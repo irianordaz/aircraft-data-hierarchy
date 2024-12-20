@@ -4,7 +4,7 @@ from ...common_base_model import CommonBaseModel
 from ...performance import Performance
 
 
-class PropulsionCycle(Performance):
+class PropulsionCyclePerformance(Performance):
     """
     Contains the analysis inputs and Engine Deck for a propulsion cycle analysis.
 

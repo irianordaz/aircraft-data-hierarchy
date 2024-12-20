@@ -267,7 +267,7 @@ class FlightConditions(CommonBaseModel):
     d_ts: Optional[float] = Field(None, description="Temperature deviation in degrees Rankine")
     W: Optional[float] = Field(None, description="Air mass flow rate")
 
-class PropulsionCycle(Behavior):
+class PropulsionCycleBehavior(Behavior):
     """
     Contains the analysis inputs and Engine Deck for a propulsion cycle analysis.
 
