@@ -20,6 +20,8 @@ from aircraft_data_hierarchy.behaviorLib.propulsion.propulsion_cycle_behavior im
     PropulsionCycleBehavior,
     Performance,
     FlightConditions,
+    MultiPointCycle,
+    OffDesignPoint,
 )
 from aircraft_data_hierarchy.performanceLib.propulsion.propulsion_cycle_performance import (
     PropulsionCyclePerformance,
@@ -45,7 +47,10 @@ class PropulsionPerformanceBuilder:
 
     # Gets the general information about the cycle
     def getCycleInfo(self):
-        cycle = self.ADHInstance.cycle
+        if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
+            cycle = self.ADHInstance.cycle.design_point
+        else:
+            cycle = self.ADHInstance.cycle
         cycleBeh = self.ADHInstance.behavior
         cyclePerf = self.ADHInstance.performance
         cycleInfo = {
@@ -75,7 +80,11 @@ class PropulsionPerformanceBuilder:
     # These functions get the engine elements
 
     def getInlet(self):
-        engineElements = self.ADHInstance.cycle.elements
+        if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
+            cycle = self.ADHInstance.cycle.design_point
+        else:
+            cycle = self.ADHInstance.cycle
+        engineElements = cycle.elements
         inlets = []
         for element in engineElements:
             if utils.lenient_isinstance(element, Inlet):
@@ -90,7 +99,11 @@ class PropulsionPerformanceBuilder:
         return inlets
 
     def getSplitter(self):
-        engineElements = self.ADHInstance.cycle.elements
+        if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
+            cycle = self.ADHInstance.cycle.design_point
+        else:
+            cycle = self.ADHInstance.cycle
+        engineElements = cycle.elements
         splitters = []
         for element in engineElements:
             if utils.lenient_isinstance(element, Splitter):
@@ -107,7 +120,11 @@ class PropulsionPerformanceBuilder:
         return splitters
 
     def getDuct(self):
-        engineElements = self.ADHInstance.cycle.elements
+        if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
+            cycle = self.ADHInstance.cycle.design_point
+        else:
+            cycle = self.ADHInstance.cycle
+        engineElements = cycle.elements
         ducts = []
         for element in engineElements:
             if utils.lenient_isinstance(element, Duct):
@@ -123,7 +140,11 @@ class PropulsionPerformanceBuilder:
         return ducts
 
     def getCompressor(self):
-        engineElements = self.ADHInstance.cycle.elements
+        if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
+            cycle = self.ADHInstance.cycle.design_point
+        else:
+            cycle = self.ADHInstance.cycle
+        engineElements = cycle.elements
         compressors = []
         for element in engineElements:
             if utils.lenient_isinstance(element, Compressor):
@@ -143,7 +164,11 @@ class PropulsionPerformanceBuilder:
         return compressors
 
     def getCombustor(self):
-        engineElements = self.ADHInstance.cycle.elements
+        if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
+            cycle = self.ADHInstance.cycle.design_point
+        else:
+            cycle = self.ADHInstance.cycle
+        engineElements = cycle.elements
         combustors = []
         for element in engineElements:
             if utils.lenient_isinstance(element, Combustor):
@@ -160,7 +185,11 @@ class PropulsionPerformanceBuilder:
         return combustors
 
     def getTurbine(self):
-        engineElements = self.ADHInstance.cycle.elements
+        if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
+            cycle = self.ADHInstance.cycle.design_point
+        else:
+            cycle = self.ADHInstance.cycle
+        engineElements = cycle.elements
         turbines = []
         for element in engineElements:
             if utils.lenient_isinstance(element, Turbine):
@@ -180,7 +209,11 @@ class PropulsionPerformanceBuilder:
         return turbines
 
     def getNozzle(self):
-        engineElements = self.ADHInstance.cycle.elements
+        if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
+            cycle = self.ADHInstance.cycle.design_point
+        else:
+            cycle = self.ADHInstance.cycle
+        engineElements = cycle.elements
         nozzles = []
         for element in engineElements:
             if utils.lenient_isinstance(element, Nozzle):
@@ -197,7 +230,11 @@ class PropulsionPerformanceBuilder:
         return nozzles
 
     def getShaft(self):
-        engineElements = self.ADHInstance.cycle.elements
+        if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
+            cycle = self.ADHInstance.cycle.design_point
+        else:
+            cycle = self.ADHInstance.cycle
+        engineElements = cycle.elements
         shafts = []
         for element in engineElements:
             if utils.lenient_isinstance(element, Shaft):
@@ -212,7 +249,11 @@ class PropulsionPerformanceBuilder:
         return shafts
 
     def getBleed(self):
-        engineElements = self.ADHInstance.cycle.elements
+        if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
+            cycle = self.ADHInstance.cycle.design_point
+        else:
+            cycle = self.ADHInstance.cycle
+        engineElements = cycle.elements
         bleeds = []
         for element in engineElements:
             if utils.lenient_isinstance(element, Bleed):
@@ -427,12 +468,42 @@ if __name__ == "__main__":
 
     file_header = FileHeader(name="engineDeck", author=[Author(name="Safa Bakhshi")])
 
+    ODpoints = []
+    fc2 = FlightConditions(
+        name="od_full_pwr_fc",
+        mn=[0.8, 0.7, 0.4, 0.8, 0.6, 0.4, 0.6, 0.4, 0.2],
+        alt=[35000, 35000, 35000, 10000, 10000, 10000, 0, 0, 0],
+        d_ts=[0.0],
+    )
+    fc3 = FlightConditions(
+        name="od_part_pwr_fc",
+        mn=[0.8, 0.7, 0.4, 0.8, 0.6, 0.4, 0.6, 0.4, 0.2],
+        alt=[35000, 35000, 35000, 10000, 10000, 10000, 0, 0, 0],
+        d_ts=[0.0],
+    )
+
+    od1 = OffDesignPoint(
+        name="OD_full_pwr",
+        flight_conditions_od=fc2,
+    )
+
+    od2 = OffDesignPoint(
+        name="OD_part_pwr",
+        flight_conditions_od=fc3,
+        PC=[1.0, 0.8],
+    )
+
+    multipoint = MultiPointCycle(
+        design_point=cycle,
+        od_points=[od1, od2],
+    )
+
     ADHInstance = Propulsion(
         name="Engine",
         description="Main engine component",
         subcomponents=[],
         metadata=metadata,
-        cycle=cycle,
+        cycle=multipoint,
         performance=cyclePerformance,
         behavior=cycleBehavior,
     )

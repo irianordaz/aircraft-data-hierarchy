@@ -305,10 +305,8 @@ class OffDesignPoint(CommonBaseModel):
     """
 
     name: str = Field(..., description="The name of the off-design point.")
-    parameters: dict = Field(..., description="The parameter values for the off-design point.")
-    flight_conditions_od: Optional[List[FlightConditions]] = Field(
-        None, description="List of off-design flight conditions."
-    )
+    flight_conditions_od: Optional[FlightConditions] = Field(None, description="Off-design flight conditions.")
+    PC: Optional[List[float]] = Field(None, description="List of off-design throttle percentage.")
 
 
 class MultiPointCycle(CommonBaseModel):
