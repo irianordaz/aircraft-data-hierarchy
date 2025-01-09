@@ -245,7 +245,6 @@ class HBTFBuilder(pyc.Cycle):
         balance = self.add_subsystem("balance", om.BalanceComp())
         # self.add_balances(balance ,cycleData["balances"] ,design)
 
-        # TODO: The balance connections are hardcoded here until I can figure out how to implement their specification in the ADH
         if design:
             balance.add_balance("W", units="lbm/s", eq_units="lbf")
             # Here balance.W is implicit state variable that is the OUTPUT of balance object
@@ -373,5 +372,101 @@ class HBTFBuilder(pyc.Cycle):
         # ls.options['print_bound_enforce'] = True
 
         self.linear_solver = om.DirectSolver()
+
+        super().setup()
+
+
+class MPhbtf_builder(pyc.MPCycle):
+
+    def initialize(self):
+        """Declare the cycle data from ADH as input"""
+        self.options.declare("adhCycleData")
+        self.options.declare("throttle_mode", default="T4", values=["T4", "percent_thrust"])
+        super().initialize()
+
+    def setup(self):
+
+        # Initialize the model here by setting option variables such as a switch for design vs off-des cases. Setup data from ADH
+        self.cycleData = cycleData = self.options["adhCycleData"]
+
+        self.pyc_add_pnt(
+            "DESIGN", HBTFBuilder(adhCycleData=cycleData)
+        )  # Create an instace of the High Bypass ratio Turbofan
+
+        self.set_input_defaults("DESIGN.inlet.MN", 0.751)
+        self.set_input_defaults("DESIGN.fan.MN", 0.4578)
+        self.set_input_defaults("DESIGN.splitter.BPR", 5.105)
+        self.set_input_defaults("DESIGN.splitter.MN1", 0.3104)
+        self.set_input_defaults("DESIGN.splitter.MN2", 0.4518)
+        self.set_input_defaults("DESIGN.duct4.MN", 0.3121)
+        self.set_input_defaults("DESIGN.lpc.MN", 0.3059)
+        self.set_input_defaults("DESIGN.duct6.MN", 0.3563)
+        self.set_input_defaults("DESIGN.hpc.MN", 0.2442)
+        self.set_input_defaults("DESIGN.bld3.MN", 0.3000)
+        self.set_input_defaults("DESIGN.burner.MN", 0.1025)
+        self.set_input_defaults("DESIGN.hpt.MN", 0.3650)
+        self.set_input_defaults("DESIGN.duct11.MN", 0.3063)
+        self.set_input_defaults("DESIGN.lpt.MN", 0.4127)
+        self.set_input_defaults("DESIGN.duct13.MN", 0.4463)
+        self.set_input_defaults("DESIGN.byp_bld.MN", 0.4489)
+        self.set_input_defaults("DESIGN.duct15.MN", 0.4589)
+        self.set_input_defaults("DESIGN.LP_Nmech", 4666.1, units="rpm")
+        self.set_input_defaults("DESIGN.HP_Nmech", 14705.7, units="rpm")
+
+        # --- Set up bleed values -----
+
+        self.pyc_add_cycle_param("inlet.ram_recovery", 0.9990)
+        self.pyc_add_cycle_param("duct4.dPqP", 0.0048)
+        self.pyc_add_cycle_param("duct6.dPqP", 0.0101)
+        self.pyc_add_cycle_param("burner.dPqP", 0.0540)
+        self.pyc_add_cycle_param("duct11.dPqP", 0.0051)
+        self.pyc_add_cycle_param("duct13.dPqP", 0.0107)
+        self.pyc_add_cycle_param("duct15.dPqP", 0.0149)
+        self.pyc_add_cycle_param("core_nozz.Cv", 0.9933)
+        self.pyc_add_cycle_param("byp_bld.bypBld:frac_W", 0.005)
+        self.pyc_add_cycle_param("byp_nozz.Cv", 0.9939)
+        self.pyc_add_cycle_param("hpc.cool1:frac_W", 0.050708)
+        self.pyc_add_cycle_param("hpc.cool1:frac_P", 0.5)
+        self.pyc_add_cycle_param("hpc.cool1:frac_work", 0.5)
+        self.pyc_add_cycle_param("hpc.cool2:frac_W", 0.020274)
+        self.pyc_add_cycle_param("hpc.cool2:frac_P", 0.55)
+        self.pyc_add_cycle_param("hpc.cool2:frac_work", 0.5)
+        self.pyc_add_cycle_param("bld3.cool3:frac_W", 0.067214)
+        self.pyc_add_cycle_param("bld3.cool4:frac_W", 0.101256)
+        self.pyc_add_cycle_param("hpc.cust:frac_P", 0.5)
+        self.pyc_add_cycle_param("hpc.cust:frac_work", 0.5)
+        self.pyc_add_cycle_param("hpc.cust:frac_W", 0.0445)
+        self.pyc_add_cycle_param("hpt.cool3:frac_P", 1.0)
+        self.pyc_add_cycle_param("hpt.cool4:frac_P", 0.0)
+        self.pyc_add_cycle_param("lpt.cool1:frac_P", 1.0)
+        self.pyc_add_cycle_param("lpt.cool2:frac_P", 0.0)
+        self.pyc_add_cycle_param("hp_shaft.HPX", 250.0, units="hp")
+
+        self.od_pts = ["OD_full_pwr", "OD_part_pwr"]
+
+        self.od_MNs = [0.8, 0.8]
+        self.od_alts = [35000.0, 35000.0]
+        self.od_Fn_target = [5500.0, 5300]
+        self.od_dTs = [0.0, 0.0]
+
+        self.pyc_add_pnt("OD_full_pwr", HBTF(design=False, thermo_method="CEA", throttle_mode="T4"))
+
+        self.set_input_defaults("OD_full_pwr.fc.MN", 0.8)
+        self.set_input_defaults("OD_full_pwr.fc.alt", 35000, units="ft")
+        self.set_input_defaults("OD_full_pwr.fc.dTs", 0.0, units="degR")
+
+        self.pyc_add_pnt("OD_part_pwr", HBTF(design=False, thermo_method="CEA", throttle_mode="percent_thrust"))
+
+        self.set_input_defaults("OD_part_pwr.fc.MN", 0.8)
+        self.set_input_defaults("OD_part_pwr.fc.alt", 35000, units="ft")
+        self.set_input_defaults("OD_part_pwr.fc.dTs", 0.0, units="degR")
+
+        self.connect("OD_full_pwr.perf.Fn", "OD_part_pwr.Fn_max")
+
+        self.pyc_use_default_des_od_conns()
+
+        # Set up the RHS of the balances!
+        self.pyc_connect_des_od("core_nozz.Throat:stat:area", "balance.rhs:W")
+        self.pyc_connect_des_od("byp_nozz.Throat:stat:area", "balance.rhs:BPR")
 
         super().setup()
