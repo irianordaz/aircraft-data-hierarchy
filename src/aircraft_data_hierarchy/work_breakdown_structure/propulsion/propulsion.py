@@ -3,9 +3,9 @@ from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field, field_validator
 from ...common_base_model import CommonBaseModel, Metadata
 from ...requirements import Requirement
-from ...performance import Discipline
-from ...behavior import Behavior, DAVEfunc
 from .propulsion_cycle import PropulsionCycle
+from aircraft_data_hierarchy.behaviorLib.propulsion.propulsion_cycle_behavior import PropulsionCycleBehavior
+from aircraft_data_hierarchy.performanceLib.propulsion.propulsion_cycle_performance import PropulsionCyclePerformance
 
 
 class Propulsion(CommonBaseModel):
@@ -39,13 +39,8 @@ class Propulsion(CommonBaseModel):
     requirements: Optional[List[Requirement]] = Field(
         default=None, description="Specific requirements for the propulsion system."
     )
-    performance: Optional[List[Discipline]] = Field(
-        default=None, description="List of disciplines analyzing the propulsion system."
-    )
-    behavior: Optional[List[Behavior]] = Field(
-        default=None, description="Specific behaviors for the propulsion system."
-    )
-    temp_behavior: Optional[DAVEfunc] = Field( default=None, description="temporary until I can talk to Ron")
+    performance: Optional[PropulsionCyclePerformance] = Field(default=None, description="Propulsion performance data.")
+    behavior: Optional[PropulsionCycleBehavior] = Field(default=None, description="SpPropulsion behavior data.")
 
     @field_validator("name", "description", mode="before")
     @classmethod

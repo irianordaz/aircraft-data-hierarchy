@@ -2,12 +2,9 @@ import numpy as np
 from pydantic.v1 import utils
 from aircraft_data_hierarchy.common_base_model import CommonBaseModel, Metadata
 from aircraft_data_hierarchy.behavior import Behavior, DAVEfunc, FileHeader, Author
-from aircraft_data_hierarchy.requirements import Requirement
-from aircraft_data_hierarchy.performance import Discipline
 from aircraft_data_hierarchy.work_breakdown_structure.propulsion import (
     Propulsion,
     PropulsionCycle,
-    FlightConditions,
     Inlet,
     Compressor,
     Splitter,
@@ -18,10 +15,16 @@ from aircraft_data_hierarchy.work_breakdown_structure.propulsion import (
     Nozzle,
     Shaft,
     Combustor,
-    BalanceComponent,
-    Performance,
 )
-from aircraft_data_hierarchy.performanceUtils.propulsion.hbtf_builder import HBTFBuilder
+from aircraft_data_hierarchy.behaviorLib.propulsion.propulsion_cycle_behavior import (
+    PropulsionCycleBehavior,
+    Performance,
+    FlightConditions,
+)
+from aircraft_data_hierarchy.performanceLib.propulsion.propulsion_cycle_performance import (
+    PropulsionCyclePerformance,
+)
+from aircraft_data_hierarchy.performanceLib.propulsion.hbtf_builder import HBTFBuilder
 import openmdao.api as om
 
 
@@ -43,26 +46,30 @@ class PropulsionPerformanceBuilder:
     # Gets the general information about the cycle
     def getCycleInfo(self):
         cycle = self.ADHInstance.cycle
+        cycleBeh = self.ADHInstance.behavior
+        cyclePerf = self.ADHInstance.performance
         cycleInfo = {
             "name": cycle.name,
-            "design": cycle.design,
-            "thermo_method": cycle.thermo_method,
-            "thermo_data": cycle.thermo_data,
-            "throttle_mode": cycle.throttle_mode,
+            "design": cycleBeh.design,
+            "thermo_method": cyclePerf.thermo_method,
+            "thermo_data": cyclePerf.thermo_data,
+            "throttle_mode": cyclePerf.throttle_mode,
             "global_connections": cycle.global_connections,
             "flow_connections": cycle.flow_connections,
-            "solver_settings": cycle.solver_settings,
+            "solver_settings": cyclePerf.solver_settings,
         }
         return cycleInfo
 
     # Gets the specified flight conditions for analysis
     def getFlightConds(self):
-        engineElements = self.ADHInstance.cycle.elements
         flightconditions = []
-        for element in engineElements:
-            if utils.lenient_isinstance(element, FlightConditions):
-                flightConds = {"name": element.name, "mn": element.mn, "alt": element.alt, "d_ts": element.d_ts}
-                flightconditions.append(flightConds)
+        des_fc = self.ADHInstance.behavior.flight_conditions_design
+        flightConds = {"name": des_fc.name, "mn": des_fc.mn, "alt": des_fc.alt, "d_ts": des_fc.d_ts}
+        flightconditions.append(flightConds)
+        # for element in engineElements:
+        # if utils.lenient_isinstance(element, FlightConditions):
+        # flightConds = {"name": element.name, "mn": element.mn, "alt": element.alt, "d_ts": element.d_ts}
+        # flightconditions.append(flightConds)
         return flightconditions
 
     # These functions get the engine elements
@@ -126,7 +133,6 @@ class PropulsionPerformanceBuilder:
                     "map_data": element.map_data,
                     "map_extrap": element.map_extrap,
                     "map_interp_method": element.map_interp_method,
-                    "alpha_map": element.alpha_map,
                     "bleed_names": element.bleed_names,
                     "pr_des": element.pr_des,
                     "eff_des": element.eff_des,
@@ -164,7 +170,6 @@ class PropulsionPerformanceBuilder:
                     "map_data": element.map_data,
                     "map_extrap": element.map_extrap,
                     "map_interp_method": element.map_interp_method,
-                    "alpha_map": element.alpha_map,
                     "pr_des": element.pr_des,
                     "eff_des": element.eff_des,
                     "bleed_names": element.bleed_names,
@@ -201,6 +206,7 @@ class PropulsionPerformanceBuilder:
                     "num_ports": element.num_ports,
                     "nmech": element.nmech,
                     "nmech_type": element.nmech_type,
+                    "HPX": element.HPX,
                 }
                 shafts.append(shaftData)
         return shafts
@@ -214,34 +220,13 @@ class PropulsionPerformanceBuilder:
                     "name": element.name,
                     "statics": element.statics,
                     "bleed_names": element.bleed_names,
+                    "mn": element.mn,
                 }
                 bleeds.append(bleedData)
         return bleeds
 
-    # Get the balance component
-
-    def getBalance(self):
-        balanceComps = self.ADHInstance.cycle.balance_components
-        balances = []
-        for comp in balanceComps:
-            if utils.lenient_isinstance(comp, BalanceComponent):
-                balanceData = {
-                    "name": comp.balance_name,
-                    "units": comp.units,
-                    "eq_units": comp.eq_units,
-                    "lower": comp.lower,
-                    "upper": comp.upper,
-                    "lhs_name": comp.lhs_name,
-                    "rhs_name": comp.rhs_name,
-                    "rhs_val": comp.rhs_val,
-                    "mult_val": comp.mult_val,
-                    "use_mult": comp.use_mult,
-                }
-                balances.append(balanceData)
-        return balances
-
     def getPerformance(self):
-        perfComps = self.ADHInstance.cycle.performance_components
+        perfComps = self.ADHInstance.behavior.performance_components
         performance = []
         for perf in perfComps:
             if utils.lenient_isinstance(perf, Performance):
@@ -283,7 +268,6 @@ class PropulsionPerformanceBuilder:
             "nozz": self.getNozzle(),
             "shafts": self.getShaft(),
             "bleeds": self.getBleed(),
-            "balances": self.getBalance(),
             "perf": self.getPerformance(),
         }
 
@@ -385,9 +369,7 @@ if __name__ == "__main__":
 
     cycle = PropulsionCycle(
         name="Cycle",
-        design=True,
         elements=[
-            fc,
             inlet,
             fan,
             splitter,
@@ -408,11 +390,7 @@ if __name__ == "__main__":
             lp_shaft,
             hp_shaft,
         ],
-        thermo_method="TABULAR",
-        throttle_mode="T4",
-        balance_components=[],
-        performance_components=[perf],
-        global_connections=["fan,lp_shaft", "lpc,lp_shaft", "lpt,lp_shaft", "hpc,hp_shaft", "hpt,hp_shaft"],
+        global_connections=["fan, lp_shaft", "lpc,lp_shaft", "lpt,lp_shaft", "hpc,hp_shaft", "hpt,hp_shaft"],
         flow_connections=[
             ["fc", "inlet"],
             ["inlet", "fan"],
@@ -434,26 +412,29 @@ if __name__ == "__main__":
         ],
     )
 
+    cyclePerformance = PropulsionCyclePerformance(
+        name="CyclePerformance",
+        thermo_method="TABULAR",
+        throttle_mode="T4",
+    )
+
+    cycleBehavior = PropulsionCycleBehavior(
+        name="CycleBehavior",
+        design=True,
+        flight_conditions_design=fc,
+        performance_components=[perf],
+    )
+
     file_header = FileHeader(name="engineDeck", author=[Author(name="Safa Bakhshi")])
 
     ADHInstance = Propulsion(
         name="Engine",
         description="Main engine component",
-        requirements=[
-            Requirement(
-                name="Req1",
-                description="Requirement 1",
-                priority="High",
-                verification_method="Test",
-                status="Open",
-                acceptance_criteria="Criteria 1",
-            )
-        ],
         subcomponents=[],
         metadata=metadata,
         cycle=cycle,
-        performance=[Discipline(name="Performance1", description="Performance description")],
-        temp_behavior=DAVEfunc(file_header=file_header),
+        performance=cyclePerformance,
+        behavior=cycleBehavior,
     )
 
     pycTest = pyCycleBuilder(ADHInstance)

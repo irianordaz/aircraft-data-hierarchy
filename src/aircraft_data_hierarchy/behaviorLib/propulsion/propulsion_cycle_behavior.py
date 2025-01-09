@@ -2,6 +2,7 @@ from typing import List, Optional
 from pydantic import Field, field_validator
 from ...common_base_model import CommonBaseModel
 from ...behavior import Behavior
+from ...work_breakdown_structure.propulsion.propulsion_cycle import PropulsionCycle
 
 
 class EngineElementBehavior(Behavior):
@@ -246,6 +247,7 @@ class Performance(Behavior):
     opr: Optional[float] = Field(None, description="Overall pressure ratio")
     tsfc: Optional[float] = Field(None, description="Thrust specific fuel consumption")
 
+
 class FlightConditions(CommonBaseModel):
     """
     Flight conditions for the engine.
@@ -262,10 +264,12 @@ class FlightConditions(CommonBaseModel):
         Air mass flow rate.
     """
 
+    name: str = Field(..., description="The name of the flight condition.")
     mn: Optional[List[float]] = Field(None, description="Mach number")
     alt: Optional[List[float]] = Field(None, description="Altitude in feet")
-    d_ts: Optional[float] = Field(None, description="Temperature deviation in degrees Rankine")
-    W: Optional[float] = Field(None, description="Air mass flow rate")
+    d_ts: Optional[List[float]] = Field(None, description="Temperature deviation in degrees Rankine")
+    W: Optional[List[float]] = Field(None, description="Air mass flow rate")
+
 
 class PropulsionCycleBehavior(Behavior):
     """
@@ -286,27 +290,9 @@ class PropulsionCycleBehavior(Behavior):
     name: str = Field(..., description="The name of the engine cycle analysis.")
     design: bool = Field(..., description="Whether the engine cycle is in design mode.")
     flight_conditions_design: Optional[FlightConditions] = Field(None, description="Design flight conditions.")
-    thermo_method: str = Field("TABULAR", description="The thermodynamic method used in the engine cycle.")
-    thermo_data: Optional[str] = Field(None, description="The thermodynamic data used in the engine cycle.")
-    throttle_mode: str = Field("T4", description="What quanity should be used to throttle engine for off-design cases.")
     performance_components: Optional[List[Performance]] = Field(
         None, description="The list of the performance components for the cycle."
     )
-    solver_settings: Optional[dict] = Field(None, description="The solver settings for the engine cycle.")
-
-    @field_validator("thermo_method")
-    def validate_thermo_method(cls, v):
-        allowed_methods = ["CEA", "TABULAR"]
-        if v not in allowed_methods:
-            raise ValueError(f"Thermodynamic method must be one of {allowed_methods}")
-        return v
-
-    @field_validator("throttle_mode")
-    def validate_throttle_mode(cls, v):
-        allowed_methods = ["T4", "percent_throttle"]
-        if v not in allowed_methods:
-            raise ValueError(f"Throttle mode must be one of {allowed_methods}")
-        return v
 
 
 class OffDesignPoint(CommonBaseModel):
@@ -320,7 +306,9 @@ class OffDesignPoint(CommonBaseModel):
 
     name: str = Field(..., description="The name of the off-design point.")
     parameters: dict = Field(..., description="The parameter values for the off-design point.")
-    flight_conditions_od: Optional[List[FlightConditions]] = Field(None, description="List of off-design flight conditions.")
+    flight_conditions_od: Optional[List[FlightConditions]] = Field(
+        None, description="List of off-design flight conditions."
+    )
 
 
 class MultiPointCycle(CommonBaseModel):

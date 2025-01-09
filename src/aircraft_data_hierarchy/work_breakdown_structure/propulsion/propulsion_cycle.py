@@ -258,22 +258,6 @@ class PropulsionCycle(CommonBaseModel):
     """
 
     name: str = Field(..., description="The name of the engine cycle.")
-    thermo_method: str = Field("TABULAR", description="The thermodynamic method used in the engine cycle.")
-    thermo_data: Optional[str] = Field(None, description="The thermodynamic data used in the engine cycle.")
     elements: List[EngineElement] = Field(..., description="The list of engine elements in the engine cycle.")
     global_connections: Optional[List[str]] = Field(None, description="The global connections in the engine cycle.")
     flow_connections: Optional[List[List[str]]] = Field(None, description="The flow connections in the engine cycle.")
-
-    @field_validator("thermo_method")
-    def validate_thermo_method(cls, v):
-        allowed_methods = ["CEA", "TABULAR"]
-        if v not in allowed_methods:
-            raise ValueError(f"Thermodynamic method must be one of {allowed_methods}")
-        return v
-
-    @field_validator("throttle_mode")
-    def validate_throttle_mode(cls, v):
-        allowed_methods = ["T4", "percent_throttle"]
-        if v not in allowed_methods:
-            raise ValueError(f"Throttle mode must be one of {allowed_methods}")
-        return v
