@@ -393,35 +393,42 @@ class MPhbtf_builder(pyc.MPCycle):
             "DESIGN", HBTFBuilder(adhCycleData=cycleData)
         )  # Create an instace of the High Bypass ratio Turbofan
 
-        self.set_input_defaults("DESIGN.inlet.MN", 0.751)
-        self.set_input_defaults("DESIGN.fan.MN", 0.4578)
-        self.set_input_defaults("DESIGN.splitter.BPR", 5.105)
-        self.set_input_defaults("DESIGN.splitter.MN1", 0.3104)
-        self.set_input_defaults("DESIGN.splitter.MN2", 0.4518)
-        self.set_input_defaults("DESIGN.duct4.MN", 0.3121)
-        self.set_input_defaults("DESIGN.lpc.MN", 0.3059)
-        self.set_input_defaults("DESIGN.duct6.MN", 0.3563)
-        self.set_input_defaults("DESIGN.hpc.MN", 0.2442)
-        self.set_input_defaults("DESIGN.bld3.MN", 0.3000)
-        self.set_input_defaults("DESIGN.burner.MN", 0.1025)
-        self.set_input_defaults("DESIGN.hpt.MN", 0.3650)
-        self.set_input_defaults("DESIGN.duct11.MN", 0.3063)
-        self.set_input_defaults("DESIGN.lpt.MN", 0.4127)
-        self.set_input_defaults("DESIGN.duct13.MN", 0.4463)
-        self.set_input_defaults("DESIGN.byp_bld.MN", 0.4489)
-        self.set_input_defaults("DESIGN.duct15.MN", 0.4589)
+        for inlet in cycleData["inlets"]:
+            self.set_input_defaults("DESIGN." + inlet["name"] + ".MN", inlet["mn"])  # inlet: 0.751
+            self.pyc_add_cycle_param(inlet["name"] + ".ram_recovery", 0.9990)  # inlet: 0.9990
+
+        for comp in cycleData["comp"]:
+            self.set_input_defaults(
+                "DESIGN." + comp["name"] + ".MN", comp["mn"]
+            )  # fan: 0.4578 # lpc: 0.3059 # hpc: 0.2442
+
+        for splitter in cycleData["splitters"]:
+            self.set_input_defaults("DESIGN." + splitter["name"] + ".BPR", splitter["BPR"])  # splitter: 5.105
+            self.set_input_defaults("DESIGN." + splitter["name"] + ".MN1", splitter["mn1"])  # splitter: 0.3104
+            self.set_input_defaults("DESIGN." + splitter["name"] + ".MN2", splitter["mn2"])  # splitter: 0.4518
+
+        for duct in cycleData["ducts"]:
+            self.set_input_defaults("DESIGN." + duct["name"] + ".MN", duct["mn"])
+            # duct4: 0.3121, #duct6: 0.3563 #duct 11: 0.3063 #duct13: 0.4463 #duct15: 0.4589
+            self.pyc_add_cycle_param(duct["name"] + ".dPqP", duct["dPqP"])
+            # duct4: 0.0048 # duct6: 0.0101 # duct11 0.0051 # duct13: 0.0107 # duct15: 0.0149
+
+        for bleed in cycleData["bleeds"]:
+            self.set_input_defaults("DESIGN." + bleed["name"] + ".MN", bleed["mn"])  # bld3: 0.300 #byp_bld: 0.4489
+
+        for comb in cycleData["combs"]:
+            self.set_input_defaults("DESIGN." + comb["name"] + ".MN", comb["mn"])  # burner: 0.1025
+            self.pyc_add_cycle_param(comb["name"] + ".dPqP", comb["dPqP"])  # burner: 0.0540
+
+        for turb in cycleData["turbs"]:
+            self.set_input_defaults("DESIGN." + turb["name"] + ".MN", turb["mn"])  # hpt: 0.3650 lpt: 0.4127
+
+        # TODO
         self.set_input_defaults("DESIGN.LP_Nmech", 4666.1, units="rpm")
         self.set_input_defaults("DESIGN.HP_Nmech", 14705.7, units="rpm")
 
         # --- Set up bleed values -----
 
-        self.pyc_add_cycle_param("inlet.ram_recovery", 0.9990)
-        self.pyc_add_cycle_param("duct4.dPqP", 0.0048)
-        self.pyc_add_cycle_param("duct6.dPqP", 0.0101)
-        self.pyc_add_cycle_param("burner.dPqP", 0.0540)
-        self.pyc_add_cycle_param("duct11.dPqP", 0.0051)
-        self.pyc_add_cycle_param("duct13.dPqP", 0.0107)
-        self.pyc_add_cycle_param("duct15.dPqP", 0.0149)
         self.pyc_add_cycle_param("core_nozz.Cv", 0.9933)
         self.pyc_add_cycle_param("byp_bld.bypBld:frac_W", 0.005)
         self.pyc_add_cycle_param("byp_nozz.Cv", 0.9939)
