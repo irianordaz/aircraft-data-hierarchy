@@ -402,6 +402,24 @@ class MPhbtf_builder(pyc.MPCycle):
                 "DESIGN." + comp["name"] + ".MN", comp["mn"]
             )  # fan: 0.4578 # lpc: 0.3059 # hpc: 0.2442
 
+            for bn in comp["bleed_names"]:
+                self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_W", 0.050708)
+                self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_P", 0.5)
+                self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_work", 0.5)
+
+                #hpc cool 1 0.050708
+                # 0.5
+                # 0.5
+
+                # hpc cool 2 0.020274
+                # 0.55
+                # 0.5
+
+                # hpc cust 0.5
+                # 0.5
+                # 0.0445
+
+
         for splitter in cycleData["splitters"]:
             self.set_input_defaults("DESIGN." + splitter["name"] + ".BPR", splitter["BPR"])  # splitter: 5.105
             self.set_input_defaults("DESIGN." + splitter["name"] + ".MN1", splitter["mn1"])  # splitter: 0.3104
@@ -415,6 +433,18 @@ class MPhbtf_builder(pyc.MPCycle):
 
         for bleed in cycleData["bleeds"]:
             self.set_input_defaults("DESIGN." + bleed["name"] + ".MN", bleed["mn"])  # bld3: 0.300 #byp_bld: 0.4489
+            
+            for bn in bleed["bleed_names"]:
+                for cb in cycleData["bleeds"]:
+                    if cb["name"] == bn:
+                        break
+                self.pyc_add_cycle_param(bleed["name"] + "." + bn + ":frac_W", cb["frac_W"]) 
+                #byp_bld.bpyBld 0.005 
+                # bld.cool3 0.067214 
+                # bld3.cool4 0.101
+                
+                #self.pyc_add_cycle_param("bld3.cool3:frac_W", 0.067214)
+                #self.pyc_add_cycle_param("bld3.cool4:frac_W", 0.101256)
 
         for comb in cycleData["combs"]:
             self.set_input_defaults("DESIGN." + comb["name"] + ".MN", comb["mn"])  # burner: 0.1025
@@ -423,31 +453,26 @@ class MPhbtf_builder(pyc.MPCycle):
         for turb in cycleData["turbs"]:
             self.set_input_defaults("DESIGN." + turb["name"] + ".MN", turb["mn"])  # hpt: 0.3650 lpt: 0.4127
 
+            for bn in turb["bleed_names"]:
+                self.pyc_add_cycle_param(turb["names"] + "." + bn + ":frac_P", 1.0) 
+                #hpt cool 3 1.0 # hpt cool4 0.0 #lpt cool1 1.0 #lpt cool2 0.0
+
+            
+
+        for nozz in cycleData["nozz"]:
+            self.pyc_add_cycle_param(nozz["name"] + ".Cv", nozz["Cv"]) # core_nozz: 0.9933 # byp_nozz: 0.9939
+            
+
         # TODO
         self.set_input_defaults("DESIGN.LP_Nmech", 4666.1, units="rpm")
         self.set_input_defaults("DESIGN.HP_Nmech", 14705.7, units="rpm")
 
         # --- Set up bleed values -----
-
-        self.pyc_add_cycle_param("core_nozz.Cv", 0.9933)
-        self.pyc_add_cycle_param("byp_bld.bypBld:frac_W", 0.005)
-        self.pyc_add_cycle_param("byp_nozz.Cv", 0.9939)
-        self.pyc_add_cycle_param("hpc.cool1:frac_W", 0.050708)
-        self.pyc_add_cycle_param("hpc.cool1:frac_P", 0.5)
-        self.pyc_add_cycle_param("hpc.cool1:frac_work", 0.5)
-        self.pyc_add_cycle_param("hpc.cool2:frac_W", 0.020274)
-        self.pyc_add_cycle_param("hpc.cool2:frac_P", 0.55)
-        self.pyc_add_cycle_param("hpc.cool2:frac_work", 0.5)
-        self.pyc_add_cycle_param("bld3.cool3:frac_W", 0.067214)
-        self.pyc_add_cycle_param("bld3.cool4:frac_W", 0.101256)
-        self.pyc_add_cycle_param("hpc.cust:frac_P", 0.5)
-        self.pyc_add_cycle_param("hpc.cust:frac_work", 0.5)
-        self.pyc_add_cycle_param("hpc.cust:frac_W", 0.0445)
-        self.pyc_add_cycle_param("hpt.cool3:frac_P", 1.0)
-        self.pyc_add_cycle_param("hpt.cool4:frac_P", 0.0)
-        self.pyc_add_cycle_param("lpt.cool1:frac_P", 1.0)
-        self.pyc_add_cycle_param("lpt.cool2:frac_P", 0.0)
         self.pyc_add_cycle_param("hp_shaft.HPX", 250.0, units="hp")
+        #TODO
+        
+        
+
 
         self.od_pts = ["OD_full_pwr", "OD_part_pwr"]
 
