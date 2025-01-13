@@ -69,6 +69,15 @@ class Compressor(EngineElement):
     s_Wc: Optional[float] = Field(None, description="On-design air mass flow rate(Output)")
     s_Nc: Optional[float] = Field(None, description="On-design Nc(Output)")
     area: Optional[float] = Field(None, description="On-design frontal area of component(Output)")
+    frac_W: Optional[List[float]] = Field(
+        None, description="Fraction of incoming flow to bleed off(associated with each bleed connection)"
+    )
+    frac_P: Optional[List[float]] = Field(
+        None, description="Fraction of incoming pressure to bleed off(associated with each bleed connection)"
+    )
+    frac_work: Optional[List[float]] = Field(
+        None, description="Fraction of work to bleed off(associated with each bleed connection)"
+    )
 
 
 class Turbine(EngineElement):
@@ -104,6 +113,15 @@ class Turbine(EngineElement):
     s_Wc: Optional[float] = Field(None, description="On-design air mass flow rate(Output)")
     s_Nc: Optional[float] = Field(None, description="On-design Nc(Output)")
     area: Optional[float] = Field(None, description="On-design frontal area of component(Output)")
+    frac_W: Optional[List[float]] = Field(
+        None, description="Fraction of incoming flow to bleed off(associated with each bleed connection)"
+    )
+    frac_P: Optional[List[float]] = Field(
+        None, description="Fraction of incoming pressure to bleed off(associated with each bleed connection)"
+    )
+    frac_work: Optional[List[float]] = Field(
+        None, description="Fraction of work to bleed off(associated with each bleed connection)"
+    )
 
 
 class Splitter(EngineElement):
@@ -167,7 +185,15 @@ class Bleed(EngineElement):
 
     bleed_names: Optional[List[str]] = Field(None, description="Names of the bleed connections associated")
     statics: Optional[bool] = Field(None, description="If true calculate static properties")
-    frac_W: Optional[float] = Field(None, description="Fraction of incoming flow to bleed off")
+    frac_W: Optional[List[float]] = Field(
+        None, description="Fraction of incoming flow to bleed off(associated with each bleed connection)"
+    )
+    frac_P: Optional[List[float]] = Field(
+        None, description="Fraction of incoming pressure to bleed off(associated with each bleed connection)"
+    )
+    frac_work: Optional[List[float]] = Field(
+        None, description="Fraction of work to bleed off(associated with each bleed connection)"
+    )
     mn: Optional[float] = Field(None, description="On-design mach number.")
 
 

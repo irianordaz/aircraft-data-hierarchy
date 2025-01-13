@@ -26,7 +26,7 @@ from aircraft_data_hierarchy.behaviorLib.propulsion.propulsion_cycle_behavior im
 from aircraft_data_hierarchy.performanceLib.propulsion.propulsion_cycle_performance import (
     PropulsionCyclePerformance,
 )
-from aircraft_data_hierarchy.performanceLib.propulsion.hbtf_builder import HBTFBuilder
+from aircraft_data_hierarchy.performanceLib.propulsion.hbtf_builder import HBTFBuilder, MPhbtfBuilder
 import openmdao.api as om
 
 
@@ -45,6 +45,20 @@ class PropulsionPerformanceBuilder:
 
     """ ADH INPUT: A set of helper functions that retreive ADH data from pydantic and return them as dictionaries. """
 
+    def getODPoints(self):
+        cycle = self.ADHInstance.cycle
+        od_points = []
+        for od_pt in cycle.od_points:
+            od_point = {
+                "name": od_pt.name,
+                "PC": od_pt.PC,
+                "mn": od_pt.flight_conditions_od.mn,
+                "alt": od_pt.flight_conditions_od.alt,
+                "d_ts": od_pt.flight_conditions_od.d_ts,
+            }
+            od_points.append(od_point)
+        return od_points
+
     # Gets the general information about the cycle
     def getCycleInfo(self):
         if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
@@ -56,6 +70,7 @@ class PropulsionPerformanceBuilder:
         cycleInfo = {
             "name": cycle.name,
             "design": cycleBeh.design,
+            "is_multi_point": False,
             "thermo_method": cyclePerf.thermo_method,
             "thermo_data": cyclePerf.thermo_data,
             "throttle_mode": cyclePerf.throttle_mode,
@@ -63,18 +78,18 @@ class PropulsionPerformanceBuilder:
             "flow_connections": cycle.flow_connections,
             "solver_settings": cyclePerf.solver_settings,
         }
+
+        if utils.lenient_isinstance(self.ADHInstance.cycle, MultiPointCycle):
+            cycleInfo["is_multi_point"] = True
+            cycleInfo["od_points"] = self.getODPoints()
         return cycleInfo
 
-    # Gets the specified flight conditions for analysis
-    def getFlightConds(self):
+    # Gets the design flight conditions for analysis
+    def getDesFlightConds(self):
         flightconditions = []
         des_fc = self.ADHInstance.behavior.flight_conditions_design
         flightConds = {"name": des_fc.name, "mn": des_fc.mn, "alt": des_fc.alt, "d_ts": des_fc.d_ts}
         flightconditions.append(flightConds)
-        # for element in engineElements:
-        # if utils.lenient_isinstance(element, FlightConditions):
-        # flightConds = {"name": element.name, "mn": element.mn, "alt": element.alt, "d_ts": element.d_ts}
-        # flightconditions.append(flightConds)
         return flightconditions
 
     # These functions get the engine elements
@@ -159,6 +174,9 @@ class PropulsionPerformanceBuilder:
                     "eff_des": element.eff_des,
                     "area": element.area,
                     "mn": element.mn,
+                    "frac_W": element.frac_W,
+                    "frac_P": element.frac_P,
+                    "frac_work": element.frac_work,
                 }
                 compressors.append(compData)
         return compressors
@@ -204,6 +222,9 @@ class PropulsionPerformanceBuilder:
                     "bleed_names": element.bleed_names,
                     "area": element.area,
                     "mn": element.mn,
+                    "frac_W": element.frac_W,
+                    "frac_P": element.frac_P,
+                    "frac_work": element.frac_work,
                 }
                 turbines.append(turbData)
         return turbines
@@ -262,6 +283,9 @@ class PropulsionPerformanceBuilder:
                     "statics": element.statics,
                     "bleed_names": element.bleed_names,
                     "mn": element.mn,
+                    "frac_W": element.frac_W,
+                    "frac_P": element.frac_P,
+                    "frac_work": element.frac_work,
                 }
                 bleeds.append(bleedData)
         return bleeds
@@ -299,7 +323,7 @@ class PropulsionPerformanceBuilder:
 
         self.cycleData = {
             "cycleInfo": self.getCycleInfo(),
-            "fc": self.getFlightConds(),
+            "fc": self.getDesFlightConds(),
             "inlets": self.getInlet(),
             "splitters": self.getSplitter(),
             "duct": self.getDuct(),
@@ -351,7 +375,10 @@ class pyCycleBuilder(PropulsionPerformanceBuilder):
         Parameters
         """
 
-        self.pycycleObject = HBTFBuilder(adhCycleData=self.cycleData)
+        if self.cycleData["cycleInfo"]["is_multi_point"]:
+            self.pycycleObject = MPhbtfBuilder(adhCycleData=self.cycleData)
+        else:
+            self.pycycleObject = HBTFBuilder(adhCycleData=self.cycleData)
 
         return self.pycycleObject
 
@@ -398,6 +425,59 @@ if __name__ == "__main__":
         fg_1_source="byp_nozz",
     )
 
+    # Set data
+
+    # Inlet
+    inlet.mn = 0.751
+    inlet.ram_recovery = 0.999
+
+    # Fan
+    fan.mn = 0.4578
+
+    # Comps
+    lpc.mn = 0.3059
+    hpc.mn = 0.2442
+    hpc.frac_W = [0.050708, 0.020274, 0.5]
+    hpc.frac_P = [0.020274, 0.55, 0.5]
+    hpc.frac_work = [0.5, 0.5, 0.0445]
+
+    # Ducts
+    duct4.mn = 0.3121
+    duct6.mn = 0.3563
+    duct11.mn = 0.3063
+    duct13.mn = 0.4463
+    duct15.mn = 0.4589
+
+    duct4.dPqP = 0.0048
+    duct6.dPqP = 0.0101
+    duct11.dPqP = 0.0051
+    duct13.dPqP = 0.0107
+    duct15.dPqP = 0.0149
+
+    # Bleeds
+    bld3.mn = 0.300
+    byp_bld.mn = 0.4489
+
+    bld3.frac_W = [0.067214, 0.101]
+    byp_bld.frac_W = [0.005]
+
+    # Combs
+    burner.mn = 0.1025
+    burner.dp_qp = 0.0540
+
+    # Turbs
+
+    lpt.mn = 0.4127
+    hpt.mn = 0.3650
+
+    hpt.frac_P = [1.0, 0.0]
+    lpt.frac_P = [1.0, 0.0]
+
+    # Nozzle
+
+    core_nozz.cv = 0.9933
+    byp_nozz.cv = 0.9939
+
     # Set PR and eff
     fan.pr_des = 1.685
     fan.eff_des = 0.8948
@@ -407,6 +487,9 @@ if __name__ == "__main__":
 
     hpc.pr_des = 9.369
     hpc.eff_des = 0.8707
+
+    hpt.eff_des = 0.8888
+    lpt.eff_des = 0.8996
 
     cycle = PropulsionCycle(
         name="Cycle",

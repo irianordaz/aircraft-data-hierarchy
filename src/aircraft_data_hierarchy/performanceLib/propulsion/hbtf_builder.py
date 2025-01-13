@@ -78,6 +78,9 @@ class HBTFBuilder(pyc.Cycle):
         for fc in flightconditions:
             self.add_subsystem(fc["name"], pyc.FlightConditions())
 
+    def add_flightcondition(self):
+        self.add_subsystem("fc", pyc.FlightConditions())
+
     def add_inlets(self, inlets):
         for inlet in inlets:
             self.add_subsystem(inlet["name"], pyc.Inlet())
@@ -188,6 +191,8 @@ class HBTFBuilder(pyc.Cycle):
         """Declare the cycle data from ADH as input"""
         self.options.declare("adhCycleData")
         self.options.declare("throttle_mode", default="T4", values=["T4", "percent_thrust"])
+        self.options.declare("design", default=True)
+
         super().initialize()
 
     def setup(self):
@@ -195,7 +200,7 @@ class HBTFBuilder(pyc.Cycle):
         self.cycleData = cycleData = self.options["adhCycleData"]
 
         self.options["throttle_mode"] = cycleData["cycleInfo"]["throttle_mode"]
-        design = cycleData["cycleInfo"]["design"]
+        design = cycleData["cycleInfo"]["design"] = self.options["design"]
 
         if cycleData["cycleInfo"]["thermo_method"] == "TABULAR":
             self.options["thermo_method"] = "TABULAR"
@@ -206,7 +211,8 @@ class HBTFBuilder(pyc.Cycle):
 
         # Add all the engine components from the ADH using helper functions
 
-        self.add_flightconditions(cycleData["fc"])
+        # self.add_flightconditions(cycleData["fc"])
+        self.add_flightcondition()
         self.add_inlets(cycleData["inlets"])
         self.add_compressors(cycleData["comp"])
         self.add_splitters(cycleData["splitters"])
@@ -376,7 +382,7 @@ class HBTFBuilder(pyc.Cycle):
         super().setup()
 
 
-class MPhbtf_builder(pyc.MPCycle):
+class MPhbtfBuilder(pyc.MPCycle):
 
     def initialize(self):
         """Declare the cycle data from ADH as input"""
@@ -395,19 +401,19 @@ class MPhbtf_builder(pyc.MPCycle):
 
         for inlet in cycleData["inlets"]:
             self.set_input_defaults("DESIGN." + inlet["name"] + ".MN", inlet["mn"])  # inlet: 0.751
-            self.pyc_add_cycle_param(inlet["name"] + ".ram_recovery", 0.9990)  # inlet: 0.9990
+            self.pyc_add_cycle_param(inlet["name"] + ".ram_recovery", inlet["ram_recovery"])  # inlet: 0.9990
 
         for comp in cycleData["comp"]:
             self.set_input_defaults(
                 "DESIGN." + comp["name"] + ".MN", comp["mn"]
             )  # fan: 0.4578 # lpc: 0.3059 # hpc: 0.2442
 
-            for bn in comp["bleed_names"]:
-                self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_W", 0.050708)
-                self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_P", 0.5)
-                self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_work", 0.5)
+            for i, bn in enumerate(comp["bleed_names"]):
+                self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_W", comp["frac_W"][i])
+                self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_P", comp["frac_P"][i])
+                self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_work", comp["frac_work"][i])
 
-                #hpc cool 1 0.050708
+                # hpc cool 1 0.050708
                 # 0.5
                 # 0.5
 
@@ -419,13 +425,12 @@ class MPhbtf_builder(pyc.MPCycle):
                 # 0.5
                 # 0.0445
 
-
         for splitter in cycleData["splitters"]:
-            self.set_input_defaults("DESIGN." + splitter["name"] + ".BPR", splitter["BPR"])  # splitter: 5.105
+            self.set_input_defaults("DESIGN." + splitter["name"] + ".BPR", splitter["bpr"])  # splitter: 5.105
             self.set_input_defaults("DESIGN." + splitter["name"] + ".MN1", splitter["mn1"])  # splitter: 0.3104
             self.set_input_defaults("DESIGN." + splitter["name"] + ".MN2", splitter["mn2"])  # splitter: 0.4518
 
-        for duct in cycleData["ducts"]:
+        for duct in cycleData["duct"]:
             self.set_input_defaults("DESIGN." + duct["name"] + ".MN", duct["mn"])
             # duct4: 0.3121, #duct6: 0.3563 #duct 11: 0.3063 #duct13: 0.4463 #duct15: 0.4589
             self.pyc_add_cycle_param(duct["name"] + ".dPqP", duct["dPqP"])
@@ -433,67 +438,77 @@ class MPhbtf_builder(pyc.MPCycle):
 
         for bleed in cycleData["bleeds"]:
             self.set_input_defaults("DESIGN." + bleed["name"] + ".MN", bleed["mn"])  # bld3: 0.300 #byp_bld: 0.4489
-            
-            for bn in bleed["bleed_names"]:
-                for cb in cycleData["bleeds"]:
-                    if cb["name"] == bn:
-                        break
-                self.pyc_add_cycle_param(bleed["name"] + "." + bn + ":frac_W", cb["frac_W"]) 
-                #byp_bld.bpyBld 0.005 
-                # bld.cool3 0.067214 
+
+            for i, bn in enumerate(bleed["bleed_names"]):
+                self.pyc_add_cycle_param(bleed["name"] + "." + bn + ":frac_W", bleed["frac_W"][i])
+                # byp_bld.bpyBld 0.005
+                # bld.cool3 0.067214
                 # bld3.cool4 0.101
-                
-                #self.pyc_add_cycle_param("bld3.cool3:frac_W", 0.067214)
-                #self.pyc_add_cycle_param("bld3.cool4:frac_W", 0.101256)
 
-        for comb in cycleData["combs"]:
+                # self.pyc_add_cycle_param("bld3.cool3:frac_W", 0.067214)
+                # self.pyc_add_cycle_param("bld3.cool4:frac_W", 0.101256)
+
+        for comb in cycleData["comb"]:
             self.set_input_defaults("DESIGN." + comb["name"] + ".MN", comb["mn"])  # burner: 0.1025
-            self.pyc_add_cycle_param(comb["name"] + ".dPqP", comb["dPqP"])  # burner: 0.0540
+            self.pyc_add_cycle_param(comb["name"] + ".dPqP", comb["dp_qp"])  # burner: 0.0540
 
-        for turb in cycleData["turbs"]:
+        for turb in cycleData["turb"]:
             self.set_input_defaults("DESIGN." + turb["name"] + ".MN", turb["mn"])  # hpt: 0.3650 lpt: 0.4127
 
-            for bn in turb["bleed_names"]:
-                self.pyc_add_cycle_param(turb["names"] + "." + bn + ":frac_P", 1.0) 
-                #hpt cool 3 1.0 # hpt cool4 0.0 #lpt cool1 1.0 #lpt cool2 0.0
-
-            
+            for i, bn in enumerate(turb["bleed_names"]):
+                self.pyc_add_cycle_param(turb["name"] + "." + bn + ":frac_P", turb["frac_P"][i])
+                # hpt cool 3 1.0 # hpt cool4 0.0 #lpt cool1 1.0 #lpt cool2 0.0
 
         for nozz in cycleData["nozz"]:
-            self.pyc_add_cycle_param(nozz["name"] + ".Cv", nozz["Cv"]) # core_nozz: 0.9933 # byp_nozz: 0.9939
-            
+            self.pyc_add_cycle_param(nozz["name"] + ".Cv", nozz["cv"])  # core_nozz: 0.9933 # byp_nozz: 0.9939
 
         # TODO
         self.set_input_defaults("DESIGN.LP_Nmech", 4666.1, units="rpm")
         self.set_input_defaults("DESIGN.HP_Nmech", 14705.7, units="rpm")
 
         # --- Set up bleed values -----
+        # TODO
         self.pyc_add_cycle_param("hp_shaft.HPX", 250.0, units="hp")
-        #TODO
-        
-        
 
+        od_names = []
+        od_mns = []
+        od_alts = []
+        # od_Fn_targets = []
+        od_dTs = []
+        for od_pt in cycleData["cycleInfo"]["od_points"]:
 
-        self.od_pts = ["OD_full_pwr", "OD_part_pwr"]
+            od_names.append(od_pt["name"])
+            od_mns.append(od_pt["mn"])
+            od_alts.append(od_pt["alt"])
+            # od_Fn_targets.append(od_pt["alt"])
+            od_dTs.append(od_pt["d_ts"])
 
-        self.od_MNs = [0.8, 0.8]
-        self.od_alts = [35000.0, 35000.0]
+        self.od_pts = od_names  # OD_full_pwr", "OD_part_pwr"
+
+        self.od_MNs = od_mns  # 0.8 0.8
+        self.od_alts = od_alts  # 35000.0 35000.0
         self.od_Fn_target = [5500.0, 5300]
-        self.od_dTs = [0.0, 0.0]
+        self.od_dTs = od_dTs  # 0.0 0.0
 
-        self.pyc_add_pnt("OD_full_pwr", HBTF(design=False, thermo_method="CEA", throttle_mode="T4"))
+        for od_pt in cycleData["cycleInfo"]["od_points"]:
+            cycleData["design"] = False
+            self.pyc_add_pnt(od_pt["name"], HBTFBuilder(design=False, adhCycleData=cycleData))
+            self.set_input_defaults(
+                od_pt["name"] + "." + od_pt["name"] + ".MN",
+                od_pt["mn"],
+            )
+            self.set_input_defaults(
+                od_pt["name"] + "." + od_pt["name"] + ".alt",
+                od_pt["alt"],
+                units="ft",
+            )
+            self.set_input_defaults(
+                od_pt["name"] + "." + od_pt["name"] + ".dTs",
+                od_pt["d_ts"],
+                units="degR",
+            )
 
-        self.set_input_defaults("OD_full_pwr.fc.MN", 0.8)
-        self.set_input_defaults("OD_full_pwr.fc.alt", 35000, units="ft")
-        self.set_input_defaults("OD_full_pwr.fc.dTs", 0.0, units="degR")
-
-        self.pyc_add_pnt("OD_part_pwr", HBTF(design=False, thermo_method="CEA", throttle_mode="percent_thrust"))
-
-        self.set_input_defaults("OD_part_pwr.fc.MN", 0.8)
-        self.set_input_defaults("OD_part_pwr.fc.alt", 35000, units="ft")
-        self.set_input_defaults("OD_part_pwr.fc.dTs", 0.0, units="degR")
-
-        self.connect("OD_full_pwr.perf.Fn", "OD_part_pwr.Fn_max")
+        self.connect("OD_full_pwr.perf.Fn", "OD_part_pwr.Fn_max")  # TODO
 
         self.pyc_use_default_des_od_conns()
 
