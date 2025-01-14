@@ -325,11 +325,11 @@ class HBTFBuilder(pyc.Cycle):
             self.connect("hp_shaft.pwr_in_real", "balance.lhs:hp_Nmech")
             self.connect("hp_shaft.pwr_out_real", "balance.rhs:hp_Nmech")
 
-        # Specify the order in which the subsystems are executed:
+            # Specify the order in which the subsystems are executed:
 
         self.set_order(
             [
-                "balance",
+                # "balance",
                 "fc",
                 "inlet",
                 "fan",
@@ -351,6 +351,7 @@ class HBTFBuilder(pyc.Cycle):
                 "lp_shaft",
                 "hp_shaft",
                 "perf",
+                "balance",
             ]
         )
 
