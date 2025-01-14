@@ -31,7 +31,7 @@ class PropulsionCyclePerformance(ModelDescription):
 
     @field_validator("throttle_mode")
     def validate_throttle_mode(cls, v):
-        allowed_methods = ["T4", "percent_throttle"]
+        allowed_methods = ["T4", "percent_thrust"]
         if v not in allowed_methods:
             raise ValueError(f"Throttle mode must be one of {allowed_methods}")
         return v

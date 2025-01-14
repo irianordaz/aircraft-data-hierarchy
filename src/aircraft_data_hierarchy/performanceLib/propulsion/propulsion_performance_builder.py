@@ -52,6 +52,7 @@ class PropulsionPerformanceBuilder:
             od_point = {
                 "name": od_pt.name,
                 "PC": od_pt.PC,
+                "throttle_mode": od_pt.throttle_mode,
                 "mn": od_pt.flight_conditions_od.mn,
                 "alt": od_pt.flight_conditions_od.alt,
                 "d_ts": od_pt.flight_conditions_od.d_ts,
@@ -568,12 +569,14 @@ if __name__ == "__main__":
     od1 = OffDesignPoint(
         name="OD_full_pwr",
         flight_conditions_od=fc2,
+        throttle_mode="T4",
     )
 
     od2 = OffDesignPoint(
         name="OD_part_pwr",
         flight_conditions_od=fc3,
         PC=[1.0, 0.8],
+        throttle_mode="percent_thrust",
     )
 
     multipoint = MultiPointCycle(

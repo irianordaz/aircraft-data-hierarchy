@@ -199,7 +199,7 @@ class HBTFBuilder(pyc.Cycle):
         # Initialize the model here by setting option variables such as a switch for design vs off-des cases. Setup data from ADH
         self.cycleData = cycleData = self.options["adhCycleData"]
 
-        self.options["throttle_mode"] = cycleData["cycleInfo"]["throttle_mode"]
+        self.options["throttle_mode"] = cycleData["cycleInfo"]["throttle_mode"] = self.options["throttle_mode"]
         design = cycleData["cycleInfo"]["design"] = self.options["design"]
 
         if cycleData["cycleInfo"]["thermo_method"] == "TABULAR":
@@ -492,19 +492,21 @@ class MPhbtfBuilder(pyc.MPCycle):
 
         for od_pt in cycleData["cycleInfo"]["od_points"]:
             cycleData["design"] = False
-            self.pyc_add_pnt(od_pt["name"], HBTFBuilder(design=False, adhCycleData=cycleData))
-            self.set_input_defaults(
-                od_pt["name"] + "." + od_pt["name"] + ".MN",
-                od_pt["mn"],
+            self.pyc_add_pnt(
+                od_pt["name"], HBTFBuilder(design=False, throttle_mode=od_pt["throttle_mode"], adhCycleData=cycleData)
             )
             self.set_input_defaults(
-                od_pt["name"] + "." + od_pt["name"] + ".alt",
-                od_pt["alt"],
+                od_pt["name"] + "." + "fc" + ".MN",
+                od_pt["mn"][0],
+            )
+            self.set_input_defaults(
+                od_pt["name"] + "." + "fc" + ".alt",
+                od_pt["alt"][0],
                 units="ft",
             )
             self.set_input_defaults(
-                od_pt["name"] + "." + od_pt["name"] + ".dTs",
-                od_pt["d_ts"],
+                od_pt["name"] + "." + "fc" + ".dTs",
+                od_pt["d_ts"][0],
                 units="degR",
             )
 

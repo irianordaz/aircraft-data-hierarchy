@@ -307,6 +307,14 @@ class OffDesignPoint(CommonBaseModel):
     name: str = Field(..., description="The name of the off-design point.")
     flight_conditions_od: Optional[FlightConditions] = Field(None, description="Off-design flight conditions.")
     PC: Optional[List[float]] = Field(None, description="List of off-design throttle percentage.")
+    throttle_mode: str = Field("T4", description="What quanity should be used to throttle engine for off-design cases.")
+
+    @field_validator("throttle_mode")
+    def validate_throttle_mode(cls, v):
+        allowed_methods = ["T4", "percent_thrust"]
+        if v not in allowed_methods:
+            raise ValueError(f"Throttle mode must be one of {allowed_methods}")
+        return v
 
 
 class MultiPointCycle(CommonBaseModel):
