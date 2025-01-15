@@ -29,7 +29,7 @@ from aircraft_data_hierarchy.performanceLib.propulsion.propulsion_cycle_performa
 from aircraft_data_hierarchy.performanceLib.propulsion.hbtf_builder import HBTFBuilder, MPhbtfBuilder
 import openmdao.api as om
 
-from temp_viewer import viewer  # Temp
+# from temp_viewer import viewer  # Temp
 
 
 class PropulsionPerformanceBuilder:
@@ -670,6 +670,7 @@ if __name__ == "__main__":
 
     prob, flight_env = HBTFprep(prob, ADHInstance)
     om.n2(prob)
+    """
 
     viewer_file = open("hbtf_view.out", "w")
     first_pass = True
@@ -701,3 +702,4 @@ if __name__ == "__main__":
         for PC in [1, 0.85]:
             prob["OD_part_pwr.PC"] = PC
             prob.run_model()
+    """
