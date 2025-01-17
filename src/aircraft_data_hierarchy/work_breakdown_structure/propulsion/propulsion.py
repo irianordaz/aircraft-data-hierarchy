@@ -11,7 +11,7 @@ from aircraft_data_hierarchy.behaviorLib.propulsion.propulsion_cycle_behavior im
 from aircraft_data_hierarchy.performanceLib.propulsion.propulsion_cycle_performance import PropulsionCyclePerformance
 
 
-class Propulsion(CommonBaseModel):
+class PropulsionArchitecture(CommonBaseModel):
     """
     Represents the propulsion system within an air vehicle system, detailing its specifications, functionalities, and interrelations.
 

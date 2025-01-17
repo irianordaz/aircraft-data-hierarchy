@@ -21,7 +21,7 @@ from typing import Optional
 
 from ..common_base_model import CommonBaseModel, Metadata
 from .airframe.airframe import Component
-#from .propulsion.propulsion import propulsion
+from .propulsion.propulsion import PropulsionArchitecture
 #from .systems.systems import system
 #from .equipment import * # Currently a local file
 
@@ -1375,7 +1375,7 @@ class AircraftSystem(CommonBaseModel):
 
         class Propulsion(CommonBaseModel):
             wbs_no: Optional[str] = Field('1.2.3')
-
+            
             @field_validator('wbs_no')
             def validate_wbs_no(cls, value: str) -> str:
                 if not value.startswith('1.'):
@@ -1386,7 +1386,7 @@ class AircraftSystem(CommonBaseModel):
                 validate_assignment = True
                 extra = 'allow'
 
-            class Engine(CommonBaseModel):
+            class Engine(PropulsionArchitecture):
                 wbs_no: Optional[str] = Field('1.2.3.1')
 
                 @field_validator('wbs_no')
