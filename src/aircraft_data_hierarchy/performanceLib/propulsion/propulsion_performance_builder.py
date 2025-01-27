@@ -29,8 +29,6 @@ from aircraft_data_hierarchy.performanceLib.propulsion.propulsion_cycle_performa
 from aircraft_data_hierarchy.performanceLib.propulsion.hbtf_builder import HBTFBuilder, MPhbtfBuilder
 import openmdao.api as om
 
-# from temp_viewer import viewer  # Temp
-
 
 class PropulsionPerformanceBuilder:
     """A builder class intended to take an ADH instance from pydantic as input and then automatically run an analysis or optimization using the desired tool of choice.
@@ -476,8 +474,8 @@ if __name__ == "__main__":
     byp_bld = Bleed(name="byp_bld", bleed_names=["bypBld"])
     duct15 = Duct(name="duct15")
     byp_nozz = Nozzle(name="byp_nozz", nozz_type="CV", loss_coef="Cv")
-    lp_shaft = Shaft(name="lp_shaft", num_ports=3)
-    hp_shaft = Shaft(name="hp_shaft", num_ports=2)
+    lp_shaft = Shaft(name="lp_shaft", nmech_type="LP", num_ports=3)
+    hp_shaft = Shaft(name="hp_shaft", nmech_type="HP", num_ports=2)
 
     perf = Performance(
         name="perf",
@@ -502,8 +500,13 @@ if __name__ == "__main__":
     lpc.mn = 0.3059
     hpc.mn = 0.2442
     hpc.frac_W = [0.050708, 0.020274, 0.5]
-    hpc.frac_P = [0.020274, 0.55, 0.5]
+    hpc.frac_P = [0.5, 0.55, 0.5]
     hpc.frac_work = [0.5, 0.5, 0.0445]
+
+    # Splitter
+    splitter.bpr = 5.105
+    splitter.mn1 = 0.3104
+    splitter.mn2 = 0.4518
 
     # Ducts
     duct4.mn = 0.3121
@@ -522,7 +525,7 @@ if __name__ == "__main__":
     bld3.mn = 0.300
     byp_bld.mn = 0.4489
 
-    bld3.frac_W = [0.067214, 0.101]
+    bld3.frac_W = [0.067214, 0.101256]
     byp_bld.frac_W = [0.005]
 
     # Combs
@@ -578,7 +581,7 @@ if __name__ == "__main__":
             lp_shaft,
             hp_shaft,
         ],
-        global_connections=["fan, lp_shaft", "lpc,lp_shaft", "lpt,lp_shaft", "hpc,hp_shaft", "hpt,hp_shaft"],
+        global_connections=["fan,lp_shaft", "lpc,lp_shaft", "lpt,lp_shaft", "hpc,hp_shaft", "hpt,hp_shaft"],
         flow_connections=[
             ["fc", "inlet"],
             ["inlet", "fan"],
@@ -670,36 +673,34 @@ if __name__ == "__main__":
 
     prob, flight_env = HBTFprep(prob, ADHInstance)
     om.n2(prob)
-    """
 
-    viewer_file = open("hbtf_view.out", "w")
-    first_pass = True
-    for MN, alt in flight_env:
+    # # viewer_file = open("hbtf_view.out", "w")
+    # first_pass = True
+    # for MN, alt in flight_env:
 
-        # NOTE: You never change the MN,alt for the
-        # design point because that is a fixed reference condition.
+    #     # NOTE: You never change the MN,alt for the
+    #     # design point because that is a fixed reference condition.
 
-        print("***" * 10)
-        print(f"* MN: {MN}, alt: {alt}")
-        print("***" * 10)
-        prob["OD_full_pwr.fc.MN"] = MN
-        prob["OD_full_pwr.fc.alt"] = alt
+    #     print("***" * 10)
+    #     print(f"* MN: {MN}, alt: {alt}")
+    #     print("***" * 10)
+    #     prob["OD_full_pwr.fc.MN"] = MN
+    #     prob["OD_full_pwr.fc.alt"] = alt
 
-        prob["OD_part_pwr.fc.MN"] = MN
-        prob["OD_part_pwr.fc.alt"] = alt
+    #     prob["OD_part_pwr.fc.MN"] = MN
+    #     prob["OD_part_pwr.fc.alt"] = alt
 
-        for PC in ADHInstance.cycle.od_points[1].PC:
-            print(f"## PC = {PC}")
-            prob["OD_part_pwr.PC"] = PC
-            prob.run_model()
+    #     for PC in ADHInstance.cycle.od_points[1].PC:
+    #         print(f"## PC = {PC}")
+    #         prob["OD_part_pwr.PC"] = PC
+    #         prob.run_model()
 
-            if first_pass:
-                viewer(prob, "DESIGN", file=viewer_file)
-                first_pass = False
-            viewer(prob, "OD_part_pwr", file=viewer_file)
+    #         if first_pass:
+    #             # viewer(prob, "DESIGN", file=viewer_file)
+    #             first_pass = False
+    #         # viewer(prob, "OD_part_pwr", file=viewer_file)
 
-        # run throttle back up to full power
-        for PC in [1, 0.85]:
-            prob["OD_part_pwr.PC"] = PC
-            prob.run_model()
-    """
+    #     # run throttle back up to full power
+    #     for PC in [1, 0.85]:
+    #         prob["OD_part_pwr.PC"] = PC
+    #         prob.run_model()

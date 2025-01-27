@@ -174,8 +174,8 @@ class HBTFBuilder(pyc.Cycle):
                 # print(comp["name"])
                 # print(i)
                 if "{},{}".format(comp["name"], shaft["name"]) in gc:
-                    # print("{},{} Found in GC".format(comp["name"],shaft["name"]))
-                    # print('{}.trq to {}.trq_{} CONNECTED'.format(comp["name"],shaft["name"],str(i)))
+                    print("{},{} Found in GC".format(comp["name"], shaft["name"]))
+                    print("{}.trq to {}.trq_{} CONNECTED".format(comp["name"], shaft["name"], str(i)))
                     self.connect("{}.trq".format(comp["name"]), "{}.trq_{}".format(shaft["name"], str(i)))
                     i += 1
 
@@ -228,9 +228,8 @@ class HBTFBuilder(pyc.Cycle):
 
         # Connect turbo machinery to shafts
         self.connect_compturb_to_shafts(
-            cycleData["comp"], cycleData["shafts"], cycleData["cycleInfo"]["global_connections"]
+            cycleData["comp"] + cycleData["turb"], cycleData["shafts"], cycleData["cycleInfo"]["global_connections"]
         )
-
         # Ideally expanding flow by conneting flight condition static pressure to nozzle exhaust pressure
         self.connect_nozz_to_fc(cycleData["nozz"], cycleData["fc"])
 
@@ -403,6 +402,8 @@ class MPhbtfBuilder(pyc.MPCycle):
         for inlet in cycleData["inlets"]:
             self.set_input_defaults("DESIGN." + inlet["name"] + ".MN", inlet["mn"])  # inlet: 0.751
             self.pyc_add_cycle_param(inlet["name"] + ".ram_recovery", inlet["ram_recovery"])  # inlet: 0.9990
+            print("DESIGN." + inlet["name"] + ".MN" + "" + str(inlet["mn"]))
+            print(inlet["name"] + ".ram_recovery" + "" + str(inlet["ram_recovery"]))
 
         for comp in cycleData["comp"]:
             self.set_input_defaults(
@@ -413,6 +414,10 @@ class MPhbtfBuilder(pyc.MPCycle):
                 self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_W", comp["frac_W"][i])
                 self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_P", comp["frac_P"][i])
                 self.pyc_add_cycle_param(comp["name"] + "." + bn + ":frac_work", comp["frac_work"][i])
+
+                print(comp["name"] + "." + bn + ":frac_W" + "" + str(comp["frac_W"][i]))
+                print(comp["name"] + "." + bn + ":frac_P" + "" + str(comp["frac_P"][i]))
+                print(comp["name"] + "." + bn + ":frac_work" + "" + str(comp["frac_work"][i]))
 
                 # hpc cool 1 0.050708
                 # 0.5
@@ -431,17 +436,26 @@ class MPhbtfBuilder(pyc.MPCycle):
             self.set_input_defaults("DESIGN." + splitter["name"] + ".MN1", splitter["mn1"])  # splitter: 0.3104
             self.set_input_defaults("DESIGN." + splitter["name"] + ".MN2", splitter["mn2"])  # splitter: 0.4518
 
+            print("DESIGN." + splitter["name"] + ".BPR" + "" + str(splitter["bpr"]))
+            print("DESIGN." + splitter["name"] + ".MN1" + "" + str(splitter["mn1"]))
+            print("DESIGN." + splitter["name"] + ".MN2" + "" + str(splitter["mn2"]))
+
         for duct in cycleData["duct"]:
             self.set_input_defaults("DESIGN." + duct["name"] + ".MN", duct["mn"])
             # duct4: 0.3121, #duct6: 0.3563 #duct 11: 0.3063 #duct13: 0.4463 #duct15: 0.4589
             self.pyc_add_cycle_param(duct["name"] + ".dPqP", duct["dPqP"])
             # duct4: 0.0048 # duct6: 0.0101 # duct11 0.0051 # duct13: 0.0107 # duct15: 0.0149
 
+            print("DESIGN." + duct["name"] + ".MN" + "" + str(duct["mn"]))
+            print(duct["name"] + ".dPqP" + "" + str(duct["dPqP"]))
+
         for bleed in cycleData["bleeds"]:
             self.set_input_defaults("DESIGN." + bleed["name"] + ".MN", bleed["mn"])  # bld3: 0.300 #byp_bld: 0.4489
+            print("DESIGN." + bleed["name"] + ".MN" + "" + str(bleed["mn"]))
 
             for i, bn in enumerate(bleed["bleed_names"]):
                 self.pyc_add_cycle_param(bleed["name"] + "." + bn + ":frac_W", bleed["frac_W"][i])
+                print(bleed["name"] + "." + bn + ":frac_W" + "" + str(bleed["frac_W"][i]))
                 # byp_bld.bpyBld 0.005
                 # bld.cool3 0.067214
                 # bld3.cool4 0.101
@@ -453,15 +467,23 @@ class MPhbtfBuilder(pyc.MPCycle):
             self.set_input_defaults("DESIGN." + comb["name"] + ".MN", comb["mn"])  # burner: 0.1025
             self.pyc_add_cycle_param(comb["name"] + ".dPqP", comb["dp_qp"])  # burner: 0.0540
 
+            print("DESIGN." + comb["name"] + ".MN" + "" + str(comb["mn"]))
+            print(comb["name"] + ".dPqP" + "" + str(comb["dp_qp"]))
+
         for turb in cycleData["turb"]:
             self.set_input_defaults("DESIGN." + turb["name"] + ".MN", turb["mn"])  # hpt: 0.3650 lpt: 0.4127
+            print("DESIGN." + turb["name"] + ".MN" + "" + str(turb["mn"]))
 
             for i, bn in enumerate(turb["bleed_names"]):
                 self.pyc_add_cycle_param(turb["name"] + "." + bn + ":frac_P", turb["frac_P"][i])
+
+                print(turb["name"] + "." + bn + ":frac_P" + "" + str(turb["frac_P"][i]))
                 # hpt cool 3 1.0 # hpt cool4 0.0 #lpt cool1 1.0 #lpt cool2 0.0
 
         for nozz in cycleData["nozz"]:
             self.pyc_add_cycle_param(nozz["name"] + ".Cv", nozz["cv"])  # core_nozz: 0.9933 # byp_nozz: 0.9939
+
+            print(nozz["name"] + ".Cv" + "" + str(nozz["cv"]))
 
         # TODO
         self.set_input_defaults("DESIGN.LP_Nmech", 4666.1, units="rpm")
