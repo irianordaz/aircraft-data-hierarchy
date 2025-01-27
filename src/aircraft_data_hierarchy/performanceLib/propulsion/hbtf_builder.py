@@ -174,8 +174,8 @@ class HBTFBuilder(pyc.Cycle):
                 # print(comp["name"])
                 # print(i)
                 if "{},{}".format(comp["name"], shaft["name"]) in gc:
-                    print("{},{} Found in GC".format(comp["name"], shaft["name"]))
-                    print("{}.trq to {}.trq_{} CONNECTED".format(comp["name"], shaft["name"], str(i)))
+                    # print("{},{} Found in GC".format(comp["name"], shaft["name"]))
+                    # print("{}.trq to {}.trq_{} CONNECTED".format(comp["name"], shaft["name"], str(i)))
                     self.connect("{}.trq".format(comp["name"]), "{}.trq_{}".format(shaft["name"], str(i)))
                     i += 1
 
@@ -532,6 +532,9 @@ class MPhbtfBuilder(pyc.MPCycle):
                 od_pt["d_ts"][0],
                 units="degR",
             )
+            print(od_pt["name"] + "." + "fc" + ".MN" + str(od_pt["mn"][0]))
+            print(od_pt["name"] + "." + "fc" + ".alt" + str(od_pt["alt"][0]))
+            print(od_pt["name"] + "." + "fc" + ".dTs" + str(od_pt["d_ts"][0]))
 
         self.connect("OD_full_pwr.perf.Fn", "OD_part_pwr.Fn_max")  # TODO
 
