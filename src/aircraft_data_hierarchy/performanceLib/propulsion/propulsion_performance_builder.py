@@ -515,9 +515,9 @@ if __name__ == "__main__":
     # Comps
     lpc.mn = 0.3059
     hpc.mn = 0.2442
-    hpc.frac_W = [0.050708, 0.020274, 0.5]
+    hpc.frac_W = [0.050708, 0.020274, 0.0445]
     hpc.frac_P = [0.5, 0.55, 0.5]
-    hpc.frac_work = [0.5, 0.5, 0.0445]
+    hpc.frac_work = [0.5, 0.5, 0.5]
 
     # Splitter
     splitter.bpr = 5.105
@@ -684,15 +684,12 @@ if __name__ == "__main__":
 
     prob.setup()
 
-
-
     # USER SCRIPT FOR RUNNING ANALYSIS BELOW THIS LINE
     # -----------------------------------------------
     prob, flight_env = HBTFprep(prob, ADHInstance)
     om.n2(prob, show_browser=False)
     prob.set_solver_print(level=-1)
     prob.set_solver_print(level=2, depth=1)
-    
 
     viewer_file = open("hbtf_view.out", "w")
     first_pass = True
