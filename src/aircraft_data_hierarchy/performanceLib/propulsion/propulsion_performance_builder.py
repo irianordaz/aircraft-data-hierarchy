@@ -422,14 +422,14 @@ def HBTFprep(prob, ADHInstance):
     prob.set_val("DESIGN.fc.alt", behavior.flight_conditions_design.alt[0], units="ft")
     prob.set_val("DESIGN.fc.MN", behavior.flight_conditions_design.mn[0])
 
-    print(behavior.flight_conditions_design.alt)
-    print(behavior.flight_conditions_design.mn)
+    print(behavior.flight_conditions_design.alt[0])
+    print(behavior.flight_conditions_design.mn[0])
 
     prob.set_val("DESIGN.T4_MAX", 2857, units="degR")
     prob.set_val("DESIGN.Fn_DES", 5900.0, units="lbf")  # TODO
 
-    prob.set_val("OD_full_pwr.T4_MAX", 2857, units="degR")  # TODO
-    prob.set_val("OD_part_pwr.PC", 0.8)
+    # prob.set_val("OD_full_pwr.T4_MAX", 2857, units="degR")  # TODO
+    # prob.set_val("OD_part_pwr.PC", 0.8)
 
     # Set initial guesses for balances
     prob["DESIGN.balance.FAR"] = 0.025
@@ -439,21 +439,21 @@ def HBTFprep(prob, ADHInstance):
     prob["DESIGN.fc.balance.Pt"] = 5.2
     prob["DESIGN.fc.balance.Tt"] = 440.0
 
-    for pt in ADHInstance.cycle.od_points:
+    # for pt in ADHInstance.cycle.od_points:
 
-        print(pt.name)
+    #     print(pt.name)
 
-        # initial guesses
-        prob[pt.name + ".balance.FAR"] = 0.02467
-        prob[pt.name + ".balance.W"] = 300
-        prob[pt.name + ".balance.BPR"] = 5.105
-        prob[pt.name + ".balance.lp_Nmech"] = 5000
-        prob[pt.name + ".balance.hp_Nmech"] = 15000
-        prob[pt.name + ".hpt.PR"] = 3.0
-        prob[pt.name + ".lpt.PR"] = 4.0
-        prob[pt.name + ".fan.map.RlineMap"] = 2.0
-        prob[pt.name + ".lpc.map.RlineMap"] = 2.0
-        prob[pt.name + ".hpc.map.RlineMap"] = 2.0
+    #     # initial guesses
+    #     prob[pt.name + ".balance.FAR"] = 0.02467
+    #     prob[pt.name + ".balance.W"] = 300
+    #     prob[pt.name + ".balance.BPR"] = 5.105
+    #     prob[pt.name + ".balance.lp_Nmech"] = 5000
+    #     prob[pt.name + ".balance.hp_Nmech"] = 15000
+    #     prob[pt.name + ".hpt.PR"] = 3.0
+    #     prob[pt.name + ".lpt.PR"] = 4.0
+    #     prob[pt.name + ".fan.map.RlineMap"] = 2.0
+    #     prob[pt.name + ".lpc.map.RlineMap"] = 2.0
+    #     prob[pt.name + ".hpc.map.RlineMap"] = 2.0
 
     ODpoints = ADHInstance.cycle.od_points
     machs = ODpoints[0].flight_conditions_od.mn
@@ -481,10 +481,10 @@ if __name__ == "__main__":
     duct6 = Duct(name="duct6")
     hpc = Compressor(name="hpc", map_data="HPCMap", bleed_names=["cool1", "cool2", "cust"], map_extrap=True)
     bld3 = Bleed(name="bld3", bleed_names=["cool3", "cool4"])
-    burner = Combustor(name="burner", fuel_type="FAR")
+    burner = Combustor(name="burner", fuel_type="Jet-A(g)")
     hpt = Turbine(name="hpt", map_data="HPTMap", bleed_names=["cool3", "cool4"], map_extrap=True)
     duct11 = Duct(name="duct11")
-    lpt = Turbine(name="lpt", bleed_names=["cool1", "cool2"], map_extrap=True)
+    lpt = Turbine(name="lpt", map_data="LPTMap", bleed_names=["cool1", "cool2"], map_extrap=True)
     duct13 = Duct(name="duct13")
     core_nozz = Nozzle(name="core_nozz", nozz_type="CV", loss_coef="Cv")
     byp_bld = Bleed(name="byp_bld", bleed_names=["bypBld"])
@@ -621,7 +621,7 @@ if __name__ == "__main__":
 
     cyclePerformance = PropulsionCyclePerformance(
         name="CyclePerformance",
-        thermo_method="TABULAR",
+        thermo_method="CEA",
         throttle_mode="T4",
     )
 
@@ -687,8 +687,10 @@ if __name__ == "__main__":
     prob.set_solver_print(level=-1)
     prob.set_solver_print(level=2, depth=1)
 
+    # USER SCRIPT FOR RUNNING ANALYSIS BELOW THIS LINE
+    # -----------------------------------------------
     prob, flight_env = HBTFprep(prob, ADHInstance)
-    om.n2(prob)
+    om.n2(prob, show_browser=False)
 
     # viewer_file = open("hbtf_view.out", "w")
     first_pass = True
@@ -700,15 +702,15 @@ if __name__ == "__main__":
         print("***" * 10)
         print(f"* MN: {MN}, alt: {alt}")
         print("***" * 10)
-        prob["OD_full_pwr.fc.MN"] = MN
-        prob["OD_full_pwr.fc.alt"] = alt
+        # prob["OD_full_pwr.fc.MN"] = MN
+        # prob["OD_full_pwr.fc.alt"] = alt
 
-        prob["OD_part_pwr.fc.MN"] = MN
-        prob["OD_part_pwr.fc.alt"] = alt
+        # prob["OD_part_pwr.fc.MN"] = MN
+        # prob["OD_part_pwr.fc.alt"] = alt
 
         for PC in ADHInstance.cycle.od_points[1].PC:
             print(f"## PC = {PC}")
-            prob["OD_part_pwr.PC"] = PC
+            # prob["OD_part_pwr.PC"] = PC
             prob.run_model()
 
             if first_pass:
@@ -721,3 +723,12 @@ if __name__ == "__main__":
         for PC in [1, 0.85]:
             prob["OD_part_pwr.PC"] = PC
             prob.run_model()
+
+    outputs = prob.model.list_outputs(
+        out_stream=None, residuals_tol=1e-2, implicit=True, explicit=False, residuals=True
+    )
+
+    from pprint import pprint
+
+    with open("output.txt", "w") as f:
+        pprint(outputs, stream=f)
