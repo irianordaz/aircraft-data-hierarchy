@@ -267,7 +267,7 @@ class FlightConditions(CommonBaseModel):
     name: str = Field(..., description="The name of the flight condition.")
     mn: Optional[List[float]] = Field(None, description="Mach number")
     alt: Optional[List[float]] = Field(None, description="Altitude in feet")
-    d_ts: Optional[List[float]] = Field(None, description="Temperature deviation in degrees Rankine")
+    d_ts: Optional[float] = Field(None, description="Temperature deviation in degrees Rankine")
     W: Optional[List[float]] = Field(None, description="Air mass flow rate")
 
 
@@ -339,6 +339,7 @@ class MultiPointCycle(CommonBaseModel):
         None, description="The sequence of points in the multi-point cycle analysis."
     )
 
+
 class EngineDeckData(DataPoint):
     """
     Contains ADH engine deck values.
@@ -370,6 +371,7 @@ class EngineDeckData(DataPoint):
     fuel_flow: Optional[float] = Field(None, description="Fuel Flow (lb/h)")
     nox_rate: Optional[float] = Field(None, description="NOx Rate (lb/h)")
 
+
 class EngineDeckCompiled(UngriddedTableDef):
     """
     Assigns ADH Deck values into ungridded table format.
@@ -382,4 +384,3 @@ class EngineDeckCompiled(UngriddedTableDef):
     flight_cond: Optional[List[EngineDeckData]] = Field(
         None, description="The list of the engine deck values for a flight condition."
     )
-
