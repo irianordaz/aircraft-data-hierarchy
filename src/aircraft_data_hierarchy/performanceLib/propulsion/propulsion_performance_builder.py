@@ -682,17 +682,19 @@ if __name__ == "__main__":
     prob = om.Problem()
     prob.model = pycTest.getOutput()
 
-    prob.setup(check=True)
+    prob.setup()
 
-    prob.set_solver_print(level=-1)
-    prob.set_solver_print(level=2, depth=1)
+
 
     # USER SCRIPT FOR RUNNING ANALYSIS BELOW THIS LINE
     # -----------------------------------------------
     prob, flight_env = HBTFprep(prob, ADHInstance)
     om.n2(prob, show_browser=False)
+    prob.set_solver_print(level=-1)
+    prob.set_solver_print(level=2, depth=1)
+    
 
-    # viewer_file = open("hbtf_view.out", "w")
+    viewer_file = open("hbtf_view.out", "w")
     first_pass = True
     for MN, alt in flight_env:
 

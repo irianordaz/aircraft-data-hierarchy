@@ -194,6 +194,9 @@ class HBTFBuilder(pyc.Cycle):
         # Go through each bleed, find its components, then connect it in the model
         for bn in bleedNames:
             cWB = [key for key, values in bleedPairs.items() if bn in values]
+            # print('BLEED MARKER')
+            # print(bn)
+            # print(cWB)
             if len(cWB) > 1:
                 self.pyc_connect_flow("{}.{}".format(cWB[0], bn), "{}.{}".format(cWB[1], bn), connect_stat=False)
                 print("{}.{}".format(cWB[0], bn) + "{}.{}".format(cWB[1], bn))
@@ -250,7 +253,7 @@ class HBTFBuilder(pyc.Cycle):
         print(self.options["thermo_data"])
         # Add all the engine components from the ADH using helper functions
 
-        # self.add_flightconditions(cycleData["fc"])
+        #self.add_flightconditions(cycleData["fc"])
         self.add_flightcondition()
         self.add_inlets(cycleData["inlets"])
         self.add_compressors(cycleData["comp"])
@@ -262,8 +265,10 @@ class HBTFBuilder(pyc.Cycle):
         self.add_nozzles(cycleData["nozz"])
         self.add_shafts(cycleData["shafts"])
 
+
         # Add and connect the performance component
         self.add_perfomance(cycleData)
+
 
         # Connect turbo machinery to shafts
         self.connect_compturb_to_shafts(
@@ -271,8 +276,9 @@ class HBTFBuilder(pyc.Cycle):
         )
         # Ideally expanding flow by conneting flight condition static pressure to nozzle exhaust pressure
         self.connect_nozz_to_fc(cycleData["nozz"], cycleData["fc"])
+   
 
-        # Create a balance component
+        #Create a balance component
         # Balances can be a bit confusing, here's some explanation -
         #   State Variables:
         #           (W)        Inlet mass flow rate to implictly balance thrust
@@ -286,36 +292,38 @@ class HBTFBuilder(pyc.Cycle):
         # Ref: look at the XDSM diagrams in the pyCycle paper and this:
         # http://openmdao.org/twodocs/versions/latest/features/building_blocks/components/balance_comp.html
 
-        balance = self.add_subsystem("balance", om.BalanceComp())
+        balance = self.add_subsystem('balance', om.BalanceComp())
         if design:
-            balance.add_balance("W", units="lbm/s", eq_units="lbf")
-            # Here balance.W is implicit state variable that is the OUTPUT of balance object
-            self.connect("balance.W", "fc.W")  # Connect the output of balance to the relevant input
-            self.connect("perf.Fn", "balance.lhs:W")  # This statement makes perf.Fn the LHS of the balance eqn.
-            self.promotes("balance", inputs=[("rhs:W", "Fn_DES")])
+            balance.add_balance('W', units='lbm/s', eq_units='lbf')
+            #Here balance.W is implicit state variable that is the OUTPUT of balance object
+            self.connect('balance.W', 'fc.W') #Connect the output of balance to the relevant input
+            self.connect('perf.Fn', 'balance.lhs:W')       #This statement makes perf.Fn the LHS of the balance eqn.
+            self.promotes('balance', inputs=[('rhs:W', 'Fn_DES')])
 
-            balance.add_balance("FAR", eq_units="degR", lower=1e-4, val=0.017)
-            self.connect("balance.FAR", "burner.Fl_I:FAR")
-            self.connect("burner.Fl_O:tot:T", "balance.lhs:FAR")
-            self.promotes("balance", inputs=[("rhs:FAR", "T4_MAX")])
-
+            balance.add_balance('FAR', eq_units='degR', lower=1e-4, val=.017)
+            self.connect('balance.FAR', 'burner.Fl_I:FAR')
+            self.connect('burner.Fl_O:tot:T', 'balance.lhs:FAR')
+            self.promotes('balance', inputs=[('rhs:FAR', 'T4_MAX')])
+            
             # Note that for the following two balances the mult val is set to -1 so that the NET torque is zero
-            balance.add_balance("lpt_PR", val=1.5, lower=1.001, upper=8, eq_units="hp", use_mult=True, mult_val=-1)
-            self.connect("balance.lpt_PR", "lpt.PR")
-            self.connect("lp_shaft.pwr_in_real", "balance.lhs:lpt_PR")
-            self.connect("lp_shaft.pwr_out_real", "balance.rhs:lpt_PR")
+            balance.add_balance('lpt_PR', val=1.5, lower=1.001, upper=8,
+                                eq_units='hp', use_mult=True, mult_val=-1)
+            self.connect('balance.lpt_PR', 'lpt.PR')
+            self.connect('lp_shaft.pwr_in_real', 'balance.lhs:lpt_PR')
+            self.connect('lp_shaft.pwr_out_real', 'balance.rhs:lpt_PR')
 
-            balance.add_balance("hpt_PR", val=1.5, lower=1.001, upper=8, eq_units="hp", use_mult=True, mult_val=-1)
-            self.connect("balance.hpt_PR", "hpt.PR")
-            self.connect("hp_shaft.pwr_in_real", "balance.lhs:hpt_PR")
-            self.connect("hp_shaft.pwr_out_real", "balance.rhs:hpt_PR")
+            balance.add_balance('hpt_PR', val=1.5, lower=1.001, upper=8,
+                                eq_units='hp', use_mult=True, mult_val=-1)
+            self.connect('balance.hpt_PR', 'hpt.PR')
+            self.connect('hp_shaft.pwr_in_real', 'balance.lhs:hpt_PR')
+            self.connect('hp_shaft.pwr_out_real', 'balance.rhs:hpt_PR')
 
         else:
-
-            # In OFF-DESIGN mode we need to redefine the balances:
+            
+            #In OFF-DESIGN mode we need to redefine the balances:
             #   State Variables:
             #           (W)        Inlet mass flow rate to balance core flow area
-            #                      LHS: core_nozz.Throat:stat:area == Area from DESIGN calculation
+            #                      LHS: core_nozz.Throat:stat:area == Area from DESIGN calculation 
             #
             #           (FAR)      Fuel-air ratio to balance Thrust req.
             #                      LHS: perf.Fn  == RHS: Thrust requirement (set when TF is instantiated)
@@ -326,46 +334,43 @@ class HBTFBuilder(pyc.Cycle):
             #           (lp_Nmech)   LP spool speed to balance shaft power on the low spool
             #           (hp_Nmech)   HP spool speed to balance shaft power on the high spool
 
-            if self.options["throttle_mode"] == "T4":
-                balance.add_balance("FAR", val=0.017, lower=1e-4, eq_units="degR")
-                self.connect("balance.FAR", "burner.Fl_I:FAR")
-                self.connect("burner.Fl_O:tot:T", "balance.lhs:FAR")
-                self.promotes("balance", inputs=[("rhs:FAR", "T4_MAX")])
+            if self.options['throttle_mode'] == 'T4': 
+                balance.add_balance('FAR', val=0.017, lower=1e-4, eq_units='degR')
+                self.connect('balance.FAR', 'burner.Fl_I:FAR')
+                self.connect('burner.Fl_O:tot:T', 'balance.lhs:FAR')
+                self.promotes('balance', inputs=[('rhs:FAR', 'T4_MAX')])
 
-            elif self.options["throttle_mode"] == "percent_thrust":
-                balance.add_balance("FAR", val=0.017, lower=1e-4, eq_units="lbf", use_mult=True)
-                self.connect("balance.FAR", "burner.Fl_I:FAR")
-                self.connect("perf.Fn", "balance.rhs:FAR")
-                self.promotes("balance", inputs=[("mult:FAR", "PC"), ("lhs:FAR", "Fn_max")])
+            elif self.options['throttle_mode'] == 'percent_thrust': 
+                balance.add_balance('FAR', val=0.017, lower=1e-4, eq_units='lbf', use_mult=True)
+                self.connect('balance.FAR', 'burner.Fl_I:FAR')
+                self.connect('perf.Fn', 'balance.rhs:FAR')
+                self.promotes('balance', inputs=[('mult:FAR', 'PC'), ('lhs:FAR', 'Fn_max')])
 
-            balance.add_balance("W", units="lbm/s", lower=10.0, upper=1000.0, eq_units="inch**2")
-            self.connect("balance.W", "fc.W")
-            self.connect("core_nozz.Throat:stat:area", "balance.lhs:W")
 
-            balance.add_balance("BPR", lower=2.0, upper=10.0, eq_units="inch**2")
-            self.connect("balance.BPR", "splitter.BPR")
-            self.connect("byp_nozz.Throat:stat:area", "balance.lhs:BPR")
+            balance.add_balance('W', units='lbm/s', lower=10., upper=1000., eq_units='inch**2')
+            self.connect('balance.W', 'fc.W')
+            self.connect('core_nozz.Throat:stat:area', 'balance.lhs:W')
+
+            balance.add_balance('BPR', lower=2., upper=10., eq_units='inch**2')
+            self.connect('balance.BPR', 'splitter.BPR')
+            self.connect('byp_nozz.Throat:stat:area', 'balance.lhs:BPR')
 
             # Again for the following two balances the mult val is set to -1 so that the NET torque is zero
-            balance.add_balance(
-                "lp_Nmech", val=1.5, units="rpm", lower=500.0, eq_units="hp", use_mult=True, mult_val=-1
-            )
-            self.connect("balance.lp_Nmech", "LP_Nmech")
-            self.connect("lp_shaft.pwr_in_real", "balance.lhs:lp_Nmech")
-            self.connect("lp_shaft.pwr_out_real", "balance.rhs:lp_Nmech")
+            balance.add_balance('lp_Nmech', val=1.5, units='rpm', lower=500., eq_units='hp', use_mult=True, mult_val=-1)
+            self.connect('balance.lp_Nmech', 'LP_Nmech')
+            self.connect('lp_shaft.pwr_in_real', 'balance.lhs:lp_Nmech')
+            self.connect('lp_shaft.pwr_out_real', 'balance.rhs:lp_Nmech')
 
-            balance.add_balance(
-                "hp_Nmech", val=1.5, units="rpm", lower=500.0, eq_units="hp", use_mult=True, mult_val=-1
-            )
-            self.connect("balance.hp_Nmech", "HP_Nmech")
-            self.connect("hp_shaft.pwr_in_real", "balance.lhs:hp_Nmech")
-            self.connect("hp_shaft.pwr_out_real", "balance.rhs:hp_Nmech")
+            balance.add_balance('hp_Nmech', val=1.5, units='rpm', lower=500., eq_units='hp', use_mult=True, mult_val=-1)
+            self.connect('balance.hp_Nmech', 'HP_Nmech')
+            self.connect('hp_shaft.pwr_in_real', 'balance.lhs:hp_Nmech')
+            self.connect('hp_shaft.pwr_out_real', 'balance.rhs:hp_Nmech')
 
             # Specify the order in which the subsystems are executed:
 
         self.set_order(
             [
-                # "balance",
+                #"balance",
                 "fc",
                 "inlet",
                 "fan",
@@ -396,6 +401,7 @@ class HBTFBuilder(pyc.Cycle):
 
         # Connect bleed flows:
         self.connect_bleeds(cycleData)
+
 
         # TODO: Specify solver settings which are hardcoded for now:
         newton = self.nonlinear_solver = om.NewtonSolver()
