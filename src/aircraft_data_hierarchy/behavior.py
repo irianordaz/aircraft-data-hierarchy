@@ -516,7 +516,7 @@ class Function(CommonBaseModel):
         return v
 
 
-class Function(BaseModel):
+"""class Function(BaseModel):
     name: str
     description: Optional[str] = None
     simple_representation: Union[DependentVarRef, None] = Field(None, alias="dependent_var_ref")
@@ -527,7 +527,7 @@ class Function(BaseModel):
         if v is not None and "simple_representation" in values and "complex_representation" in values:
             if values["simple_representation"] is not None and values["complex_representation"] is not None:
                 raise ValueError("Function can't have both simple and complex representations")
-        return v
+        return v"""
 
 
 class IndependentVarPts(CommonBaseModel):
