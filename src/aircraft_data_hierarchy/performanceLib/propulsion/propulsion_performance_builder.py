@@ -29,8 +29,6 @@ from aircraft_data_hierarchy.performanceLib.propulsion.propulsion_cycle_performa
 from aircraft_data_hierarchy.performanceLib.propulsion.hbtf_builder import HBTFBuilder, MPhbtfBuilder
 import openmdao.api as om
 
-# from temp_viewer import viewer  # Temp
-
 
 class PropulsionPerformanceBuilder:
     """A builder class intended to take an ADH instance from pydantic as input and then automatically run an analysis or optimization using the desired tool of choice.
@@ -412,8 +410,20 @@ def HBTFprep(prob, ADHInstance):
     prob.set_val("DESIGN.hpt.eff", cycle.elements[9].eff_des)
     prob.set_val("DESIGN.lpt.eff", cycle.elements[11].eff_des)
 
-    prob.set_val("DESIGN.fc.alt", behavior.flight_conditions_design.alt, units="ft")
-    prob.set_val("DESIGN.fc.MN", behavior.flight_conditions_design.mn)
+    # print(cycle.elements[1].pr_des)
+    # print(cycle.elements[1].eff_des)
+    # print(cycle.elements[4].pr_des)
+    # print(cycle.elements[4].eff_des)
+    # print(cycle.elements[6].pr_des)
+    # print(cycle.elements[6].eff_des)
+    # print(cycle.elements[9].eff_des)
+    # print(cycle.elements[11].eff_des)
+
+    prob.set_val("DESIGN.fc.alt", behavior.flight_conditions_design.alt[0], units="ft")
+    prob.set_val("DESIGN.fc.MN", behavior.flight_conditions_design.mn[0])
+
+    # print(behavior.flight_conditions_design.alt[0])
+    # print(behavior.flight_conditions_design.mn[0])
 
     prob.set_val("DESIGN.T4_MAX", 2857, units="degR")
     prob.set_val("DESIGN.Fn_DES", 5900.0, units="lbf")  # TODO
@@ -430,6 +440,8 @@ def HBTFprep(prob, ADHInstance):
     prob["DESIGN.fc.balance.Tt"] = 440.0
 
     for pt in ADHInstance.cycle.od_points:
+
+        print(pt.name)
 
         # initial guesses
         prob[pt.name + ".balance.FAR"] = 0.02467
@@ -449,6 +461,8 @@ def HBTFprep(prob, ADHInstance):
 
     flight_env = list(zip(machs, alts))
 
+    print(flight_env)
+
     return prob, flight_env
 
 
@@ -467,17 +481,17 @@ if __name__ == "__main__":
     duct6 = Duct(name="duct6")
     hpc = Compressor(name="hpc", map_data="HPCMap", bleed_names=["cool1", "cool2", "cust"], map_extrap=True)
     bld3 = Bleed(name="bld3", bleed_names=["cool3", "cool4"])
-    burner = Combustor(name="burner", fuel_type="FAR")
+    burner = Combustor(name="burner", fuel_type="Jet-A(g)")
     hpt = Turbine(name="hpt", map_data="HPTMap", bleed_names=["cool3", "cool4"], map_extrap=True)
     duct11 = Duct(name="duct11")
-    lpt = Turbine(name="lpt", bleed_names=["cool1", "cool2"], map_extrap=True)
+    lpt = Turbine(name="lpt", map_data="LPTMap", bleed_names=["cool1", "cool2"], map_extrap=True)
     duct13 = Duct(name="duct13")
     core_nozz = Nozzle(name="core_nozz", nozz_type="CV", loss_coef="Cv")
     byp_bld = Bleed(name="byp_bld", bleed_names=["bypBld"])
     duct15 = Duct(name="duct15")
     byp_nozz = Nozzle(name="byp_nozz", nozz_type="CV", loss_coef="Cv")
-    lp_shaft = Shaft(name="lp_shaft", num_ports=3)
-    hp_shaft = Shaft(name="hp_shaft", num_ports=2)
+    lp_shaft = Shaft(name="lp_shaft", nmech_type="LP", num_ports=3)
+    hp_shaft = Shaft(name="hp_shaft", nmech_type="HP", num_ports=2)
 
     perf = Performance(
         name="perf",
@@ -501,9 +515,14 @@ if __name__ == "__main__":
     # Comps
     lpc.mn = 0.3059
     hpc.mn = 0.2442
-    hpc.frac_W = [0.050708, 0.020274, 0.5]
-    hpc.frac_P = [0.020274, 0.55, 0.5]
-    hpc.frac_work = [0.5, 0.5, 0.0445]
+    hpc.frac_W = [0.050708, 0.020274, 0.0445]
+    hpc.frac_P = [0.5, 0.55, 0.5]
+    hpc.frac_work = [0.5, 0.5, 0.5]
+
+    # Splitter
+    splitter.bpr = 5.105
+    splitter.mn1 = 0.3104
+    splitter.mn2 = 0.4518
 
     # Ducts
     duct4.mn = 0.3121
@@ -522,7 +541,7 @@ if __name__ == "__main__":
     bld3.mn = 0.300
     byp_bld.mn = 0.4489
 
-    bld3.frac_W = [0.067214, 0.101]
+    bld3.frac_W = [0.067214, 0.101256]
     byp_bld.frac_W = [0.005]
 
     # Combs
@@ -578,7 +597,7 @@ if __name__ == "__main__":
             lp_shaft,
             hp_shaft,
         ],
-        global_connections=["fan, lp_shaft", "lpc,lp_shaft", "lpt,lp_shaft", "hpc,hp_shaft", "hpt,hp_shaft"],
+        global_connections=["fan,lp_shaft", "lpc,lp_shaft", "lpt,lp_shaft", "hpc,hp_shaft", "hpt,hp_shaft"],
         flow_connections=[
             ["fc", "inlet"],
             ["inlet", "fan"],
@@ -602,7 +621,7 @@ if __name__ == "__main__":
 
     cyclePerformance = PropulsionCyclePerformance(
         name="CyclePerformance",
-        thermo_method="TABULAR",
+        thermo_method="CEA",
         throttle_mode="T4",
     )
 
@@ -618,15 +637,15 @@ if __name__ == "__main__":
     ODpoints = []
     fc2 = FlightConditions(
         name="od_full_pwr_fc",
-        mn=[0.8, 0.7, 0.4, 0.8, 0.6, 0.4, 0.6, 0.4, 0.2],
-        alt=[35000, 35000, 35000, 10000, 10000, 10000, 0, 0, 0],
-        d_ts=[0.0],
+        mn=[0.8, 0.7, 0.4, 0.6, 0.8, 0.6, 0.4, 0.2, 0.001, 0.001, 0.2, 0.4, 0.6, 0.6, 0.4, 0.2, 0.001],
+        alt=[35000, 35000, 20000, 20000, 20000, 10000, 10000, 10000, 10000, 1000, 1000, 1000, 1000, 0, 0, 0, 0],
+        d_ts=0.0,
     )
     fc3 = FlightConditions(
         name="od_part_pwr_fc",
         mn=[0.8, 0.7, 0.4, 0.8, 0.6, 0.4, 0.6, 0.4, 0.2],
         alt=[35000, 35000, 35000, 10000, 10000, 10000, 0, 0, 0],
-        d_ts=[0.0],
+        d_ts=0.0,
     )
 
     od1 = OffDesignPoint(
@@ -663,14 +682,14 @@ if __name__ == "__main__":
     prob = om.Problem()
     prob.model = pycTest.getOutput()
 
-    prob.setup(check=True)
+    prob.setup()
 
+    # USER SCRIPT FOR RUNNING ANALYSIS BELOW THIS LINE
+    # -----------------------------------------------
+    prob, flight_env = HBTFprep(prob, ADHInstance)
+    om.n2(prob, show_browser=False)
     prob.set_solver_print(level=-1)
     prob.set_solver_print(level=2, depth=1)
-
-    prob, flight_env = HBTFprep(prob, ADHInstance)
-    om.n2(prob)
-    """
 
     viewer_file = open("hbtf_view.out", "w")
     first_pass = True
@@ -694,12 +713,20 @@ if __name__ == "__main__":
             prob.run_model()
 
             if first_pass:
-                viewer(prob, "DESIGN", file=viewer_file)
+                # viewer(prob, "DESIGN", file=viewer_file)
                 first_pass = False
-            viewer(prob, "OD_part_pwr", file=viewer_file)
+            # viewer(prob, "OD_part_pwr", file=viewer_file)
 
         # run throttle back up to full power
         for PC in [1, 0.85]:
             prob["OD_part_pwr.PC"] = PC
             prob.run_model()
-    """
+
+    outputs = prob.model.list_outputs(
+        out_stream=None, residuals_tol=1e-2, implicit=True, explicit=False, residuals=True
+    )
+
+    from pprint import pprint
+
+    with open("output.txt", "w") as f:
+        pprint(outputs, stream=f)
