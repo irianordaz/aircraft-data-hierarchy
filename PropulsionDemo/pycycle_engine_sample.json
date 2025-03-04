@@ -1,0 +1,86 @@
+{
+    "file_header": null,
+    "variable_def": null,
+    "breakpoint_def": null,
+    "gridded_table_def": null,
+    "ungridded_table_def": {
+        "name": null,
+        "ut_id": null,
+        "units": [
+            "unitless, unitless, unitless, lbf, lbf, lbf, lbm/s, unitless, hp"
+        ],
+        "description": null,
+        "provenance": null,
+        "provenance_ref": null,
+        "uncertainty": null,
+        "data_point": [
+            {
+                "mod_id": null,
+                "value": "0.8 35000.0 0.85 12996.294793465624 5014.999999808503 7981.294793657121 0.8639420181946386 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+            },
+            {
+                "mod_id": null,
+                "value": "0.7 35000.0 0.85 11576.51246970648 5049.911333496573 6526.601136209907 0.8152591754776614 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+            },
+            {
+                "mod_id": null,
+                "value": "0.4 20000.0 0.85 14189.693748492653 8420.087468964412 5769.606279528242 1.1280450534566653 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+            }
+        ]
+    },
+    "function": [
+        {
+            "name": "Engine Deck",
+            "description": null,
+            "provenance": null,
+            "provenance_ref": null,
+            "independent_var_pts": null,
+            "dependent_var_pts": null,
+            "independent_var_ref": [
+                {
+                    "var_id": "mn",
+                    "min": null,
+                    "max": null,
+                    "extrapolate": null,
+                    "interpolate": null
+                },
+                {
+                    "var_id": "alt",
+                    "min": null,
+                    "max": null,
+                    "extrapolate": null,
+                    "interpolate": null
+                },
+                {
+                    "var_id": "throttle",
+                    "min": null,
+                    "max": null,
+                    "extrapolate": null,
+                    "interpolate": null
+                }
+            ],
+            "dependent_var_ref": [
+                {
+                    "var_id": "gross_thrust"
+                },
+                {
+                    "var_id": "net_thrust"
+                },
+                {
+                    "var_id": "ram_drag"
+                },
+                {
+                    "var_id": "fuel_flow"
+                },
+                {
+                    "var_id": "temp"
+                },
+                {
+                    "var_id": "shaft_power"
+                }
+            ],
+            "function_defn": null
+        }
+    ],
+    "check_data": null
+}
