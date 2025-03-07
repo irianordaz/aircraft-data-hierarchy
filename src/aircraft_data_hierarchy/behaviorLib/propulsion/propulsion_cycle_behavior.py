@@ -1,7 +1,7 @@
 from typing import List, Optional
 from pydantic import Field, field_validator
 from ...common_base_model import CommonBaseModel
-from ...behavior import Behavior, UngriddedTableDef, DataPoint
+from ...behavior import Behavior, DAVEfunc
 from ...work_breakdown_structure.propulsion.propulsion_cycle import PropulsionCycle
 
 
@@ -293,6 +293,7 @@ class PropulsionCycleBehavior(Behavior):
     performance_components: Optional[List[Performance]] = Field(
         None, description="The list of the performance components for the cycle."
     )
+    engine_decks: Optional[List[DAVEfunc]] = Field(None, description="The engine deck in DaveML ungridded data table format.")
 
 
 class OffDesignPoint(CommonBaseModel):
@@ -337,50 +338,4 @@ class MultiPointCycle(CommonBaseModel):
     )
     seq_points: Optional[List[str]] = Field(
         None, description="The sequence of points in the multi-point cycle analysis."
-    )
-
-
-class EngineDeckData(DataPoint):
-    """
-    Contains ADH engine deck values.
-
-    Attributes
-    ----------
-        mn : Optional[float]
-            Mach number.
-        alt: Optional[float]
-            Altitude.
-        throttle: Optional[float]
-            Throttle.
-        gross_thrust: Optional[float]
-            Gross Thrust.
-        ram_drag: Optional[float]
-            Ram Drag.
-        fuel_flow: Optional[float]
-            Fuel Flow.
-        nox_rate: Optional[float]
-            NOx Rate.
-
-    """
-
-    mn: Optional[float] = Field(None, description="Mach Number (unitless)")
-    alt: Optional[float] = Field(None, description="Altitude (ft)")
-    throttle: Optional[float] = Field(None, description="Throttle (unitless)")
-    gross_thrust: Optional[float] = Field(None, description="Gross Thrust (lbf)")
-    ram_drag: Optional[float] = Field(None, description="Ram Drag (lbf)")
-    fuel_flow: Optional[float] = Field(None, description="Fuel Flow (lb/h)")
-    nox_rate: Optional[float] = Field(None, description="NOx Rate (lb/h)")
-
-
-class EngineDeckCompiled(UngriddedTableDef):
-    """
-    Assigns ADH Deck values into ungridded table format.
-
-    Attributes
-    ----------
-
-    """
-
-    flight_cond: Optional[List[EngineDeckData]] = Field(
-        None, description="The list of the engine deck values for a flight condition."
     )

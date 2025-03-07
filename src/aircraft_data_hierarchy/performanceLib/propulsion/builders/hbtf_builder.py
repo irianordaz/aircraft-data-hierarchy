@@ -1,5 +1,3 @@
-import numpy as np
-
 import openmdao.api as om
 import pycycle.api as pyc
 

@@ -1,7 +1,5 @@
-import numpy as np
-from pydantic.v1 import utils
-from aircraft_data_hierarchy.common_base_model import CommonBaseModel, Metadata
-from aircraft_data_hierarchy.behavior import Behavior, DAVEfunc, FileHeader, Author
+from aircraft_data_hierarchy.common_base_model import Metadata
+from aircraft_data_hierarchy.behavior import FileHeader, Author
 from aircraft_data_hierarchy.work_breakdown_structure.propulsion import (
     Propulsion,
     PropulsionCycle,
@@ -25,7 +23,6 @@ from aircraft_data_hierarchy.behaviorLib.propulsion.propulsion_cycle_behavior im
 from aircraft_data_hierarchy.performanceLib.propulsion.propulsion_cycle_performance import (
     PropulsionCyclePerformance,
 )
-from aircraft_data_hierarchy.performanceLib.propulsion.hbtf_builder import HBTFBuilder, MPhbtfBuilder
 
 def generate_test_ADH_propulsion():
     # Set-up the ADH Propulsion instance for demo purposes

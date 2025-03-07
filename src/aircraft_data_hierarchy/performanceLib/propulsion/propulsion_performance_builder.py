@@ -26,7 +26,7 @@ from aircraft_data_hierarchy.behaviorLib.propulsion.propulsion_cycle_behavior im
 from aircraft_data_hierarchy.performanceLib.propulsion.propulsion_cycle_performance import (
     PropulsionCyclePerformance,
 )
-from aircraft_data_hierarchy.performanceLib.propulsion.hbtf_builder import HBTFBuilder, MPhbtfBuilder
+from aircraft_data_hierarchy.performanceLib.propulsion.builders.hbtf_builder import HBTFBuilder, MPhbtfBuilder
 import openmdao.api as om
 
 
@@ -387,3 +387,5 @@ class pyCycleBuilder(PropulsionPerformanceBuilder):
 class NPSSBuilder(PropulsionPerformanceBuilder):
     def __init__(self, ADHInstance):
         raise Exception("NPSS Builder not implemented!")
+
+
