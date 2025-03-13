@@ -15,14 +15,14 @@ with open("/home/mdolabuser/mount/aircraft-data-hierarchy/DAVEMLTest/output_file
 with open("/home/mdolabuser/mount/aircraft-data-hierarchy/DAVEMLTest/output_files/adh_in.json", 'r') as file:
     adhNewData = json.load(file)
 
+# Simulate a change
+adhNewData["name"] = "Engine MOD"
+
 # Convert read new ADH JSON to string
 adhNewData = json.dumps(adhNewData)
  
 # Read in the new ADH
 adhNEW = adh.model_validate_json(adhNewData)
-
-# Simulate a change
-adhNEW.name = "Engine MOD"
 
 # Output new ADH
 print(adhNEW.model_dump_json(indent=4,exclude_unset=True,exclude_defaults=False))
