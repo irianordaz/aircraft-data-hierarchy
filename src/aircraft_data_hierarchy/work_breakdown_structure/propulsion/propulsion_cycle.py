@@ -1,5 +1,5 @@
 from typing import List, Optional
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, InstanceOf, SerializeAsAny
 from ...common_base_model import CommonBaseModel
 
 
@@ -284,6 +284,6 @@ class PropulsionCycle(CommonBaseModel):
     """
 
     name: str = Field(..., description="The name of the engine cycle.")
-    elements: List[EngineElement] = Field(..., description="The list of engine elements in the engine cycle.")
+    elements: List[SerializeAsAny[InstanceOf[EngineElement]]] = Field(..., description="The list of engine elements in the engine cycle.")
     global_connections: Optional[List[str]] = Field(None, description="The global connections in the engine cycle.")
     flow_connections: Optional[List[List[str]]] = Field(None, description="The flow connections in the engine cycle.")

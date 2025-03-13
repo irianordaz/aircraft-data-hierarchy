@@ -20,133 +20,325 @@
                     "adh_root": {},
                     "aliases": {},
                     "name": "inlet",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "mn": 0.751,
+                    "ram_recovery": 0.999,
+                    "area": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "fan",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "map_data": "FanMap",
+                    "map_extrap": true,
+                    "map_interp_method": null,
+                    "bleed_names": [],
+                    "pr_des": 1.685,
+                    "eff_des": 0.8948,
+                    "mn": 0.4578,
+                    "s_PR": null,
+                    "s_eff": null,
+                    "s_Wc": null,
+                    "s_Nc": null,
+                    "area": null,
+                    "frac_W": null,
+                    "frac_P": null,
+                    "frac_work": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "splitter",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "bpr": 5.105,
+                    "mn1": 0.3104,
+                    "mn2": 0.4518,
+                    "area1": null,
+                    "area2": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "duct4",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "mn": 0.3121,
+                    "dPqP": 0.0048,
+                    "Q_dot": null,
+                    "area": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "lpc",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "map_data": "LPCMap",
+                    "map_extrap": true,
+                    "map_interp_method": null,
+                    "bleed_names": [],
+                    "pr_des": 1.935,
+                    "eff_des": 0.9243,
+                    "mn": 0.3059,
+                    "s_PR": null,
+                    "s_eff": null,
+                    "s_Wc": null,
+                    "s_Nc": null,
+                    "area": null,
+                    "frac_W": null,
+                    "frac_P": null,
+                    "frac_work": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "duct6",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "mn": 0.3563,
+                    "dPqP": 0.0101,
+                    "Q_dot": null,
+                    "area": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "hpc",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "map_data": "HPCMap",
+                    "map_extrap": true,
+                    "map_interp_method": null,
+                    "bleed_names": [
+                        "cool1",
+                        "cool2",
+                        "cust"
+                    ],
+                    "pr_des": 9.369,
+                    "eff_des": 0.8707,
+                    "mn": 0.2442,
+                    "s_PR": null,
+                    "s_eff": null,
+                    "s_Wc": null,
+                    "s_Nc": null,
+                    "area": null,
+                    "frac_W": [
+                        0.050708,
+                        0.020274,
+                        0.0445
+                    ],
+                    "frac_P": [
+                        0.5,
+                        0.55,
+                        0.5
+                    ],
+                    "frac_work": [
+                        0.5,
+                        0.5,
+                        0.5
+                    ]
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "bld3",
-                    "options": null
+                    "options": null,
+                    "bleed_names": [
+                        "cool3",
+                        "cool4"
+                    ],
+                    "statics": null,
+                    "frac_W": [
+                        0.067214,
+                        0.101256
+                    ],
+                    "frac_P": null,
+                    "frac_work": null,
+                    "mn": 0.3
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "burner",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "fuel_type": "Jet-A(g)",
+                    "mn": 0.1025,
+                    "dp_qp": 0.054,
+                    "FAR": null,
+                    "Wfuel": null,
+                    "area": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "hpt",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "map_data": "HPTMap",
+                    "map_extrap": true,
+                    "map_interp_method": null,
+                    "bleed_names": [
+                        "cool3",
+                        "cool4"
+                    ],
+                    "pr_des": null,
+                    "eff_des": 0.8888,
+                    "mn": 0.365,
+                    "s_PR": null,
+                    "s_eff": null,
+                    "s_Wc": null,
+                    "s_Nc": null,
+                    "area": null,
+                    "frac_W": null,
+                    "frac_P": [
+                        1.0,
+                        0.0
+                    ],
+                    "frac_work": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "duct11",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "mn": 0.3063,
+                    "dPqP": 0.0051,
+                    "Q_dot": null,
+                    "area": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "lpt",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "map_data": "LPTMap",
+                    "map_extrap": true,
+                    "map_interp_method": null,
+                    "bleed_names": [
+                        "cool1",
+                        "cool2"
+                    ],
+                    "pr_des": null,
+                    "eff_des": 0.8996,
+                    "mn": 0.4127,
+                    "s_PR": null,
+                    "s_eff": null,
+                    "s_Wc": null,
+                    "s_Nc": null,
+                    "area": null,
+                    "frac_W": null,
+                    "frac_P": [
+                        1.0,
+                        0.0
+                    ],
+                    "frac_work": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "duct13",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "mn": 0.4463,
+                    "dPqP": 0.0107,
+                    "Q_dot": null,
+                    "area": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "core_nozz",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "mn": null,
+                    "nozz_type": "CV",
+                    "loss_coef": "Cv",
+                    "cv": 0.9933,
+                    "area": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "byp_bld",
-                    "options": null
+                    "options": null,
+                    "bleed_names": [
+                        "bypBld"
+                    ],
+                    "statics": null,
+                    "frac_W": [
+                        0.005
+                    ],
+                    "frac_P": null,
+                    "frac_work": null,
+                    "mn": 0.4489
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "duct15",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "mn": 0.4589,
+                    "dPqP": 0.0149,
+                    "Q_dot": null,
+                    "area": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "byp_nozz",
-                    "options": null
+                    "options": null,
+                    "statics": null,
+                    "mn": null,
+                    "nozz_type": "CV",
+                    "loss_coef": "Cv",
+                    "cv": 0.9939,
+                    "area": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "lp_shaft",
-                    "options": null
+                    "options": null,
+                    "num_ports": 3,
+                    "nmech": null,
+                    "nmech_type": "LP",
+                    "HPX": null
                 },
                 {
                     "adh_data": {},
                     "adh_root": {},
                     "aliases": {},
                     "name": "hp_shaft",
-                    "options": null
+                    "options": null,
+                    "num_ports": 2,
+                    "nmech": null,
+                    "nmech_type": "HP",
+                    "HPX": null
                 }
             ],
             "global_connections": [
@@ -403,6 +595,7 @@
                 "opr": null,
                 "tsfc": null
             }
-        ]
+        ],
+        "engine_decks": null
     }
 }
