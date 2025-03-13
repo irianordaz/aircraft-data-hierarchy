@@ -1,7 +1,8 @@
 import sys
 import openmdao.api as om
 from aircraft_data_hierarchy.performanceLib.propulsion.propulsion_performance_builder import pyCycleBuilder
-from utils.generate_demo_adh import generate_test_ADH_propulsion, JSON_to_ADH, ADH_to_JSON
+from utils.generate_demo_adh import generate_test_ADH_propulsion
+from utils.ADH_JSON_tools import JSON_to_ADH, ADH_to_JSON
 from aircraft_data_hierarchy.performanceLib.propulsion.utils.pycycle_to_ADH import initialize_engine_deck_ADH, append_data_point_ADH, append_data_point_json
 from pydantic.v1 import utils
 from aircraft_data_hierarchy.behaviorLib.propulsion.propulsion_cycle_behavior import (
@@ -127,8 +128,8 @@ if __name__ == "__main__":
     output = "/home/mdolabuser/mount/aircraft-data-hierarchy/MichiganFinalPropulsionDemo/output_files/"
 
     # Load the generated test ADH
-    ADHSchema= generate_test_ADH_propulsion()
-    ADHInstance = JSON_to_ADH(output + "step1_adh.json", ADHSchema)
+    ADHInstance= generate_test_ADH_propulsion()
+    #ADHInstance = JSON_to_ADH(output + "step1_adh.json", ADHSchema)
 
     # Intantiate the pyCycle builder class
     pycTest = pyCycleBuilder(ADHInstance)
