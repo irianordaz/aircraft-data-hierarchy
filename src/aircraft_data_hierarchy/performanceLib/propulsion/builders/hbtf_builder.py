@@ -164,8 +164,10 @@ class HBTFBuilder(pyc.Cycle):
     # Connect the flow between engine elements
     def connect_flow(self, flow_connections):
         for fc in flow_connections:
-            if len(fc) > 2:
-                self.pyc_connect_flow("{}.Fl_O{}".format(fc[0], fc[2]), "{}.Fl_I".format(fc[1]))
+            #if len(fc) > 2:
+            if "__" in fc[1]:
+                fcsplit = fc[1].split("__")
+                self.pyc_connect_flow("{}.Fl_O{}".format(fc[0], fcsplit[1]), "{}.Fl_I".format(fcsplit[0]))
                 # print("{}.Fl_O{}".format(fc[0], fc[2]) + "{}.Fl_I".format(fc[1]))
             else:
                 self.pyc_connect_flow("{}.Fl_O".format(fc[0]), "{}.Fl_I".format(fc[1]))
@@ -363,7 +365,7 @@ class HBTFBuilder(pyc.Cycle):
             self.connect("hp_shaft.pwr_out_real", "balance.rhs:hp_Nmech")
 
             # Specify the order in which the subsystems are executed:
-
+            
         self.set_order(
             [
                 "balance",

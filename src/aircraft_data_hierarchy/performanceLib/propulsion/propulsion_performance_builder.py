@@ -103,7 +103,8 @@ class PropulsionPerformanceBuilder:
         engineElements = cycle.elements
         inlets = []
         for element in engineElements:
-            if utils.lenient_isinstance(element, Inlet):
+            #if utils.lenient_isinstance(element, Inlet):
+            if element.type == "inlet":
                 inletData = {
                     "name": element.name,
                     "statics": element.statics,
@@ -122,7 +123,8 @@ class PropulsionPerformanceBuilder:
         engineElements = cycle.elements
         splitters = []
         for element in engineElements:
-            if utils.lenient_isinstance(element, Splitter):
+            if element.type == "splitter":
+            #if utils.lenient_isinstance(element, Splitter):
                 splitterData = {
                     "name": element.name,
                     "statics": element.statics,
@@ -143,7 +145,8 @@ class PropulsionPerformanceBuilder:
         engineElements = cycle.elements
         ducts = []
         for element in engineElements:
-            if utils.lenient_isinstance(element, Duct):
+            if element.type == "duct":
+            #if utils.lenient_isinstance(element, Duct):
                 ductData = {
                     "name": element.name,
                     "statics": element.statics,
@@ -163,7 +166,8 @@ class PropulsionPerformanceBuilder:
         engineElements = cycle.elements
         compressors = []
         for element in engineElements:
-            if utils.lenient_isinstance(element, Compressor):
+            if element.type == "comp":
+            #if utils.lenient_isinstance(element, Compressor):
                 compData = {
                     "name": element.name,
                     "statics": element.statics,
@@ -190,7 +194,8 @@ class PropulsionPerformanceBuilder:
         engineElements = cycle.elements
         combustors = []
         for element in engineElements:
-            if utils.lenient_isinstance(element, Combustor):
+            if element.type == "comb":
+            #if utils.lenient_isinstance(element, Combustor):
                 combData = {
                     "name": element.name,
                     "statics": element.statics,
@@ -211,7 +216,8 @@ class PropulsionPerformanceBuilder:
         engineElements = cycle.elements
         turbines = []
         for element in engineElements:
-            if utils.lenient_isinstance(element, Turbine):
+            if element.type == "turb":
+            #if utils.lenient_isinstance(element, Turbine):
                 turbData = {
                     "name": element.name,
                     "statics": element.statics,
@@ -238,7 +244,8 @@ class PropulsionPerformanceBuilder:
         engineElements = cycle.elements
         nozzles = []
         for element in engineElements:
-            if utils.lenient_isinstance(element, Nozzle):
+            if element.type == "nozz":
+            #if utils.lenient_isinstance(element, Nozzle):
                 nozzData = {
                     "name": element.name,
                     "statics": element.statics,
@@ -259,7 +266,8 @@ class PropulsionPerformanceBuilder:
         engineElements = cycle.elements
         shafts = []
         for element in engineElements:
-            if utils.lenient_isinstance(element, Shaft):
+            if element.type == "shaft":
+            #if utils.lenient_isinstance(element, Shaft):
                 shaftData = {
                     "name": element.name,
                     "num_ports": element.num_ports,
@@ -278,7 +286,8 @@ class PropulsionPerformanceBuilder:
         engineElements = cycle.elements
         bleeds = []
         for element in engineElements:
-            if utils.lenient_isinstance(element, Bleed):
+            if element.type == "bleed":
+            #if utils.lenient_isinstance(element, Bleed):
                 bleedData = {
                     "name": element.name,
                     "statics": element.statics,
@@ -375,7 +384,6 @@ class pyCycleBuilder(PropulsionPerformanceBuilder):
         Returns the pyCycle builder class for HBTF for the engine type.
         Parameters
         """
-
         if self.cycleData["cycleInfo"]["is_multi_point"]:
             self.pycycleObject = MPhbtfBuilder(adhCycleData=self.cycleData)
         else:

@@ -30,25 +30,27 @@ def generate_test_ADH_propulsion():
     metadata = Metadata(key="example_key", value="example_value")
 
     fc = FlightConditions(name="fc", mn=[0.8], alt=[35000])
-    inlet = Inlet(name="inlet")
-    fan = Compressor(name="fan", map_data="FanMap", bleed_names=[], map_extrap=True)
-    splitter = Splitter(name="splitter")
-    duct4 = Duct(name="duct4")
-    lpc = Compressor(name="lpc", map_data="LPCMap", bleed_names=[], map_extrap=True)
-    duct6 = Duct(name="duct6")
-    hpc = Compressor(name="hpc", map_data="HPCMap", bleed_names=["cool1", "cool2", "cust"], map_extrap=True)
-    bld3 = Bleed(name="bld3", bleed_names=["cool3", "cool4"])
-    burner = Combustor(name="burner", fuel_type="Jet-A(g)")
-    hpt = Turbine(name="hpt", map_data="HPTMap", bleed_names=["cool3", "cool4"], map_extrap=True)
-    duct11 = Duct(name="duct11")
-    lpt = Turbine(name="lpt", map_data="LPTMap", bleed_names=["cool1", "cool2"], map_extrap=True)
-    duct13 = Duct(name="duct13")
-    core_nozz = Nozzle(name="core_nozz", nozz_type="CV", loss_coef="Cv")
-    byp_bld = Bleed(name="byp_bld", bleed_names=["bypBld"])
-    duct15 = Duct(name="duct15")
-    byp_nozz = Nozzle(name="byp_nozz", nozz_type="CV", loss_coef="Cv")
-    lp_shaft = Shaft(name="lp_shaft", nmech_type="LP", num_ports=3)
-    hp_shaft = Shaft(name="hp_shaft", nmech_type="HP", num_ports=2)
+    inlet = Inlet(name="inlet", type = "inlet")
+    fan = Compressor(name="fan", type = "comp", map_data="FanMap", bleed_names=[], map_extrap=True)
+    splitter = Splitter(name="splitter", type = "splitter")
+    duct4 = Duct(name="duct4", type = "duct")
+    lpc = Compressor(name="lpc", type = "comp", map_data="LPCMap", bleed_names=[], map_extrap=True)
+    duct6 = Duct(name="duct6", type = "duct")
+    hpc = Compressor(name="hpc", type = "comp", map_data="HPCMap", bleed_names=["cool1", "cool2", "cust"], map_extrap=True)
+    bld3 = Bleed(name="bld3", type = "bleed", bleed_names=["cool3", "cool4"])
+    burner = Combustor(name="burner", type = "comb", fuel_type="Jet-A(g)")
+    hpt = Turbine(name="hpt", type = "turb", map_data="HPTMap", bleed_names=["cool3", "cool4"], map_extrap=True)
+    duct11 = Duct(name="duct11", type = "duct")
+    lpt = Turbine(name="lpt", type = "turb", map_data="LPTMap", bleed_names=["cool1", "cool2"], map_extrap=True)
+    duct13 = Duct(name="duct13", type = "duct")
+    core_nozz = Nozzle(name="core_nozz", type = "nozz", nozz_type="CV", loss_coef="Cv")
+    byp_bld = Bleed(name="byp_bld", type = "bleed", bleed_names=["bypBld"])
+    duct15 = Duct(name="duct15", type = "duct")
+    byp_nozz = Nozzle(name="byp_nozz", type = "nozz", nozz_type="CV", loss_coef="Cv")
+    lp_shaft = Shaft(name="lp_shaft", type = "shaft", nmech_type="LP", num_ports=3)
+    hp_shaft = Shaft(name="hp_shaft", type = "shaft", nmech_type="HP", num_ports=2)
+
+
 
     perf = Performance(
         name="perf",
@@ -159,7 +161,7 @@ def generate_test_ADH_propulsion():
             ["fc", "inlet"],
             ["inlet", "fan"],
             ["fan", "splitter"],
-            ["splitter", "duct4", "1"],
+            ["splitter", "duct4__1"],
             ["duct4", "lpc"],
             ["lpc", "duct6"],
             ["duct6", "hpc"],
@@ -170,7 +172,7 @@ def generate_test_ADH_propulsion():
             ["duct11", "lpt"],
             ["lpt", "duct13"],
             ["duct13", "core_nozz"],
-            ["splitter", "byp_bld", "2"],
+            ["splitter", "byp_bld__2"],
             ["byp_bld", "duct15"],
             ["duct15", "byp_nozz"],
         ],

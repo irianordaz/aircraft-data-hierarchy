@@ -129,7 +129,7 @@ if __name__ == "__main__":
 
     # Load the generated test ADH
     ADHInstance= generate_test_ADH_propulsion()
-    #ADHInstance = JSON_to_ADH(output + "step1_adh.json", ADHSchema)
+    ADHInstance = JSON_to_ADH(output + "step1_adh.json", ADHInstance)
 
     # Intantiate the pyCycle builder class
     pycTest = pyCycleBuilder(ADHInstance)

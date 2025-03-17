@@ -18,8 +18,12 @@ def ADH_to_JSON(ADHInstance, path, exclude_unset=True, exclude_defaults=False):
     excludes default values
 
      """
+    
+    ADHJSON = ADHInstance.model_dump_json(indent=4,exclude_unset=exclude_unset,exclude_defaults=exclude_defaults)
+    ADHJSONDict = json.loads(ADHJSON)
+    ADHJSONON = json.dumps({"OuterNest":ADHJSONDict}, indent=4)
     with open(path, "w") as file:
-        file.write(ADHInstance.model_dump_json(indent=4,exclude_unset=exclude_unset,exclude_defaults=exclude_defaults))
+        file.write(ADHJSONON)
         file.close()
 
 def JSON_to_ADH(path,ADHInstance):
@@ -32,7 +36,7 @@ def JSON_to_ADH(path,ADHInstance):
         adhData = json.load(file)
 
     # Convert read new ADH JSON to string
-    adhData = json.dumps(adhData)
+    adhData = json.dumps(adhData["OuterNest"])
     
     # Read in the new ADH
     ADHInstanceNew = ADHInstance.model_validate_json(adhData)

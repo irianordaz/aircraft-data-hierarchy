@@ -13,8 +13,75 @@ class EngineElement(CommonBaseModel):
     """
 
     name: str = Field(..., description="The name of the engine element.")
+    type: str = Field(..., description="The type of engine element this is.")
     options: Optional[dict] = Field(None, description="The options associated with the engine element.")
 
+    ######## Temp brute force fix for the demo ################
+    ###########################################################
+    ###########################################################
+    statics: Optional[bool] = Field(None, description="If true calculate static properties")
+    mn: Optional[float] = Field(None, description="On-design Mach number")
+    ram_recovery: Optional[float] = Field(None, description="Ram recovery factor")
+    area: Optional[float] = Field(None, description="On-design frontal area of component")
+
+    map_data: Optional[str] = Field(None, description="Map data for the compressor")
+    map_extrap: Optional[bool] = Field(None, description="Flag to indicate if map extrapolation is used")
+    map_interp_method: Optional[str] = Field(None, description="Method to use for map interpolation.")
+    bleed_names: Optional[List[str]] = Field(None, description="Names of the bleed ports")
+    pr_des: Optional[float] = Field(None, description="On-design pressure ratio(Input)")
+    eff_des: Optional[float] = Field(None, description="On-design efficeincy(Input)")
+    mn: Optional[float] = Field(None, description="On-design mach number(Input)")
+    s_PR: Optional[float] = Field(None, description="On-design pressure ratio(Output)")
+    s_eff: Optional[float] = Field(None, description="On-design efficiency(Output)")
+    s_Wc: Optional[float] = Field(None, description="On-design air mass flow rate(Output)")
+    s_Nc: Optional[float] = Field(None, description="On-design Nc(Output)")
+    area: Optional[float] = Field(None, description="On-design frontal area of component(Output)")
+    frac_W: Optional[List[float]] = Field(
+        None, description="Fraction of incoming flow to bleed off(associated with each bleed connection)"
+    )
+    frac_P: Optional[List[float]] = Field(
+        None, description="Fraction of incoming pressure to bleed off(associated with each bleed connection)"
+    )
+    frac_work: Optional[List[float]] = Field(
+        None, description="Fraction of work to bleed off(associated with each bleed connection)"
+    )
+
+    bpr: Optional[float] = Field(None, description="Bypass ratio")
+    mn1: Optional[float] = Field(None, description="On-design mach number for the first flow path(Input)")
+    mn2: Optional[float] = Field(None, description="On-design mach number for the second flow path(Input)")
+    area1: Optional[float] = Field(None, description="On-design frontal area for the first flow path(Output)")
+    area2: Optional[float] = Field(None, description="On-design frontal area for the second flow path(Output)")
+
+    fuel_type: Optional[str] = Field(None, description="Type of fuel used")
+    mn: Optional[float] = Field(None, description="On-design mach number")
+    dp_qp: Optional[float] = Field(None, description="On-design pressure drop ratio")
+    FAR: Optional[float] = Field(None, description="On-design fuel-air ratio")
+    Wfuel: Optional[float] = Field(None, description="On-design fuel injection rate")
+
+    nozz_type: Optional[str] = Field(None, description="Type of nozzle")
+    loss_coef: Optional[str] = Field(None, description="Loss coefficient")
+    cv: Optional[float] = Field(None, description="Discharge coefficient")
+
+    num_ports: Optional[int] = Field(None, description="Number of ports on the shaft")
+    nmech: Optional[float] = Field(None, description="Mechanical speed in RPM")
+    nmech_type: Optional[str] = Field(None, description="Low or high pressure shaft")
+    HPX: Optional[float] = Field(None, description="Horsepower transfer")
+
+    dPqP: Optional[float] = Field(None, description="On-design pressure drop ratio")
+    Q_dot: Optional[float] = Field(
+        None, description="On-design heat flow rate into (positive) or out of (negative) the air"
+    )
+
+    @field_validator("fuel_type")
+    def validate_fuel_type(cls, v):
+        allowed_types = ["FAR", "Jet-A(g)"]
+        if v not in allowed_types:
+            raise ValueError(f"Fuel type must be one of {allowed_types}")
+        return v
+    
+    ######## END temp brute force fix for the demo ################
+    ###########################################################
+    ###########################################################
 
 class Inlet(EngineElement):
     """
