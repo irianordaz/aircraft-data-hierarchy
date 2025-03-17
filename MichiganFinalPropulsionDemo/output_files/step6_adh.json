@@ -1,0 +1,691 @@
+{
+    "OuterNest": {
+        "name": "Engine",
+        "description": "Main engine component",
+        "cycle": {
+            "design_point": {
+                "name": "Cycle",
+                "elements": [
+                    {
+                        "name": "inlet",
+                        "type": "inlet",
+                        "mn": 0.751,
+                        "ram_recovery": 0.999
+                    },
+                    {
+                        "name": "fan",
+                        "type": "comp",
+                        "mn": 0.4578,
+                        "map_data": "FanMap",
+                        "map_extrap": true,
+                        "bleed_names": [],
+                        "pr_des": 1.685,
+                        "eff_des": 0.8948
+                    },
+                    {
+                        "name": "splitter",
+                        "type": "splitter",
+                        "bpr": 5.805,
+                        "mn1": 0.3104,
+                        "mn2": 0.4518
+                    },
+                    {
+                        "name": "duct4",
+                        "type": "duct",
+                        "mn": 0.3121,
+                        "dPqP": 0.0048
+                    },
+                    {
+                        "name": "lpc",
+                        "type": "comp",
+                        "mn": 0.3059,
+                        "map_data": "LPCMap",
+                        "map_extrap": true,
+                        "bleed_names": [],
+                        "pr_des": 1.935,
+                        "eff_des": 0.9243
+                    },
+                    {
+                        "name": "duct6",
+                        "type": "duct",
+                        "mn": 0.3563,
+                        "dPqP": 0.0101
+                    },
+                    {
+                        "name": "hpc",
+                        "type": "comp",
+                        "mn": 0.2442,
+                        "map_data": "HPCMap",
+                        "map_extrap": true,
+                        "bleed_names": [
+                            "cool1",
+                            "cool2",
+                            "cust"
+                        ],
+                        "pr_des": 9.369,
+                        "eff_des": 0.8707,
+                        "frac_W": [
+                            0.050708,
+                            0.020274,
+                            0.0445
+                        ],
+                        "frac_P": [
+                            0.5,
+                            0.55,
+                            0.5
+                        ],
+                        "frac_work": [
+                            0.5,
+                            0.5,
+                            0.5
+                        ]
+                    },
+                    {
+                        "name": "bld3",
+                        "type": "bleed",
+                        "mn": 0.3,
+                        "bleed_names": [
+                            "cool3",
+                            "cool4"
+                        ],
+                        "frac_W": [
+                            0.067214,
+                            0.101256
+                        ]
+                    },
+                    {
+                        "name": "burner",
+                        "type": "comb",
+                        "mn": 0.1025,
+                        "fuel_type": "Jet-A(g)",
+                        "dp_qp": 0.054
+                    },
+                    {
+                        "name": "hpt",
+                        "type": "turb",
+                        "mn": 0.365,
+                        "map_data": "HPTMap",
+                        "map_extrap": true,
+                        "bleed_names": [
+                            "cool3",
+                            "cool4"
+                        ],
+                        "eff_des": 0.8888,
+                        "frac_P": [
+                            1.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "name": "duct11",
+                        "type": "duct",
+                        "mn": 0.3063,
+                        "dPqP": 0.0051
+                    },
+                    {
+                        "name": "lpt",
+                        "type": "turb",
+                        "mn": 0.4127,
+                        "map_data": "LPTMap",
+                        "map_extrap": true,
+                        "bleed_names": [
+                            "cool1",
+                            "cool2"
+                        ],
+                        "eff_des": 0.8996,
+                        "frac_P": [
+                            1.0,
+                            0.0
+                        ]
+                    },
+                    {
+                        "name": "duct13",
+                        "type": "duct",
+                        "mn": 0.4463,
+                        "dPqP": 0.0107
+                    },
+                    {
+                        "name": "core_nozz",
+                        "type": "nozz",
+                        "nozz_type": "CV",
+                        "loss_coef": "Cv",
+                        "cv": 0.9933
+                    },
+                    {
+                        "name": "byp_bld",
+                        "type": "bleed",
+                        "mn": 0.4489,
+                        "bleed_names": [
+                            "bypBld"
+                        ],
+                        "frac_W": [
+                            0.005
+                        ]
+                    },
+                    {
+                        "name": "duct15",
+                        "type": "duct",
+                        "mn": 0.4589,
+                        "dPqP": 0.0149
+                    },
+                    {
+                        "name": "byp_nozz",
+                        "type": "nozz",
+                        "nozz_type": "CV",
+                        "loss_coef": "Cv",
+                        "cv": 0.9939
+                    },
+                    {
+                        "name": "lp_shaft",
+                        "type": "shaft",
+                        "num_ports": 3,
+                        "nmech_type": "LP"
+                    },
+                    {
+                        "name": "hp_shaft",
+                        "type": "shaft",
+                        "num_ports": 2,
+                        "nmech_type": "HP"
+                    }
+                ],
+                "global_connections": [
+                    "fan,lp_shaft",
+                    "lpc,lp_shaft",
+                    "lpt,lp_shaft",
+                    "hpc,hp_shaft",
+                    "hpt,hp_shaft"
+                ],
+                "flow_connections": [
+                    [
+                        "fc",
+                        "inlet"
+                    ],
+                    [
+                        "inlet",
+                        "fan"
+                    ],
+                    [
+                        "fan",
+                        "splitter"
+                    ],
+                    [
+                        "splitter",
+                        "duct4__1"
+                    ],
+                    [
+                        "duct4",
+                        "lpc"
+                    ],
+                    [
+                        "lpc",
+                        "duct6"
+                    ],
+                    [
+                        "duct6",
+                        "hpc"
+                    ],
+                    [
+                        "hpc",
+                        "bld3"
+                    ],
+                    [
+                        "bld3",
+                        "burner"
+                    ],
+                    [
+                        "burner",
+                        "hpt"
+                    ],
+                    [
+                        "hpt",
+                        "duct11"
+                    ],
+                    [
+                        "duct11",
+                        "lpt"
+                    ],
+                    [
+                        "lpt",
+                        "duct13"
+                    ],
+                    [
+                        "duct13",
+                        "core_nozz"
+                    ],
+                    [
+                        "splitter",
+                        "byp_bld__2"
+                    ],
+                    [
+                        "byp_bld",
+                        "duct15"
+                    ],
+                    [
+                        "duct15",
+                        "byp_nozz"
+                    ]
+                ]
+            },
+            "od_points": [
+                {
+                    "name": "OD_full_pwr",
+                    "flight_conditions_od": {
+                        "name": "od_full_pwr_fc",
+                        "mn": [
+                            0.8,
+                            0.7,
+                            0.4,
+                            0.6,
+                            0.8,
+                            0.6,
+                            0.4,
+                            0.2,
+                            0.001,
+                            0.001,
+                            0.2,
+                            0.4,
+                            0.6,
+                            0.6,
+                            0.4,
+                            0.2,
+                            0.001
+                        ],
+                        "alt": [
+                            35000.0,
+                            35000.0,
+                            20000.0,
+                            20000.0,
+                            20000.0,
+                            10000.0,
+                            10000.0,
+                            10000.0,
+                            10000.0,
+                            1000.0,
+                            1000.0,
+                            1000.0,
+                            1000.0,
+                            0.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "d_ts": 0.0
+                    },
+                    "throttle_mode": "T4"
+                },
+                {
+                    "name": "OD_part_pwr",
+                    "flight_conditions_od": {
+                        "name": "od_part_pwr_fc",
+                        "mn": [
+                            0.8,
+                            0.7,
+                            0.4,
+                            0.8,
+                            0.6,
+                            0.4,
+                            0.6,
+                            0.4,
+                            0.2
+                        ],
+                        "alt": [
+                            35000.0,
+                            35000.0,
+                            35000.0,
+                            10000.0,
+                            10000.0,
+                            10000.0,
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "d_ts": 0.0
+                    },
+                    "PC": [
+                        1.0,
+                        0.8
+                    ],
+                    "throttle_mode": "percent_thrust"
+                }
+            ]
+        },
+        "metadata": {
+            "key": "example_key",
+            "value": "example_value"
+        },
+        "subcomponents": [],
+        "performance": {
+            "name": "CyclePerformance",
+            "thermo_method": "CEA",
+            "throttle_mode": "T4"
+        },
+        "behavior": {
+            "name": "CycleBehavior",
+            "design": true,
+            "flight_conditions_design": {
+                "name": "fc",
+                "mn": [
+                    0.8
+                ],
+                "alt": [
+                    35000.0
+                ]
+            },
+            "performance_components": [
+                {
+                    "name": "perf",
+                    "pt2_source": "inlet",
+                    "pt3_source": "hpc",
+                    "wfuel_0_source": "burner",
+                    "ram_drag_source": "inlet",
+                    "fg_0_source": "core_nozz",
+                    "fg_1_source": "byp_nozz"
+                }
+            ],
+            "engine_decks": [
+                {
+                    "file_header": {
+                        "name": "Engine Deck"
+                    },
+                    "ungridded_table_def": [
+                        {
+                            "name": "Engine Deck Data",
+                            "units": "unitless, unitless, unitless, lbf, lbf, lbf, lbm/s, unitless, hp",
+                            "data_point": [
+                                {
+                                    "value": "0.8 35000.0 1.0 14232.224464624915 5899.99999977472 8332.224464850195 1.0336799654899762 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.8 35000.0 0.8 12576.20477616605 4719.999999819353 7856.204776346697 0.8113537042895516 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.7 35000.0 1.0 12744.37867506452 5941.072157054759 6803.30651800976 0.9895291782327656 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.7 35000.0 0.8 11173.853170052593 4752.857725643807 6420.995444408786 0.7647280721904252 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 20000.0 1.0 15977.920643510384 9905.9852576052 6071.935385905184 1.3514395022423509 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 20000.0 0.8 13581.270103988718 7924.788206084114 5656.481897904604 1.0603563848906288 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 20000.0 1.0 18825.04663289652 8883.541889056716 9941.504743839803 1.4183771744588447 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 20000.0 0.8 16481.147005930743 7106.833511245448 9374.313494685295 1.1346525463957127 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.8 20000.0 1.0 23042.413631346448 8176.575575942448 14865.838055404 1.5055374164665736 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.8 20000.0 0.8 20653.061914917984 6541.260460753956 14111.801454164028 1.2222193510812362 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 10000.0 1.0 24656.209072386602 10635.589939145637 14020.619133240965 1.7716964037533132 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 10000.0 0.8 21755.099843550164 8508.472001940792 13246.627841609372 1.440479907404764 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 10000.0 1.0 20616.647933806482 12100.637938456277 8516.009995350205 1.6897762840285542 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 10000.0 0.8 17600.642665944277 9680.510350765253 7920.132315179025 1.355238137730877 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 10000.0 1.0 18253.36232637081 14258.81072224987 3994.5516041209407 1.638693240430493 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 10000.0 0.8 15061.538858741771 11407.048545727484 3654.4903130142866 1.2909831907398435 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 10000.0 1.0 17465.589731679578 17446.075535784283 19.51419589529454 1.6200988095719209 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 10000.0 0.8 13974.452458059786 13956.860400462636 17.592057597150728 1.2430894008713311 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 1000.0 1.0 20664.198609314597 20638.91628241381 25.282326900785854 1.9232629750387937 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 1000.0 0.8 16533.875208011796 16511.13305528287 22.74215272892581 1.4978989014447623 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 1000.0 1.0 21748.96364258763 16555.46393501545 5193.49970757218 1.9463380665025853 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 1000.0 0.8 17994.153936302766 13244.371190336442 4749.782745966325 1.550940430097288 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 1000.0 1.0 25061.342934565462 13879.860790841074 11181.482143724388 2.013786638274238 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 1000.0 0.8 21514.90784582505 11103.888632672913 10411.019213152138 1.6334680938105792 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 1000.0 1.0 30684.78690131801 12065.80548464249 18618.98141667552 2.116614472484723 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 1000.0 0.8 27281.954290125585 9652.64438771388 17629.309902411704 1.7410462564332305 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 0.0 1.0 31415.274193452387 12222.139236077182 19193.134957375205 2.157531432667021 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 0.0 0.8 27955.089092724134 9777.711425850612 18177.377666873523 1.7773612484994532 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 0.0 1.0 25573.851461910777 14065.824165917404 11508.027295993374 2.050678243394864 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 0.0 0.8 21969.742519729713 11252.659332733847 10717.083186995866 1.6654123835210612 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 0.0 1.0 22142.844390476974 16803.687732746064 5339.156657730909 1.9814794601422852 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 0.0 0.8 18326.05206380118 13442.950186196806 4883.101877604376 1.5806971454224419 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 0.0 1.0 21019.11384525775 20993.134279393482 25.97956586426744 1.9577472432525405 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 0.0 0.8 16817.87209283014 16794.507435807136 23.36465702300318 1.52715724266005 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                }
+                            ]
+                        }
+                    ],
+                    "function": [
+                        {
+                            "name": "Engine Deck Header",
+                            "independent_var_ref": [
+                                {
+                                    "var_id": "mn"
+                                },
+                                {
+                                    "var_id": "alt"
+                                },
+                                {
+                                    "var_id": "throttle"
+                                }
+                            ],
+                            "dependent_var_ref": [
+                                {
+                                    "var_id": "gross_thrust"
+                                },
+                                {
+                                    "var_id": "net_thrust"
+                                },
+                                {
+                                    "var_id": "ram_drag"
+                                },
+                                {
+                                    "var_id": "fuel_flow"
+                                },
+                                {
+                                    "var_id": "temp"
+                                },
+                                {
+                                    "var_id": "shaft_power"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "file_header": {
+                        "name": "Engine Deck"
+                    },
+                    "ungridded_table_def": [
+                        {
+                            "name": "Engine Deck Data",
+                            "units": "unitless, unitless, unitless, lbf, lbf, lbf, lbm/s, unitless, hp",
+                            "data_point": [
+                                {
+                                    "value": "0.8 35000.0 1.0 14910.103765078435 5899.999999899443 9010.103765178992 1.00279571435966 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.8 35000.0 0.8 13234.493316400089 4719.999999919408 8514.49331648068 0.7931057722999598 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.7 35000.0 1.0 13318.047642736901 5960.135393909342 7357.912248827559 0.9606119671643762 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.7 35000.0 0.8 11725.736896161761 4768.108315127466 6957.628581034295 0.7478366947496617 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 20000.0 1.0 16393.47894426979 9872.158748761889 6521.320195507903 1.2984821493631253 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 20000.0 0.8 13957.513182737313 7897.7269990094 6059.786183727913 1.0284190960191943 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 20000.0 1.0 19539.033567458253 8816.977270198648 10722.056297259605 1.3698783495189695 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 20000.0 0.8 17149.62644721592 7053.581816158949 10096.044631056971 1.104889733958649 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.8 20000.0 1.0 24167.278583640036 8080.413898891025 16086.86468474901 1.459166415195963 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.8 20000.0 0.8 21725.891744714056 6464.331114253311 15261.560630460745 1.1943481075878601 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 10000.0 1.0 25429.897886350187 10390.164994669332 15039.732891680855 1.6997190978729078 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 10000.0 0.8 22514.30089658303 8312.132042532732 14202.168854050298 1.3914351356896029 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 10000.0 1.0 20937.92603017108 11862.026603078402 9075.899427092676 1.6107458431857935 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 10000.0 0.8 17921.56108280489 9489.621282462753 8431.939800342136 1.3009974110722897 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 10000.0 1.0 18289.84721785325 14057.277517317958 4232.569700535292 1.5536336616476145 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 10000.0 0.8 15110.865262699805 11245.822013854358 3865.0432488454467 1.2332850827831143 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 10000.0 1.0 17414.925766354536 17394.292381974952 20.63338437958356 1.5336156958081155 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 10000.0 0.8 13933.98434475821 13915.433905579948 18.550439178262277 1.1862644681517083 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 1000.0 1.0 20463.019278044972 20436.428873394256 26.59040465071631 1.8161227896673529 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 1000.0 0.8 16373.012193773728 16349.143124714948 23.869069058779132 1.4260238789857567 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 1000.0 1.0 21675.883571980623 16198.050092256319 5477.833479724304 1.8416664041676336 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 1000.0 0.8 17962.322204671374 12958.44007380506 5003.882130866313 1.478877208998052 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 1000.0 1.0 25319.509421454168 13456.485732014096 11863.023689440071 1.9117424694832599 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 1000.0 0.8 21807.794229624906 10765.188650619673 11042.605579005232 1.561925426099759 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 1000.0 1.0 31562.47957534688 11654.654609437584 19907.824965909294 2.0233426346086296 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 1000.0 0.8 28179.441119565596 9323.723687550093 18855.717432015503 1.6748209702265977 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 0.0 1.0 32311.490889957342 11794.300420930122 20517.19046902722 2.06208315468389 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.6 0.0 0.8 28875.00511816374 9435.44037250274 19439.564745661 1.709230500538322 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 0.0 1.0 25842.404555628185 13634.088082476224 12208.316473151961 1.9475626416686864 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.4 0.0 0.8 22274.235576367784 10907.270465980971 11366.965110386813 1.5931592259588496 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 0.0 1.0 22054.515906808017 16425.976632582795 5628.5392742252225 1.8748696879796918 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.2 0.0 0.8 18282.950959388992 13140.781306066308 5142.169653322684 1.506844774988775 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 0.0 1.0 20801.362669620383 20774.053108170894 27.309561449488854 1.8488468412512926 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                },
+                                {
+                                    "value": "0.001 0.0 0.8 16643.75468196845 16619.2424865367 24.512195431749884 1.4534408630203048 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                }
+                            ]
+                        }
+                    ],
+                    "function": [
+                        {
+                            "name": "Engine Deck Header",
+                            "independent_var_ref": [
+                                {
+                                    "var_id": "mn"
+                                },
+                                {
+                                    "var_id": "alt"
+                                },
+                                {
+                                    "var_id": "throttle"
+                                }
+                            ],
+                            "dependent_var_ref": [
+                                {
+                                    "var_id": "gross_thrust"
+                                },
+                                {
+                                    "var_id": "net_thrust"
+                                },
+                                {
+                                    "var_id": "ram_drag"
+                                },
+                                {
+                                    "var_id": "fuel_flow"
+                                },
+                                {
+                                    "var_id": "temp"
+                                },
+                                {
+                                    "var_id": "shaft_power"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
