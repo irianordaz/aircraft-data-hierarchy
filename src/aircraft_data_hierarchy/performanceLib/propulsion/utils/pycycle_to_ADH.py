@@ -140,7 +140,7 @@ def append_data_point_ADH(prob, engine_data, promoted_names=None, ordered_keys=[
 
     # Assemble the data point string.
     # Example: "0.0 0.0 21.0 1110.0 0.0 500.3 55.372 <!-- mn, alt, throttle, gross_thrust, ram_drag, fuel_flow, nox_rate-->"
-    values_str = " ".join(str(v) for v in data_values)
+    values_str = " ".join('{:.4f}'.format(v) for v in data_values)
     comment_str = " <!-- " + ", ".join(ordered_keys) + " -->"
     full_value_str = values_str + comment_str
 
@@ -214,7 +214,7 @@ def append_data_point_json(prob, json_filepath, promoted_names=None, ordered_key
 
     # Assemble the data point string.
     # Example: "0.0 0.0 21.0 1110.0 0.0 500.3 55.372 <!-- mn, alt, throttle, gross_thrust, ram_drag, fuel_flow, nox_rate-->"
-    values_str = " ".join(str(v) for v in data_values)
+    values_str = " ".join('{:.4f}'.format(v) for v in data_values)
     comment_str = " <!-- " + ", ".join(ordered_keys) + " -->"
     full_value_str = values_str + comment_str
 

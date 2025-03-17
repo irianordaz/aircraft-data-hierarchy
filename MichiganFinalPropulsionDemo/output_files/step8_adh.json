@@ -393,106 +393,106 @@
                             "units": "unitless, unitless, unitless, lbf, lbf, lbf, lbm/s, unitless, hp",
                             "data_point": [
                                 {
-                                    "value": "0.8 35000.0 1.0 14232.224464624915 5899.99999977472 8332.224464850195 1.0336799654899762 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.8000 35000.0000 1.0000 14232.2245 5900.0000 8332.2245 1.0337 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.8 35000.0 0.8 12576.20477616605 4719.999999819353 7856.204776346697 0.8113537042895516 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.8000 35000.0000 0.8000 12576.2048 4720.0000 7856.2048 0.8114 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.7 35000.0 1.0 12744.37867506452 5941.072157054759 6803.30651800976 0.9895291782327656 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.7000 35000.0000 1.0000 12744.3787 5941.0722 6803.3065 0.9895 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.7 35000.0 0.8 11173.853170052593 4752.857725643807 6420.995444408786 0.7647280721904252 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.7000 35000.0000 0.8000 11173.8532 4752.8577 6420.9954 0.7647 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.4 20000.0 1.0 15977.920643510384 9905.9852576052 6071.935385905184 1.3514395022423509 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.4000 20000.0000 1.0000 15977.9206 9905.9853 6071.9354 1.3514 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.4 20000.0 0.8 13581.270103988718 7924.788206084114 5656.481897904604 1.0603563848906288 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.4000 20000.0000 0.8000 13581.2701 7924.7882 5656.4819 1.0604 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.6 20000.0 1.0 18825.04663289652 8883.541889056716 9941.504743839803 1.4183771744588447 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.6000 20000.0000 1.0000 18825.0466 8883.5419 9941.5047 1.4184 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.6 20000.0 0.8 16481.147005930743 7106.833511245448 9374.313494685295 1.1346525463957127 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.6000 20000.0000 0.8000 16481.1470 7106.8335 9374.3135 1.1347 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.8 20000.0 1.0 23042.413631346448 8176.575575942448 14865.838055404 1.5055374164665736 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.8000 20000.0000 1.0000 23042.4136 8176.5756 14865.8381 1.5055 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.8 20000.0 0.8 20653.061914917984 6541.260460753956 14111.801454164028 1.2222193510812362 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.8000 20000.0000 0.8000 20653.0619 6541.2605 14111.8015 1.2222 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.6 10000.0 1.0 24656.209072386602 10635.589939145637 14020.619133240965 1.7716964037533132 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.6000 10000.0000 1.0000 24656.2091 10635.5899 14020.6191 1.7717 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.6 10000.0 0.8 21755.099843550164 8508.472001940792 13246.627841609372 1.440479907404764 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.6000 10000.0000 0.8000 21755.0998 8508.4720 13246.6278 1.4405 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.4 10000.0 1.0 20616.647933806482 12100.637938456277 8516.009995350205 1.6897762840285542 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.4000 10000.0000 1.0000 20616.6479 12100.6379 8516.0100 1.6898 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.4 10000.0 0.8 17600.642665944277 9680.510350765253 7920.132315179025 1.355238137730877 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.4000 10000.0000 0.8000 17600.6427 9680.5104 7920.1323 1.3552 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.2 10000.0 1.0 18253.36232637081 14258.81072224987 3994.5516041209407 1.638693240430493 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.2000 10000.0000 1.0000 18253.3623 14258.8107 3994.5516 1.6387 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.2 10000.0 0.8 15061.538858741771 11407.048545727484 3654.4903130142866 1.2909831907398435 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.2000 10000.0000 0.8000 15061.5389 11407.0485 3654.4903 1.2910 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.001 10000.0 1.0 17465.589731679578 17446.075535784283 19.51419589529454 1.6200988095719209 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.0010 10000.0000 1.0000 17465.5897 17446.0755 19.5142 1.6201 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.001 10000.0 0.8 13974.452458059786 13956.860400462636 17.592057597150728 1.2430894008713311 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.0010 10000.0000 0.8000 13974.4525 13956.8604 17.5921 1.2431 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.001 1000.0 1.0 20664.198609314597 20638.91628241381 25.282326900785854 1.9232629750387937 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.0010 1000.0000 1.0000 20664.1986 20638.9163 25.2823 1.9233 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.001 1000.0 0.8 16533.875208011796 16511.13305528287 22.74215272892581 1.4978989014447623 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.0010 1000.0000 0.8000 16533.8752 16511.1331 22.7422 1.4979 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.2 1000.0 1.0 21748.96364258763 16555.46393501545 5193.49970757218 1.9463380665025853 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.2000 1000.0000 1.0000 21748.9636 16555.4639 5193.4997 1.9463 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.2 1000.0 0.8 17994.153936302766 13244.371190336442 4749.782745966325 1.550940430097288 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.2000 1000.0000 0.8000 17994.1539 13244.3712 4749.7827 1.5509 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.4 1000.0 1.0 25061.342934565462 13879.860790841074 11181.482143724388 2.013786638274238 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.4000 1000.0000 1.0000 25061.3429 13879.8608 11181.4821 2.0138 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.4 1000.0 0.8 21514.90784582505 11103.888632672913 10411.019213152138 1.6334680938105792 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.4000 1000.0000 0.8000 21514.9078 11103.8886 10411.0192 1.6335 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.6 1000.0 1.0 30684.78690131801 12065.80548464249 18618.98141667552 2.116614472484723 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.6000 1000.0000 1.0000 30684.7869 12065.8055 18618.9814 2.1166 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.6 1000.0 0.8 27281.954290125585 9652.64438771388 17629.309902411704 1.7410462564332305 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.6000 1000.0000 0.8000 27281.9543 9652.6444 17629.3099 1.7410 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.6 0.0 1.0 31415.274193452387 12222.139236077182 19193.134957375205 2.157531432667021 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.6000 0.0000 1.0000 31415.2742 12222.1392 19193.1350 2.1575 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.6 0.0 0.8 27955.089092724134 9777.711425850612 18177.377666873523 1.7773612484994532 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.6000 0.0000 0.8000 27955.0891 9777.7114 18177.3777 1.7774 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.4 0.0 1.0 25573.851461910777 14065.824165917404 11508.027295993374 2.050678243394864 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.4000 0.0000 1.0000 25573.8515 14065.8242 11508.0273 2.0507 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.4 0.0 0.8 21969.742519729713 11252.659332733847 10717.083186995866 1.6654123835210612 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.4000 0.0000 0.8000 21969.7425 11252.6593 10717.0832 1.6654 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.2 0.0 1.0 22142.844390476974 16803.687732746064 5339.156657730909 1.9814794601422852 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.2000 0.0000 1.0000 22142.8444 16803.6877 5339.1567 1.9815 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.2 0.0 0.8 18326.05206380118 13442.950186196806 4883.101877604376 1.5806971454224419 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.2000 0.0000 0.8000 18326.0521 13442.9502 4883.1019 1.5807 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.001 0.0 1.0 21019.11384525775 20993.134279393482 25.97956586426744 1.9577472432525405 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.0010 0.0000 1.0000 21019.1138 20993.1343 25.9796 1.9577 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 },
                                 {
-                                    "value": "0.001 0.0 0.8 16817.87209283014 16794.507435807136 23.36465702300318 1.52715724266005 2857.0 0.0 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
+                                    "value": "0.0010 0.0000 0.8000 16817.8721 16794.5074 23.3647 1.5272 2857.0000 0.0000 <!-- mn, alt, throttle, gross_thrust, net_thrust, ram_drag, fuel_flow, temp, shaft_power -->"
                                 }
                             ]
                         }
