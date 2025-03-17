@@ -87,7 +87,7 @@ def initialize_engine_deck_ADH(prob, ADHInstance, deck_name = "Engine Deck", pro
         unit = get_unit(prob, prom_key)
         units_list.append(unit)
     units_string = ", ".join(units_list)
-    engine_data.units = [units_string]
+    engine_data.units = units_string
 
     print(f"Initialized Deck {deck_index}")
 
@@ -243,7 +243,7 @@ def append_data_point_json(prob, json_filepath, promoted_names=None, ordered_key
             "ungridded_table_def": {
                 "name": None,
                 "ut_id": None,
-                "units": [units_string],
+                "units": units_string,
                 "description": None,
                 "provenance": None,
                 "provenance_ref": None,

@@ -503,7 +503,7 @@ class Function(CommonBaseModel):
     independent_var_ref: Optional[List[IndependentVarRef]] = Field(
         None, description="References to independent variables for complex functions"
     )
-    dependent_var_ref: Optional[DependentVarRef] = Field(
+    dependent_var_ref: Optional[List[DependentVarRef]] = Field(
         None, description="Reference to the dependent variable for complex functions"
     )
     function_defn: Optional[FunctionDefn] = Field(None, description="The function definition for complex functions")

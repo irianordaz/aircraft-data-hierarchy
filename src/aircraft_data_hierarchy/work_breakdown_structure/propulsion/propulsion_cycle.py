@@ -79,7 +79,7 @@ class EngineElement(CommonBaseModel):
             raise ValueError(f"Fuel type must be one of {allowed_types}")
         return v
     
-    ######## END temp brute force fix for the demo ################
+    ######## END temp brute force fix for the demo ############
     ###########################################################
     ###########################################################
 
