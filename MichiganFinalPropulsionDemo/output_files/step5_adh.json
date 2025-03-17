@@ -25,7 +25,7 @@
                     {
                         "name": "splitter",
                         "type": "splitter",
-                        "bpr": 5.805,
+                        "bpr": 5.105,
                         "mn1": 0.3104,
                         "mn2": 0.4518
                     },

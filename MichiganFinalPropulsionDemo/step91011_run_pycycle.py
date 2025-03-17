@@ -129,7 +129,7 @@ if __name__ == "__main__":
 
     # Load the generated test ADH
     ADHInstance= generate_test_ADH_propulsion()
-    ADHInstance = JSON_to_ADH(output + "step5_adh.json", ADHInstance)
+    ADHInstance = JSON_to_ADH(output + "step8_adh.json", ADHInstance)
 
     # Intantiate the pyCycle builder class
     pycTest = pyCycleBuilder(ADHInstance)
@@ -213,5 +213,5 @@ if __name__ == "__main__":
             prob["OD_part_pwr.PC"] = PC
             prob.run_model()
 
-    ADH_to_JSON(ADHInstance,output + "step6_adh.json")
+    ADH_to_JSON(ADHInstance,output + "step12_adh.json")
         
