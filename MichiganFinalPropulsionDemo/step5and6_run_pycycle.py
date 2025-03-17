@@ -168,7 +168,7 @@ if __name__ == "__main__":
     ordered_keys = ["mn", "alt", "throttle", "gross_thrust", "net_thrust", "ram_drag", "fuel_flow", "temp", "shaft_power"]
     
     # Specify the JSON file path for the engine deck.
-    json_file_path = "pycycle_engine2.json"
+    json_file_path = output + "pycycle_engine2.json"
 
     #Initialize the Engine Deck in the ADH (sets up the DaveML structure in the behavior branch but no data points yet)
     deck_index = initialize_engine_deck_ADH(prob, ADHInstance, promoted_names=promoted_names, ordered_keys=ordered_keys)
