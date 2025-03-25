@@ -1,3 +1,4 @@
+[![Pytest](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/test-package.yml/badge.svg)](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/test-package.yml)
 [![Python package](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/python-package.yml/badge.svg)](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/python-package.yml)
 
 # Aircraft Data Hierarchy
