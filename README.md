@@ -1,4 +1,3 @@
-[![Pytest](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/test-package.yml/badge.svg)](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/test-package.yml)
 [![Python package](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/python-package.yml/badge.svg)](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/python-package.yml)
 [![Pytest](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/test-package.yml/badge.svg)](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/test-package.yml)
 [![Build & Deploy Documentation](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/sphinx-docs.yml/badge.svg)](https://github.com/Boeing/aircraft-data-hierarchy/actions/workflows/sphinx-docs.yml)
