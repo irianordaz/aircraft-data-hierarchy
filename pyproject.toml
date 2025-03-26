@@ -42,6 +42,14 @@ test = [
     "pytest-cov",
     "coverage",
 ]
+docs = [
+    "sphinx",
+    "jupyter",
+    "autodocsumm",
+    "sphinx-rtd-theme",
+    "sphinx-automodapi",
+    "myst-nb",
+]
 
 [tool.setuptools.packages.find]
 where = ["./src"]
