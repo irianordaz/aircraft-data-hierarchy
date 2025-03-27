@@ -1,0 +1,972 @@
+{
+  "AircraftSystem": {
+    "wbs_no": "1.0",
+    "AircraftSystemIntegrationAssemblyTestAndCheckout": {
+      "wbs_no": "1.1"
+    },
+    "AirVehicle": {
+      "wbs_no": "1.2",
+      "AirVehicleIntegrationAssemblyTestAndCheckout": {
+        "wbs_no": "1.2.1"
+      },
+      "Airframe": {
+        "wbs_no": "1.2.2",
+        "AirframeIntegrationAssemblyTestAndCheckout": {
+          "wbs_no": "1.2.2.1"
+        },
+        "Fuselage": {
+          "wbs_no": "1.2.2.2",
+          "BasicStructure": {
+            "wbs_no": "1.2.2.2.1",
+            "Skins": {
+              "wbs_no": "1.2.2.2.1.1"
+            },
+            "Stringers": {
+              "wbs_no": "1.2.2.2.1.2"
+            },
+            "Frames": {
+              "wbs_no": "1.2.2.2.1.3"
+            },
+            "Clips": {
+              "wbs_no": "1.2.2.2.1.4"
+            },
+            "Beams": {
+              "wbs_no": "1.2.2.2.1.5"
+            },
+            "Floors": {
+              "wbs_no": "1.2.2.2.1.6"
+            },
+            "Bulkheads": {
+              "wbs_no": "1.2.2.2.1.7"
+            },
+            "Longerons": {
+              "wbs_no": "1.2.2.2.1.8"
+            },
+            "Supports": {
+              "wbs_no": "1.2.2.2.1.9"
+            }
+          },
+          "SecondaryStructure": {
+            "wbs_no": "1.2.2.2.2",
+            "Enclosures": {
+              "wbs_no": "1.2.2.2.2.1"
+            },
+            "Flooring": {
+              "wbs_no": "1.2.2.2.2.2"
+            },
+            "Partitions": {
+              "wbs_no": "1.2.2.2.2.3"
+            },
+            "Windows": {
+              "wbs_no": "1.2.2.2.2.4"
+            },
+            "Doors": {
+              "wbs_no": "1.2.2.2.2.5"
+            },
+            "Ramps": {
+              "wbs_no": "1.2.2.2.2.6"
+            },
+            "Panels": {
+              "wbs_no": "1.2.2.2.2.7"
+            },
+            "Misc": {
+              "wbs_no": "1.2.2.2.2.8"
+            }
+          }
+        },
+        "Wing": {
+          "wbs_no": "1.2.2.3",
+          "BasicStructure": {
+            "wbs_no": "1.2.2.3.1",
+            "CenterSection": {
+              "wbs_no": "1.2.2.3.1.1",
+              "Skins": {
+                "wbs_no": "1.2.2.3.1.1.1"
+              },
+              "Spars": {
+                "wbs_no": "1.2.2.3.1.1.2"
+              },
+              "Ribs": {
+                "wbs_no": "1.2.2.3.1.1.3"
+              },
+              "Stringers": {
+                "wbs_no": "1.2.2.3.1.1.4"
+              },
+              "Clips": {
+                "wbs_no": "1.2.2.3.1.1.5"
+              }
+            },
+            "IntermediatePanel": {
+              "wbs_no": "1.2.2.3.1.2",
+              "Skins": {
+                "wbs_no": "1.2.2.3.1.2.1"
+              },
+              "Spars": {
+                "wbs_no": "1.2.2.3.1.2.2"
+              },
+              "Ribs": {
+                "wbs_no": "1.2.2.3.1.2.3"
+              },
+              "Stringers": {
+                "wbs_no": "1.2.2.3.1.2.4"
+              },
+              "Clips": {
+                "wbs_no": "1.2.2.3.1.2.5"
+              }
+            },
+            "OuterPanel": {
+              "wbs_no": "1.2.2.3.1.3",
+              "Skins": {
+                "wbs_no": "1.2.2.3.1.3.1"
+              },
+              "Spars": {
+                "wbs_no": "1.2.2.3.1.3.2"
+              },
+              "Ribs": {
+                "wbs_no": "1.2.2.3.1.3.3"
+              },
+              "Stringers": {
+                "wbs_no": "1.2.2.3.1.3.4"
+              },
+              "Clips": {
+                "wbs_no": "1.2.2.3.1.3.5"
+              }
+            }
+          },
+          "SecondaryStructure": {
+            "wbs_no": "1.2.2.3.2",
+            "AccessPanels": {
+              "wbs_no": "1.2.2.3.2.1"
+            }
+          },
+          "Ailerons": {
+            "wbs_no": "1.2.2.3.3"
+          },
+          "Elevons": {
+            "wbs_no": "1.2.2.3.4"
+          },
+          "Spoilers": {
+            "wbs_no": "1.2.2.3.5"
+          },
+          "TrailingEdgeFlaps": {
+            "wbs_no": "1.2.2.3.6"
+          },
+          "LeadingEdgeFlaps": {
+            "wbs_no": "1.2.2.3.7"
+          },
+          "Slats": {
+            "wbs_no": "1.2.2.3.8"
+          }
+        },
+        "Empennage": {
+          "wbs_no": "1.2.2.4",
+          "Stabilizer": {
+            "wbs_no": "1.2.2.4.1",
+            "BasicStructure": {
+              "wbs_no": "1.2.2.4.1.1",
+              "CenterSection": {
+                "wbs_no": "1.2.2.4.1.1.1",
+                "Skins": {
+                  "wbs_no": "1.2.2.4.1.1.1.1"
+                },
+                "Spars": {
+                  "wbs_no": "1.2.2.4.1.1.1.2"
+                },
+                "Ribs": {
+                  "wbs_no": "1.2.2.4.1.1.1.3"
+                },
+                "Stringers": {
+                  "wbs_no": "1.2.2.4.1.1.1.4"
+                },
+                "Clips": {
+                  "wbs_no": "1.2.2.4.1.1.1.5"
+                }
+              },
+              "IntermediatePanel": {
+                "wbs_no": "1.2.2.4.1.1.2",
+                "Skins": {
+                  "wbs_no": "1.2.2.4.1.1.2.1"
+                },
+                "Spars": {
+                  "wbs_no": "1.2.2.4.1.1.2.2"
+                },
+                "Ribs": {
+                  "wbs_no": "1.2.2.4.1.1.2.3"
+                },
+                "Stringers": {
+                  "wbs_no": "1.2.2.4.1.1.2.4"
+                },
+                "Clips": {
+                  "wbs_no": "1.2.2.4.1.1.2.5"
+                }
+              },
+              "OuterPanel": {
+                "wbs_no": "1.2.2.4.1.1.3",
+                "Skins": {
+                  "wbs_no": "1.2.2.4.1.1.3.1"
+                },
+                "Spars": {
+                  "wbs_no": "1.2.2.4.1.1.3.2"
+                },
+                "Ribs": {
+                  "wbs_no": "1.2.2.4.1.1.3.3"
+                },
+                "Stringers": {
+                  "wbs_no": "1.2.2.4.1.1.3.4"
+                },
+                "Clips": {
+                  "wbs_no": "1.2.2.4.1.1.3.5"
+                }
+              }
+            },
+            "SecondaryStructure": {
+              "wbs_no": "1.2.2.4.2",
+              "AccessPanels": {
+                "wbs_no": "1.2.2.4.2.1"
+              }
+            },
+            "Ailerons": {
+              "wbs_no": "1.2.2.4.3"
+            },
+            "Elevons": {
+              "wbs_no": "1.2.2.4.4"
+            },
+            "Spoilers": {
+              "wbs_no": "1.2.2.4.5"
+            },
+            "TrailingEdgeFlaps": {
+              "wbs_no": "1.2.2.4.6"
+            },
+            "LeadingEdgeFlaps": {
+              "wbs_no": "1.2.2.4.7"
+            },
+            "Slats": {
+              "wbs_no": "1.2.2.4.8"
+            }
+          }
+        },
+        "Nacelle": {
+          "wbs_no": "1.2.2.5",
+          "BasicStructure": {
+            "wbs_no": "1.2.2.5.1",
+            "Skins": {
+              "wbs_no": "1.2.2.5.1.1"
+            },
+            "Stringers": {
+              "wbs_no": "1.2.2.5.1.2"
+            },
+            "Frames": {
+              "wbs_no": "1.2.2.5.1.3"
+            },
+            "Clips": {
+              "wbs_no": "1.2.2.5.1.4"
+            },
+            "Beams": {
+              "wbs_no": "1.2.2.5.1.5"
+            },
+            "Floors": {
+              "wbs_no": "1.2.2.5.1.6"
+            },
+            "Bulkheads": {
+              "wbs_no": "1.2.2.5.1.7"
+            },
+            "Longerons": {
+              "wbs_no": "1.2.2.5.1.8"
+            },
+            "Supports": {
+              "wbs_no": "1.2.2.5.1.9"
+            }
+          },
+          "SecondaryStructure": {
+            "wbs_no": "1.2.2.5.2",
+            "Enclosures": {
+              "wbs_no": "1.2.2.5.2.1"
+            },
+            "Flooring": {
+              "wbs_no": "1.2.2.5.2.2"
+            },
+            "Partitions": {
+              "wbs_no": "1.2.2.5.2.3"
+            },
+            "Windows": {
+              "wbs_no": "1.2.2.5.2.4"
+            },
+            "Doors": {
+              "wbs_no": "1.2.2.5.2.5"
+            },
+            "Ramps": {
+              "wbs_no": "1.2.2.5.2.6"
+            },
+            "Panels": {
+              "wbs_no": "1.2.2.5.2.7"
+            },
+            "Misc": {
+              "wbs_no": "1.2.2.5.2.8"
+            }
+          },
+          "geometry": {
+            "reference_axis": {
+              "points": [
+                {"x": 1.0, "y": 1.0, "z": 1.0},
+                {"x": 1.0, "y": 1.0, "z": 1.0},
+                {"x": 1.0, "y": 1.0, "z": 1.0}
+              ],
+              "degree": 3
+            },
+            "cross_sections": [
+              {
+                "station": 0.0,
+                "upper_curve": {
+                  "points": [
+                    {"x": 0.0, "y": 0.5, "z": 0.0},
+                    {"x": 0.0, "y": 0.0, "z": 0.4},
+                    {"x": 0.0, "y": -0.5, "z": 0.0}
+                  ],
+                  "degree": 3
+                },
+                "lower_curve": {
+                  "points": [
+                    {"x": 0.0, "y": 0.5, "z": 0.0},
+                    {"x": 0.0, "y": 0.0, "z": -0.4},
+                    {"x": 0.0, "y": -0.5, "z": 0.0}
+                  ],
+                  "degree": 3
+                }
+              },
+              {
+                "station": 1.0,
+                "upper_curve": {
+                  "points": [
+                    {"x": 0.5, "y": 0.5, "z": 0.0},
+                    {"x": 0.5, "y": 0.0, "z": 0.5},
+                    {"x": 0.5, "y": -0.5, "z": 0.0}
+                  ],
+                  "degree": 3
+                },
+                "lower_curve": {
+                  "points": [
+                    {"x": 0.5, "y": 0.5, "z": 0.0},
+                    {"x": 0.5, "y": 0.0, "z": -0.5},
+                    {"x": 0.5, "y": -0.5, "z": 0.0}
+                  ],
+                  "degree": 3
+                }
+              },
+              {
+                "station": 2.0,
+                "upper_curve": {
+                  "points": [
+                    {"x": 1.0, "y": 0.5, "z": 0.0},
+                    {"x": 1.0, "y": 0.0, "z": 0.3},
+                    {"x": 1.0, "y": -0.5, "z": 0.0}
+                  ],
+                  "degree": 3
+                },
+                "lower_curve": {
+                  "points": [
+                    {"x": 1.0, "y": 0.5, "z": 0.0},
+                    {"x": 1.0, "y": 0.0, "z": -0.3},
+                    {"x": 1.0, "y": -0.5, "z": 0.0}
+                  ],
+                  "degree": 3
+                }
+              }
+            ]
+          },
+          "parameters": {
+            "length": 2.0,
+            "diameter": 1.0,
+            "material": "Aluminum Alloy",
+            "weight": 500.0
+          },
+          "metadata": {
+            "key": "nacelle_metadata",
+            "value": "Example metadata for nacelle"
+          }
+        },
+        "Propulsion": {
+          "wbs_no": "1.2.3",
+          "Engine": {
+            "wbs_no": "1.2.3.1"
+          },
+          "EngineInstallation": {
+            "wbs_no": "1.2.3.2"
+          },
+          "AccessoryGearBoxesAndDrive": {
+            "wbs_no": "1.2.3.3"
+          },
+          "ExhaustSystem": {
+            "wbs_no": "1.2.3.4"
+          },
+          "EngineCooling": {
+            "wbs_no": "1.2.3.5"
+          },
+          "WaterInjection": {
+            "wbs_no": "1.2.3.6"
+          },
+          "EngineControls": {
+            "wbs_no": "1.2.3.7"
+          },
+          "StartingSystem": {
+            "wbs_no": "1.2.3.8"
+          },
+          "PropellerOrFanInstallation": {
+            "wbs_no": "1.2.3.9"
+          },
+          "LubricatingSystem": {
+            "wbs_no": "1.2.3.10"
+          },
+          "FuelSystem": {
+            "wbs_no": "1.2.3.11",
+            "ProtectedTanks": {
+              "wbs_no": "1.2.3.11.1"
+            },
+            "UnprotectedTanks": {
+              "wbs_no": "1.2.3.11.2"
+            },
+            "Plumbing": {
+              "wbs_no": "1.2.3.11.3"
+            },
+            "Etc": {
+              "wbs_no": "1.2.3.11.4"
+            }
+          },
+          "DriveSystem": {
+            "wbs_no": "1.2.3.12",
+            "GearBoxes": {
+              "wbs_no": "1.2.3.12.1"
+            },
+            "LubSys": {
+              "wbs_no": "1.2.3.12.2"
+            },
+            "RtrBrk": {
+              "wbs_no": "1.2.3.12.3"
+            },
+            "TransmissionDrive": {
+              "wbs_no": "1.2.3.12.4"
+            },
+            "RotorShaft": {
+              "wbs_no": "1.2.3.12.5"
+            },
+            "GasDrive": {
+              "wbs_no": "1.2.3.12.6"
+            }
+          }
+        }
+      },
+      "VehicleSubsystems": {
+        "wbs_no": "1.2.4",
+        "VehicleSubsystemIntegrationAssemblyTestAndCheckout": {
+          "wbs_no": "1.2.4.1"
+        },
+        "FlightControlSubsystem": {
+          "wbs_no": "1.2.4.2",
+          "CockpitControls": {
+            "wbs_no": "1.2.4.2.1"
+          },
+          "AutomaticFlightControlSystem": {
+            "wbs_no": "1.2.4.2.2"
+          },
+          "SystemControls": {
+            "wbs_no": "1.2.4.2.3"
+          }
+        },
+        "AuxiliaryPowerSubsystem": {
+          "wbs_no": "1.2.4.3"
+        },
+        "HydraulicSubsystem": {
+          "wbs_no": "1.2.4.4"
+        },
+        "ElectricalAntiIcingSystem": {
+          "wbs_no": "1.2.4.5"
+        },
+        "CrewStationSubsystem": {
+          "wbs_no": "1.2.4.6"
+        },
+        "EnvironmentalControlSubsystem": {
+          "wbs_no": "1.2.4.7"
+        },
+        "FuelSubsystem": {
+          "wbs_no": "1.2.4.8"
+        },
+        "Instruments": {
+          "wbs_no": "1.2.4.9"
+        },
+        "PneumaticSubsystem": {
+          "wbs_no": "1.2.4.10"
+        },
+        "AntiIcingSubsystem": {
+          "wbs_no": "1.2.4.11"
+        },
+        "VehicleSubsystemSoftware": {
+          "wbs_no": "1.2.4.12"
+        },
+        "OtherSubsystems": {
+          "wbs_no": "1.2.4.13"
+        }
+      },
+      "Avionics": {
+        "wbs_no": "1.2.5",
+        "AvionicsIntegrationAssemblyTestAndCheckout": {
+          "wbs_no": "1.2.5.1"
+        },
+        "CommunicationIdentification": {
+          "wbs_no": "1.2.5.2"
+        },
+        "NavigationGuidance": {
+          "wbs_no": "1.2.5.3"
+        },
+        "MissionComputerProcessing": {
+          "wbs_no": "1.2.5.4"
+        },
+        "FireControl": {
+          "wbs_no": "1.2.5.5"
+        },
+        "DataDisplayAndControls": {
+          "wbs_no": "1.2.5.6"
+        },
+        "Survivability": {
+          "wbs_no": "1.2.5.7"
+        },
+        "Reconnaissance": {
+          "wbs_no": "1.2.5.8"
+        },
+        "ElectronicWarfare": {
+          "wbs_no": "1.2.5.9"
+        },
+        "AutomaticFlightControl": {
+          "wbs_no": "1.2.5.10"
+        },
+        "HealthMonitoringSystem": {
+          "wbs_no": "1.2.5.11"
+        },
+        "StoresManagement": {
+          "wbs_no": "1.2.5.12"
+        },
+        "AvionicsSoftwareRelease": {
+          "wbs_no": "1.2.5.13"
+        },
+        "OtherAvionicsSubsystems": {
+          "wbs_no": "1.2.5.14"
+        },
+        "Installation": {
+          "wbs_no": "1.2.5.15"
+        }
+      },
+      "ArmamentWeaponsDelivery": {
+        "wbs_no": "1.2.6"
+      },
+      "AuxiliaryEquipment": {
+        "wbs_no": "1.2.7"
+      },
+      "FurnishingsAndEquipment": {
+        "wbs_no": "1.2.8",
+        "AccommodationForPersonnel": {
+          "wbs_no": "1.2.8.1"
+        },
+        "MiscellaneousEquipment": {
+          "wbs_no": "1.2.8.2"
+        },
+        "Furnishings": {
+          "wbs_no": "1.2.8.3"
+        },
+        "EmergencyEquipment": {
+          "wbs_no": "1.2.8.4"
+        }
+      },
+      "AirVehicleSoftwareRelease": {
+        "wbs_no": "1.2.9"
+      },
+      "LoadAndHandlingSystem": {
+        "wbs_no": "1.2.10",
+        "AircraftHandling": {
+          "wbs_no": "1.2.10.1"
+        },
+        "LoadHandling": {
+          "wbs_no": "1.2.10.2"
+        }
+      },
+      "BallastGroup": {
+        "wbs_no": "1.2.11"
+      },
+      "ManufacturingVariation": {
+        "wbs_no": "1.2.12"
+      },
+      "Contingency": {
+        "wbs_no": "1.2.13"
+      },
+      "OperatingItems": {
+        "wbs_no": "1.2.14",
+        "Crew": {
+          "wbs_no": "1.2.14.1"
+        },
+        "UnusableFuel": {
+          "wbs_no": "1.2.14.2"
+        },
+        "TrappedOil": {
+          "wbs_no": "1.2.14.3"
+        },
+        "EngineOil": {
+          "wbs_no": "1.2.14.4"
+        },
+        "AuxFuelTanks": {
+          "wbs_no": "1.2.14.5"
+        },
+        "InternalFuelTanks": {
+          "wbs_no": "1.2.14.6"
+        },
+        "ExternalFuelTanks": {
+          "wbs_no": "1.2.14.7"
+        },
+        "WaterInjectionFluid": {
+          "wbs_no": "1.2.14.8"
+        },
+        "Baggage": {
+          "wbs_no": "1.2.14.9"
+        },
+        "GunInstallations": {
+          "wbs_no": "1.2.14.10",
+          "Guns": {
+            "wbs_no": "1.2.14.10.1"
+          },
+          "Supports": {
+            "wbs_no": "1.2.14.10.2"
+          }
+        },
+        "WeaponsProvisions": {
+          "wbs_no": "1.2.14.11"
+        },
+        "Chaff": {
+          "wbs_no": "1.2.14.12"
+        },
+        "Flares": {
+          "wbs_no": "1.2.14.13"
+        },
+        "SurvivalKits": {
+          "wbs_no": "1.2.14.14"
+        },
+        "LifeRafts": {
+          "wbs_no": "1.2.14.15"
+        },
+        "Oxygen": {
+          "wbs_no": "1.2.14.16"
+        }
+      },
+      "Passengers": {
+        "wbs_no": "1.2.15"
+      },
+      "Troops": {
+        "wbs_no": "1.2.16"
+      },
+      "Cargo": {
+        "wbs_no": "1.2.17"
+      },
+      "Ammunition": {
+        "wbs_no": "1.2.18"
+      },
+      "Weapons": {
+        "wbs_no": "1.2.19"
+      },
+      "InternalUsableFuel": {
+        "wbs_no": "1.2.20"
+      },
+      "ExternalUsableFuel": {
+        "wbs_no": "1.2.21"
+      },
+      "OtherAirVehicle": {
+        "wbs_no": "1.2.22"
+      }
+    },
+    "PayloadMissionSystem": {
+      "wbs_no": "1.3",
+      "PayloadIntegrationAssemblyTestAndCheckout": {
+        "wbs_no": "1.3.1"
+      },
+      "SurvivabilityPayload": {
+        "wbs_no": "1.3.2"
+      },
+      "ReconnaissancePayload": {
+        "wbs_no": "1.3.3"
+      },
+      "ElectronicWarfarePayload": {
+        "wbs_no": "1.3.4"
+      },
+      "ArmamentWeaponsDeliveryPayload": {
+        "wbs_no": "1.3.5"
+      },
+      "PayloadSoftwareRelease": {
+        "wbs_no": "1.3.6"
+      },
+      "OtherPayload": {
+        "wbs_no": "1.3.7"
+      }
+    },
+    "GroundHostSegment": {
+      "wbs_no": "1.4",
+      "GroundSegmentIntegrationAssemblyTestAndCheckout": {
+        "wbs_no": "1.4.1"
+      },
+      "GroundControlSystems": {
+        "wbs_no": "1.4.2"
+      },
+      "CommandAndControlSubsystem": {
+        "wbs_no": "1.4.3"
+      },
+      "LaunchEquipment": {
+        "wbs_no": "1.4.4"
+      },
+      "RecoveryEquipment": {
+        "wbs_no": "1.4.5"
+      },
+      "TransportVehicles": {
+        "wbs_no": "1.4.6"
+      },
+      "GroundSegmentSoftwareRelease": {
+        "wbs_no": "1.4.7"
+      },
+      "OtherGroundHostSegment": {
+        "wbs_no": "1.4.8"
+      }
+    },
+    "AircraftSystemSoftwareRelease": {
+      "wbs_no": "1.5"
+    },
+    "SystemsEngineering": {
+      "wbs_no": "1.6",
+      "SoftwareSystemsEngineering": {
+        "wbs_no": "1.6.1"
+      },
+      "IntegratedLogisticsSupportSystemsEngineering": {
+        "wbs_no": "1.6.2"
+      },
+      "CybersecuritySystemsEngineering": {
+        "wbs_no": "1.6.3"
+      },
+      "CoreSystemsEngineering": {
+        "wbs_no": "1.6.4"
+      },
+      "OtherSystemsEngineering": {
+        "wbs_no": "1.6.5"
+      }
+    },
+    "ProgramManagement": {
+      "wbs_no": "1.7",
+      "SoftwareProgramManagement": {
+        "wbs_no": "1.7.1"
+      },
+      "IntegratedLogisticsSupportProgramManagement": {
+        "wbs_no": "1.7.2"
+      },
+      "CybersecurityManagement": {
+        "wbs_no": "1.7.3"
+      },
+      "CoreProgramManagement": {
+        "wbs_no": "1.7.4"
+      },
+      "OtherProgramManagement": {
+        "wbs_no": "1.7.5"
+      }
+    },
+    "SystemTestAndEvaluation": {
+      "wbs_no": "1.8",
+      "DevelopmentalTestAndEvaluation": {
+        "wbs_no": "1.8.1",
+        "SystemAcceptanceTest": {
+          "wbs_no": "1.8.1.1"
+        },
+        "WindTunnelTests": {
+          "wbs_no": "1.8.1.2"
+        },
+        "StructuralTests": {
+          "wbs_no": "1.8.1.3"
+        },
+        "FlightTests": {
+          "wbs_no": "1.8.1.4"
+        },
+        "GroundTests": {
+          "wbs_no": "1.8.1.5"
+        },
+        "CybersecurityTestAndEvaluation": {
+          "wbs_no": "1.8.1.6"
+        },
+        "OtherDTEtests": {
+          "wbs_no": "1.8.1.7"
+        }
+      },
+      "OperationalTestAndEvaluation": {
+        "wbs_no": "1.8.2",
+        "LimitedUserEvaluation": {
+          "wbs_no": "1.8.2.1"
+        },
+        "InteroperabilityTesting": {
+          "wbs_no": "1.8.2.2"
+        },
+        "FlightTests": {
+          "wbs_no": "1.8.2.3"
+        },
+        "GroundTests": {
+          "wbs_no": "1.8.2.4"
+        },
+        "CybersecurityTestAndEvaluation": {
+          "wbs_no": "1.8.2.5"
+        },
+        "OtherOTEtests": {
+          "wbs_no": "1.8.2.6"
+        }
+      },
+      "LiveFireTestAndEvaluation": {
+        "wbs_no": "1.8.3"
+      },
+      "MockupsSystemIntegrationLabs": {
+        "wbs_no": "1.8.4"
+      },
+      "TestAndEvaluationSupport": {
+        "wbs_no": "1.8.5"
+      },
+      "TestFacilities": {
+        "wbs_no": "1.8.6"
+      }
+    },
+    "Training": {
+      "wbs_no": "1.9",
+      "Equipment": {
+        "wbs_no": "1.9.1",
+        "OperatorInstructionalEquipment": {
+          "wbs_no": "1.9.1.1"
+        },
+        "MaintainerInstructionalEquipment": {
+          "wbs_no": "1.9.1.2"
+        }
+      },
+      "Services": {
+        "wbs_no": "1.9.2",
+        "OperatorInstructionalServices": {
+          "wbs_no": "1.9.2.1"
+        },
+        "MaintainerInstructionalServices": {
+          "wbs_no": "1.9.2.2"
+        }
+      },
+      "Facilities": {
+        "wbs_no": "1.9.3"
+      },
+      "TrainingSoftware": {
+        "wbs_no": "1.9.4"
+      }
+    },
+    "Data": {
+      "wbs_no": "1.10",
+      "DataDeliverables": {
+        "wbs_no": "1.10.1"
+      },
+      "DataRepository": {
+        "wbs_no": "1.10.2"
+      },
+      "DataRights": {
+        "wbs_no": "1.10.3"
+      }
+    },
+    "PeculiarSupportEquipment": {
+      "wbs_no": "1.11",
+      "TestAndMeasurementEquipment": {
+        "wbs_no": "1.11.1",
+        "AirframeHullVehicle": {
+          "wbs_no": "1.11.1.1"
+        },
+        "Propulsion": {
+          "wbs_no": "1.11.1.2"
+        },
+        "ElectronicsAvionics": {
+          "wbs_no": "1.11.1.3"
+        },
+        "OtherMajorSubsystems": {
+          "wbs_no": "1.11.1.4"
+        }
+      },
+      "SupportAndHandlingEquipment": {
+        "wbs_no": "1.11.2",
+        "AirframeHullVehicle": {
+          "wbs_no": "1.11.2.1"
+        },
+        "Propulsion": {
+          "wbs_no": "1.11.2.2"
+        },
+        "ElectronicsAvionics": {
+          "wbs_no": "1.11.2.3"
+        },
+        "OtherMajorSubsystems": {
+          "wbs_no": "1.11.2.4"
+        }
+      }
+    },
+    "CommonSupportEquipment": {
+      "wbs_no": "1.12",
+      "TestAndMeasurementEquipment": {
+        "wbs_no": "1.12.1",
+        "AirframeHullVehicle": {
+          "wbs_no": "1.12.1.1"
+        },
+        "Propulsion": {
+          "wbs_no": "1.12.1.2"
+        },
+        "ElectronicsAvionics": {
+          "wbs_no": "1.12.1.3"
+        },
+        "OtherMajorSubsystems": {
+          "wbs_no": "1.12.1.4"
+        }
+      },
+      "SupportAndHandlingEquipment": {
+        "wbs_no": "1.12.2",
+        "AirframeHullVehicle": {
+          "wbs_no": "1.12.2.1"
+        },
+        "Propulsion": {
+          "wbs_no": "1.12.2.2"
+        },
+        "ElectronicsAvionics": {
+          "wbs_no": "1.12.2.3"
+        },
+        "OtherMajorSubsystems": {
+          "wbs_no": "1.12.2.4"
+        }
+      }
+    },
+    "OperationalSiteActivation": {
+      "wbs_no": "1.13",
+      "SystemAssemblyInstallationAndCheckoutOnSite": {
+        "wbs_no": "1.13.1"
+      },
+      "ContractorTechnicalSupport": {
+        "wbs_no": "1.13.2"
+      },
+      "SiteConstruction": {
+        "wbs_no": "1.13.3"
+      },
+      "SiteShipVehicleConversion": {
+        "wbs_no": "1.13.4"
+      },
+      "InterimContractorSupport": {
+        "wbs_no": "1.13.5"
+      }
+    },
+    "ContractorLogisticsSupport": {
+      "wbs_no": "1.14"
+    },
+    "IndustrialFacilities": {
+      "wbs_no": "1.15",
+      "ConstructionConversionExpansion": {
+        "wbs_no": "1.15.1"
+      },
+      "EquipmentAcquisitionOrModernization": {
+        "wbs_no": "1.15.2"
+      },
+      "IndustrialFacilitiesMaintenance": {
+        "wbs_no": "1.15.3"
+      }
+    },
+    "InitialSparesAndRepairParts": {
+      "wbs_no": "1.16"
+    }
+  }
+}
