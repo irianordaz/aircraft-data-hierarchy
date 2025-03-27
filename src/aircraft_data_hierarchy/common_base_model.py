@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 from pydantic import BaseModel, Field, field_validator, ConfigDict
 
 class NodeNotFoundError(Exception):
@@ -298,10 +298,18 @@ class Metadata(CommonBaseModel):
     Attributes:
         key (str): The key of the metadata entry.
         value (Any): The value associated with the key.
+        units (Optional[str]): The units of measure for the data.
+        uncertainty (Optional[Any]): The uncertainty associated with the data.
+        lower_bounds (Optional[List[Bounds]]): The lower bounds of the data.
+        upper_bounds (Optional[List[Bounds]]): The upper bounds of the data.
     """
 
     key: str
     value: Any
+    units: Optional[str] = Field(None, description="The units of measure for the data")
+    uncertainty: Optional[Any] = Field(None, description="The uncertainty associated with the data")
+    lower_bounds: Optional[Union[int, float]] = Field(None, description="The lower bounds of the data")
+    upper_bounds: Optional[Union[int, float]] = Field(None, description="The upper bounds of the data")
 
     class Config:
         """Pydantic configuration for the Metadata model."""
