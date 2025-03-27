@@ -3,12 +3,15 @@ import os
 from aircraft_data_hierarchy.behavior import DAVEfunc, UngriddedTableDef, DataPoint, IndependentVarRef, DependentVarRef, Function, FileHeader
 
 
-def normalize_string(s):
+def normalize_string(s,notLowerCase=False):
     """
     Normalize a string by stripping whitespace, replacing spaces with underscores,
     and converting to lowercase.
     """
-    return s.strip().replace(" ", "_").lower()
+    if notLowerCase:
+        return s.strip().replace(" ", "_")
+    else:
+        return s.strip().replace(" ", "_").lower()
 
 def get_unit(prob, prom_key):
     """
@@ -16,9 +19,9 @@ def get_unit(prob, prom_key):
     returns its units. If not found, returns 'unitless'.
     """
     io_metadata = prob.model.get_io_metadata()
-    norm_prom = normalize_string(prom_key)
+    norm_prom = normalize_string(prom_key,notLowerCase=True)
     for meta_key, meta in io_metadata.items():
-        if norm_prom in normalize_string(meta_key):
+        if norm_prom in normalize_string(meta_key,notLowerCase=True):
             return meta.get("units", "unitless")
     return "unitless"
 
@@ -66,16 +69,17 @@ def initialize_engine_deck_ADH(prob, ADHInstance, deck_name = "Engine Deck", pro
     function.independent_var_ref = independent_vars
     function.dependent_var_ref = dependent_vars
 
+    # Some keys like alt and temp require the absolute names
     if promoted_names is None:
         promoted_names = {
         "mn": "OD_part_pwr.fc.MN",
-        "alt": "OD_part_pwr.fc.alt",
+        "alt": "OD_part_pwr.fc.ambient.readAtmTable.alt",
         "throttle": "OD_part_pwr.PC",
         "gross_thrust": "OD_part_pwr.perf.Fg",
         "net_thrust": "OD_part_pwr.perf.Fn",
         "ram_drag": "OD_part_pwr.perf.ram_drag",
         "fuel_flow": "OD_part_pwr.perf.Wfuel_0",
-        "temp": "OD_full_pwr.T4_MAX",
+        "temp": "OD_full_pwr.balance.rhs:FAR",
         "shaft_power": "OD_part_pwr.lp_shaft.HPX"
         # PyCycle doesn't return nox rate 
     }
@@ -88,6 +92,7 @@ def initialize_engine_deck_ADH(prob, ADHInstance, deck_name = "Engine Deck", pro
         units_list.append(unit)
     units_string = ", ".join(units_list)
     engine_data.units = units_string
+    breakpoint()
 
     print(f"Initialized Deck {deck_index}")
 
@@ -110,16 +115,17 @@ def append_data_point_ADH(prob, engine_data, promoted_names=None, ordered_keys=[
             Default values (adjust these as needed) are used if not provided.
     """
 
+    # Some keys like alt and temp require the absolute names
     if promoted_names is None:
         promoted_names = {
         "mn": "OD_part_pwr.fc.MN",
-        "alt": "OD_part_pwr.fc.alt",
+        "alt": "OD_part_pwr.fc.ambient.readAtmTable.alt",
         "throttle": "OD_part_pwr.PC",
         "gross_thrust": "OD_part_pwr.perf.Fg",
         "net_thrust": "OD_part_pwr.perf.Fn",
         "ram_drag": "OD_part_pwr.perf.ram_drag",
         "fuel_flow": "OD_part_pwr.perf.Wfuel_0",
-        "temp": "OD_full_pwr.T4_MAX",
+        "temp": "OD_full_pwr.balance.rhs:FAR",
         "shaft_power": "OD_part_pwr.lp_shaft.HPX"
         # PyCycle doesn't return nox rate 
     }
@@ -184,16 +190,17 @@ def append_data_point_json(prob, json_filepath, promoted_names=None, ordered_key
         else:
             dependent_vars.append({"var_id": alias})
 
+    # Some keys like alt and temp require the absolute names
     if promoted_names is None:
         promoted_names = {
         "mn": "OD_part_pwr.fc.MN",
-        "alt": "OD_part_pwr.fc.alt",
+        "alt": "OD_part_pwr.fc.ambient.readAtmTable.alt",
         "throttle": "OD_part_pwr.PC",
         "gross_thrust": "OD_part_pwr.perf.Fg",
         "net_thrust": "OD_part_pwr.perf.Fn",
         "ram_drag": "OD_part_pwr.perf.ram_drag",
         "fuel_flow": "OD_part_pwr.perf.Wfuel_0",
-        "temp": "OD_full_pwr.T4_MAX",
+        "temp": "OD_full_pwr.balance.rhs:FAR",
         "shaft_power": "OD_part_pwr.lp_shaft.HPX"
         # PyCycle doesn't return nox rate 
     }

@@ -42,3 +42,31 @@ def JSON_to_ADH(path,ADHInstance):
     ADHInstanceNew = ADHInstance.model_validate_json(adhData)
 
     return ADHInstanceNew
+
+def ADH_to_Engine_Deck(input_path, output_path):
+    """
+    Extracts the 'engine_decks' data from an existing ADH JSON file and saves it separately.
+
+    input_path: str
+        The path to the existing ADH.json file.
+
+    output_path: str
+        The path where the extracted engine_decks JSON should be saved.
+    """
+
+    # Read the ADH JSON file
+    with open(input_path, "r") as file:
+        adh_data = json.load(file)  # Load as dictionary
+
+    # Check if "engine_decks" exists in the JSON data
+    if "engine_decks" in adh_data["OuterNest"]["behavior"]:
+        engine_decks_data = adh_data["OuterNest"]["behavior"]["engine_decks"][0]  # Extract only engine_decks
+
+        # Convert extracted data to formatted JSON string
+        engine_decks_json = json.dumps(engine_decks_data, indent=4)
+
+        # Save the extracted data to the output file
+        with open(output_path, "w") as file:
+            file.write(engine_decks_json)
+    else:
+        raise KeyError("The input JSON file does not contain 'engine_decks'.")
