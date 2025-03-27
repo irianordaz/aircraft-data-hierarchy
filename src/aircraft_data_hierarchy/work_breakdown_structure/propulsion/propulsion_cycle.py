@@ -16,9 +16,7 @@ class EngineElement(CommonBaseModel):
     type: str = Field(..., description="The type of engine element this is.")
     options: Optional[dict] = Field(None, description="The options associated with the engine element.")
 
-    ######## Temp brute force fix for the demo ################
-    ###########################################################
-    ###########################################################
+    # brute force fix begin
     statics: Optional[bool] = Field(None, description="If true calculate static properties")
     mn: Optional[float] = Field(None, description="On-design Mach number")
     ram_recovery: Optional[float] = Field(None, description="Ram recovery factor")
@@ -79,9 +77,7 @@ class EngineElement(CommonBaseModel):
             raise ValueError(f"Fuel type must be one of {allowed_types}")
         return v
     
-    ######## END temp brute force fix for the demo ############
-    ###########################################################
-    ###########################################################
+    # brute force fix end
 
 class Inlet(EngineElement):
     """

@@ -125,7 +125,7 @@ def viewer(prob, pt, file=sys.stdout):
 if __name__ == "__main__":
 
     # Folder path for files
-    output = "/home/mdolabuser/mount/aircraft-data-hierarchy/MichiganFinalPropulsionDemo/output_files/"
+    output = "output_files/"
 
     # Load the generated test ADH
     ADHInstance= generate_test_ADH_propulsion()
