@@ -2,10 +2,11 @@
 requires = ["setuptools>=45","setuptools_scm[toml]>=6.2"]
 build-backend = 'setuptools.build_meta'
 
+[tool.setuptools_scm]
+
 [project]
 name = "aircraft_data_hierarchy"
 description = "The Aircraft Data Hierarchy (ADH) is a modern data definition standard for the aerospace vehicle design studies. The ADH enables engineers to exchange information (i.e. geometry, disciplinary tool inputs/outputs, requirements, etc.) between tools using a common data structure and a schema that can be validated."
-version = "0.1.0"
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [
@@ -28,6 +29,8 @@ dependencies = [
     "tabulate",
     "IPython"
 ]
+
+dynamic = ["version", "scripts"]
 
 [project.optional-dependencies]
 test = [
