@@ -26,7 +26,7 @@ class CommonBaseModel(BaseModel):
     model_config = ConfigDict(
         validate_assignment=True,
         arbitrary_types_allowed=True,
-        extra="forbid",
+        extra="allow",
         protected_namespaces=(),  # Allow the use of 'model_' prefix
     )
 
