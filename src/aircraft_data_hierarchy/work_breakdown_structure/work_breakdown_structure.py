@@ -1,24 +1,5 @@
 from pydantic import BaseModel, Field, field_validator, Extra
 from typing import Optional
-
-# ToDo:
-# 1. Get airframe working for the Nacelle demo
-# 2. Complete inheritance for all the other airframe components
-# 3. Get propulsion working for Propulsion demo
-# 4. Complete inheritance for all the other propulsion components
-# 5. Get systems working for Systems demo
-# 6. Complete inheritance for all the other systems components
-# 7. Flesh out equipment branch
-# 8. Get equipment working for Equipment demo
-# 9. Add any Operating items not covered by airframe, propulsion, systems, or equipment
-# 10. Complete inheritance for all the other operating items
-# 11. Demonstrate traversing branches to create weights buildup
-# 12. Demonstrate traversing branches to create CG buildup
-# 13. Demonstrate traversing branches to create weight based cost buildup
-# 14. Demonstrate traversing branches to create parasite drag buildup
-# 15. Create PINs from part locations and WBS structure
-# 16. Demonstrate traversing branches to create part based cost buildup
-
 from ..common_base_model import CommonBaseModel, Metadata
 from .airframe.airframe import Component
 from .propulsion.propulsion import Propulsion
