@@ -1,5 +1,0 @@
-pydantic
-numpy
-graphviz
-tabulate
-IPython
