@@ -23,6 +23,7 @@ The foundational structure of the ADH is provided by Pydantic v2 classes, ensuri
    :maxdepth: 7
    :caption: Contents:
 
+   reference/index
 
 Indices and tables
 ==================
