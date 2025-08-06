@@ -20,6 +20,6 @@ To contribute to the development of the Aircraft Data Hierarchy package begin by
 
 # License
 
-Copyright 2025 The Boeing Company
+Copyright 2025 The Boeing Company.
 
 This project is licensed under the Apache License - see the [LICENSE](LICENSE) file for details.
