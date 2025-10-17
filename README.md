@@ -10,6 +10,10 @@ To use the ADH you need to use Python 3.8 or higher and Pydantic v2.
 
 The foundational structure of the ADH is provided by Pydantic v2 classes, ensuring a single source of data that is self-validating to manage the quality of the data. This approach makes the complexity of Aircraft Design in a Model-Based Systems Engineering (MBSE) environment more transparent and intuitive.
 
+# Cite us
+
+[Engelbeck, R. M., Ocampo, E., Gablonsky, J., Shi, M., Wakayama, S., Carrere, A., Plybon, R., Refford, M., Mokotoff, P., Bakhshi, S., Kerlee, A., Cinar, G., and Martins, J., "Model-Based Systems Analysis and Engineering: Aircraft Data Hierarchy," NASA Contractor Report NASA/CR-20250007045, National Aeronautics and Space Administration, Glenn Research Center, Aug. 1, 2025.](https://ntrs.nasa.gov/citations/20250007045)
+
 # Documentation
 
 The documentation and examples for this project are hosted on Github Pages: [Aircraft Data Hierarchy Documentation](https://boeing.github.io/aircraft-data-hierarchy/)
